@@ -1,17 +1,17 @@
 import React from 'react';
 import Head from 'next/head';
 
-import AppLayout from '../components/layouts/AppLayout';
+import { BaseTemplate } from '../components';
 
-function Home(): React.ReactElement {
+function Main(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>dev.readers | Home</title>
+        <title>dev.readers | Main</title>
       </Head>
-      <AppLayout>Home</AppLayout>
+      <BaseTemplate>Main</BaseTemplate>
     </>
   );
 }
 
-export default Home;
+export default Main;
