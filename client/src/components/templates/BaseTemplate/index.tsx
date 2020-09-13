@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Header } from '../../index';
+import { Header } from '@components';
 
 interface Props {
   children: React.ReactNode;
