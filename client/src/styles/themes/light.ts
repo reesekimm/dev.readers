@@ -25,9 +25,9 @@ const lightTheme: DefaultTheme = {
     default: `'Noto Sans KR', sans-serif;`,
   },
   fontSizes: {
-    xxl: '4rem',
-    xl: '2.8rem',
-    lg: '2rem',
+    xxl: '4.2rem',
+    xl: '3.6rem',
+    lg: '2.4rem',
     md: '1.6rem',
     sm: '1.4rem',
     xsm: '1.2rem',
