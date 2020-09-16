@@ -1,26 +1,25 @@
 import React from 'react';
 import Link from 'next/link';
-import { SearchOutlined } from '@ant-design/icons';
 
-import { Text, Button } from '@components';
+import { Text, Button, Search } from '@components';
 import * as S from './style';
 
 function Header(): React.ReactElement {
   return (
     <S.Container>
-      <Link href="/">
-        <a>
-          <Text tag="h1" color="primary" fontFamily="logo" fontSize="lg">
-            dev.readers
-          </Text>
-        </a>
-      </Link>
-      <div>
-        <SearchOutlined
-          style={{ fontSize: '2rem', color: '#414141', padding: '1rem', cursor: 'pointer' }}
-        />
-        <Button styleType="plain">로그인</Button>
-      </div>
+      <S.NavItemContainer>
+        <Link href="/">
+          <a>
+            <Text tag="h1" color="primary" fontFamily="logo" fontSize="lg">
+              dev.readers
+            </Text>
+          </a>
+        </Link>
+        <S.ButtonContainer>
+          <Search />
+          <Button styleType="plain">로그인</Button>
+        </S.ButtonContainer>
+      </S.NavItemContainer>
     </S.Container>
   );
 }
