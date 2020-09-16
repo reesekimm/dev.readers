@@ -1,7 +1,14 @@
 import styled, { css } from 'styled-components';
-import { Props } from './index';
 
-export const TextStyle = css<Props>`
+export interface TextStyleProps {
+  tag?: string;
+  color?: string;
+  fontFamily?: string;
+  fontSize?: string;
+  fontWeight?: string;
+}
+
+export const TextStyle = css<TextStyleProps>`
   display: inline-block;
   color: ${(props) =>
     props.theme.palette[props.color as keyof typeof props.theme.palette] ||

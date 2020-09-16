@@ -2,15 +2,13 @@ import React from 'react';
 import * as S from './style';
 
 export interface Props {
-  tag?: 'h1' | 'h2' | 'h3' | string;
+  children: string;
+  /** html tag (span(default), h1, h2, h3) */
+  tag?: string;
   color?: string;
   fontFamily?: string;
   fontSize?: string;
   fontWeight?: string;
-}
-
-export interface TextProps extends Props {
-  children: string;
 }
 
 function Text({
@@ -20,7 +18,7 @@ function Text({
   fontFamily,
   fontSize,
   fontWeight,
-}: TextProps): React.ReactElement {
+}: Props): React.ReactElement {
   switch (tag) {
     case 'h1':
       return (
