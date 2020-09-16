@@ -12,7 +12,7 @@ function App({ Component }: AppProps): React.ReactElement {
       <Head>
         <title>dev.readers</title>
         <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;900&display=swap"
           rel="stylesheet"
         />
         <link

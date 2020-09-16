@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 
-import { BaseTemplate, Text } from '@components';
+import { BaseTemplate, Text, Button } from '@components';
 
 function Main(): React.ReactElement {
   return (
@@ -20,6 +20,21 @@ function Main(): React.ReactElement {
           h3 heading
         </Text>
         <Text color="danger">default span</Text>
+        <Button>primary button</Button>
+        <Button styleType="secondary">secondary button</Button>
+        <Button styleType="plain">plain button</Button>
+        <Button styleType="bordered">bordered button</Button>
+        <Button
+          styleType="plain"
+          href="https://github.com/reesekimm"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          external link
+        </Button>
+        <Button styleType="plain" href="/profile">
+          internal routing
+        </Button>
       </BaseTemplate>
     </>
   );

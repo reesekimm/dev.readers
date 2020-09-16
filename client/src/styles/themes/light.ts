@@ -31,9 +31,9 @@ const lightTheme: DefaultTheme = {
   },
   fontSizes: {
     xxl: '4.2rem',
-    xl: '3.6rem',
-    lg: '2.4rem',
-    md: '1.6rem',
+    xl: '3.4rem',
+    lg: '2.5rem',
+    md: '2rem',
     sm: '1.4rem',
     xsm: '1.2rem',
   },
