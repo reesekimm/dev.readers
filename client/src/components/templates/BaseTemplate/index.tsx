@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Header } from '@components';
+import { Header, Footer } from '@components';
+import * as S from './style';
 
 interface Props {
   children: React.ReactNode;
@@ -8,10 +9,11 @@ interface Props {
 
 function BeseTemplate({ children }: Props): React.ReactElement {
   return (
-    <div>
+    <>
       <Header />
-      {children}
-    </div>
+      <S.Container>{children}</S.Container>
+      <Footer />
+    </>
   );
 }
 

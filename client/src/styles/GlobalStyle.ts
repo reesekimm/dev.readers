@@ -5,10 +5,15 @@ const GlobalStyle = createGlobalStyle`
   ${normalize}
 
   html {
+    height: 100%;
     font-size: 10px;
   }
 
-  * {
+  body {
+    height: 100%;
+  }
+
+  *, *:before, *:after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
