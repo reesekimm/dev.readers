@@ -30,13 +30,14 @@ function Button({
   styleType = 'primary',
   btnType = 'button',
   onClick,
+  ...props
 }: Props): React.ReactElement {
   const isExternalLink = href && target;
   const isInternalLink = href;
 
   if (isExternalLink)
     return (
-      <S.Anchor href={href} target={target} rel={rel} styleType={styleType}>
+      <S.Anchor href={href} target={target} rel={rel} styleType={styleType} {...props}>
         {children}
       </S.Anchor>
     );
@@ -44,12 +45,14 @@ function Button({
   if (isInternalLink)
     return (
       <Link href={href} passHref>
-        <S.Anchor styleType={styleType}>{children}</S.Anchor>
+        <S.Anchor styleType={styleType} {...props}>
+          {children}
+        </S.Anchor>
       </Link>
     );
 
   return (
-    <S.StyledButton styleType={styleType} type={btnType}>
+    <S.StyledButton styleType={styleType} type={btnType} {...props}>
       {children}
     </S.StyledButton>
   );

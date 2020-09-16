@@ -14,6 +14,7 @@ export const ButtonStyle = css<ButtonStyleProps>`
   text-decoration: none;
   text-align: center;
   padding: 1rem;
+  margin: 0 1rem;
   border: none;
   outline: none;
   white-space: nowrap;
@@ -55,6 +56,7 @@ export const ButtonStyle = css<ButtonStyleProps>`
     props.styleType === 'plain' &&
     css`
       color: ${props.theme.palette.secondary};
+      margin: 0;
     `}
 `;
 

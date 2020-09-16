@@ -18,23 +18,42 @@ function Text({
   fontFamily,
   fontSize,
   fontWeight,
+  ...props
 }: Props): React.ReactElement {
   switch (tag) {
     case 'h1':
       return (
-        <S.H1 color={color} fontFamily={fontFamily} fontSize={fontSize} fontWeight={fontWeight}>
+        <S.H1
+          color={color}
+          fontFamily={fontFamily}
+          fontSize={fontSize}
+          fontWeight={fontWeight}
+          {...props}
+        >
           {children}
         </S.H1>
       );
     case 'h2':
       return (
-        <S.H2 color={color} fontFamily={fontFamily} fontSize={fontSize} fontWeight={fontWeight}>
+        <S.H2
+          color={color}
+          fontFamily={fontFamily}
+          fontSize={fontSize}
+          fontWeight={fontWeight}
+          {...props}
+        >
           {children}
         </S.H2>
       );
     case 'h3':
       return (
-        <S.H3 color={color} fontFamily={fontFamily} fontSize={fontSize} fontWeight={fontWeight}>
+        <S.H3
+          color={color}
+          fontFamily={fontFamily}
+          fontSize={fontSize}
+          fontWeight={fontWeight}
+          {...props}
+        >
           {children}
         </S.H3>
       );
