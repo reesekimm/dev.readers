@@ -8,10 +8,8 @@ export interface Props {
   children: React.ReactElement | string;
   /** next.js client-side routing을 위한 path / 외부 링크 */
   href?: string;
-  /** anchor 태그의 target 속성 */
-  target?: string;
-  /** anchor 태그의 rel 속성 */
-  rel?: string;
+  /** 버튼 타입 (exLink: 외부 링크, inLink: client-side 내부 routing) */
+  type?: string;
   /** 버튼 스타일 (primary(default), secondary, bordered, plain) */
   styleType?: string;
   /** 버튼 타입 (submit(default), reset, button) */
@@ -25,24 +23,26 @@ export interface Props {
 function Button({
   children,
   href,
-  target,
-  rel,
+  type,
   styleType = 'primary',
   btnType = 'button',
   onClick,
   ...props
 }: Props): React.ReactElement {
-  const isExternalLink = href && target;
-  const isInternalLink = href;
-
-  if (isExternalLink)
+  if (type === 'exLink')
     return (
-      <S.Anchor href={href} target={target} rel={rel} styleType={styleType} {...props}>
+      <S.Anchor
+        href={href}
+        target="_blank"
+        rel="noreferrer noopener"
+        styleType={styleType}
+        {...props}
+      >
         {children}
       </S.Anchor>
     );
 
-  if (isInternalLink)
+  if (type === 'inLink')
     return (
       <Link href={href} passHref>
         <S.Anchor styleType={styleType} {...props}>

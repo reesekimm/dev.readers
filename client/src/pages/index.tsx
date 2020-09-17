@@ -24,15 +24,10 @@ function Main(): React.ReactElement {
         <Button styleType="secondary">secondary button</Button>
         <Button styleType="plain">plain button</Button>
         <Button styleType="bordered">bordered button</Button>
-        <Button
-          styleType="plain"
-          href="https://github.com/reesekimm"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
+        <Button styleType="plain" href="https://github.com/reesekimm" type="exLink">
           external link
         </Button>
-        <Button styleType="plain" href="/profile">
+        <Button styleType="plain" type="inLink" href="/profile">
           internal routing
         </Button>
       </BaseTemplate>
