@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledInput = styled.input`
   border: 0;
-  padding: 0.25em 1em;
+  padding: 0.25em 0.5em;
   flex-grow: 1;
   outline: 0;
   position: absolute;
@@ -37,8 +37,7 @@ export const StyledButton = styled.button`
 export const Container = styled.form`
   display: flex;
   align-items: center;
-  border: 1.7px solid ${({ theme }) => theme.palette.secondary};
-  border-radius: 100px;
+  border-bottom: 1.7px solid ${({ theme }) => theme.palette.gray3};
   overflow: hidden;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   position: relative;
@@ -52,6 +51,7 @@ export const Container = styled.form`
 
   @media only screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     width: 3.8rem;
+    border: none;
 
     ${StyledInput} {
       opacity: 0;
@@ -61,6 +61,7 @@ export const Container = styled.form`
 
     &:focus-within {
       width: 100%;
+      border-bottom: 1.7px solid ${({ theme }) => theme.palette.gray3};
 
       ${StyledInput} {
         opacity: 1;
