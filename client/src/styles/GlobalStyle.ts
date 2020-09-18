@@ -23,6 +23,10 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     cursor: pointer;
   }
+
+  .anticon {
+    font-size: 1.7rem;
+  }
 `;
 
 export default GlobalStyle;

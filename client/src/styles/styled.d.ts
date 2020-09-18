@@ -17,5 +17,8 @@ declare module 'styled-components' {
     fontWeights: {
       [key: string]: number;
     };
+    shadows: {
+      [key: string]: string;
+    };
   }
 }

@@ -12,7 +12,7 @@ export const TextStyle = css<TextStyleProps>`
   display: inline-block;
   color: ${(props) =>
     props.theme.palette[props.color as keyof typeof props.theme.palette] ||
-    props.theme.palette.black};
+    props.theme.palette.gray6};
   font-family: ${(props) =>
     props.theme.fontFamily[props.fontFamily as keyof typeof props.theme.fontFamily] ||
     props.theme.fontFamily.default}

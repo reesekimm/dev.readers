@@ -4,6 +4,7 @@ import Link from 'next/link';
 import * as S from './style';
 
 export interface Props {
+  [key: string]: unknown;
   /** 버튼 내용 */
   children: React.ReactElement | string;
   /** next.js client-side routing을 위한 path / 외부 링크 */

@@ -46,6 +46,13 @@ const lightTheme: DefaultTheme = {
     light: 300,
     thin: 100,
   },
+  shadows: {
+    xxl: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)',
+    xl: '0px 10px 37px rgba(0, 0, 0, 0.15)',
+    lg: '0 1px 5px rgba(0,0,0,0.2)',
+    md: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+    sm: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08)',
+  },
 };
 
 export default lightTheme;

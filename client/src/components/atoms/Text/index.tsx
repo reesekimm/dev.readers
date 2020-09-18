@@ -2,6 +2,7 @@ import React from 'react';
 import * as S from './style';
 
 export interface Props {
+  [key: string]: unknown;
   children: string;
   /** html tag (span(default), h1, h2, h3) */
   tag?: string;
@@ -59,7 +60,13 @@ function Text({
       );
     default:
       return (
-        <S.Span color={color} fontFamily={fontFamily} fontSize={fontSize} fontWeight={fontWeight}>
+        <S.Span
+          color={color}
+          fontFamily={fontFamily}
+          fontSize={fontSize}
+          fontWeight={fontWeight}
+          {...props}
+        >
           {children}
         </S.Span>
       );
