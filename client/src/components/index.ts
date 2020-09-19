@@ -11,3 +11,4 @@ export { default as Header } from './organisms/Header';
 export { default as ReviewListItem } from './organisms/ReviewListItem';
 
 export { default as BaseTemplate } from './templates/BaseTemplate';
+export { default as ReviewListTemplate } from './templates/ReviewListTemplate';

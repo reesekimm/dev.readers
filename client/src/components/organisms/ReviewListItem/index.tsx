@@ -21,7 +21,16 @@ function ReviewListItem({ id, User, Book, type, rating, content }: Props): React
   return (
     <S.Container>
       <BookInfo {...bookInfo} />
-      <Text color="gray5">{content}</Text>
+      {content.length > 200 ? (
+        <Text color="gray5">
+          {content.slice(0, 200) + '...'}{' '}
+          <Text color="gray3" fontSize="xsm" fontWeight="medium">
+            더보기
+          </Text>
+        </Text>
+      ) : (
+        <Text color="gray5">{content}</Text>
+      )}
       <S.Actions>
         <Text color="gray4" fontSize="xsm" fontWeight="medium">
           {User.nickname}

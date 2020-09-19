@@ -23,7 +23,6 @@ function BookInfo({
   type,
   ...props
 }: Props): React.ReactElement {
-  const textStyle = useMemo(() => ({ marginBottom: '0.3rem' }), []);
   const buttonStyle = useMemo(
     () => ({ position: 'absolute', right: 0, bottom: 0, padding: 0 }),
     []
@@ -39,23 +38,23 @@ function BookInfo({
         </S.ImageContainer>
         <div>
           <S.TextContainer>
-            <Text tag="h2" fontSize="sm" fontWeight="medium" style={textStyle}>
+            <Text tag="h2" fontSize="sm" fontWeight="medium">
               {title}
             </Text>
             <Text color="gray3" fontSize="xsm">
               {pubDate.slice(0, 4)}
             </Text>
           </S.TextContainer>
-          <S.TextContainer className="hide">
-            <Text fontSize="xsm" style={textStyle}>
-              {author}
-            </Text>
-            <Text fontSize="xsm">{publisher}</Text>
-          </S.TextContainer>
           {includeDetails ? (
-            <Button href={link} type="exLink" styleType="plain" style={buttonStyle}>
-              자세히 보기
-            </Button>
+            <>
+              <S.TextContainer className="hide">
+                <Text fontSize="xsm">{author}</Text>
+                <Text fontSize="xsm">{publisher}</Text>
+              </S.TextContainer>
+              <Button href={link} type="exLink" styleType="plain" style={buttonStyle}>
+                자세히 보기
+              </Button>
+            </>
           ) : (
             <Rate disabled defaultValue={rating} allowHalf style={buttonStyle} />
           )}
