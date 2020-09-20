@@ -7,12 +7,6 @@ export const Summary = styled.div`
   height: fit-content;
   margin-bottom: 1rem;
 
-  & > div:first-child {
-    /* book cover ratio - 1 : 1.27 */
-    width: 70px;
-    height: 88.9px;
-  }
-
   & > div:last-child {
     padding-left: 1rem;
     flex: 1;
@@ -30,6 +24,9 @@ export const Summary = styled.div`
 `;
 
 export const ImageContainer = styled.div`
+  /* book cover ratio - 1 : 1.27 */
+  width: 70px;
+  height: 88.9px;
   overflow: hidden;
   border-radius: 0.5rem;
   box-shadow: ${({ theme }) => theme.shadows.lg};

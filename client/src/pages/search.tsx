@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { BaseTemplate } from '../components';
+import { BookListTemplate } from '@components';
+import searchResult from '../assets/aladin_search.json';
 
 function Search(): React.ReactElement {
-  return <BaseTemplate>Search</BaseTemplate>;
+  return <BookListTemplate bookList={searchResult.item} />;
 }
 
 export default Search;

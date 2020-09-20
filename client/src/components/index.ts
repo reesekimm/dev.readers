@@ -4,6 +4,7 @@ export { default as RatingTag } from './atoms/RatingTag';
 export { default as Text } from './atoms/Text';
 
 export { default as BookInfo } from './molecules/BookInfo';
+export { default as BookListItem } from './molecules/BookListItem';
 export { default as Search } from './molecules/Search';
 
 export { default as Footer } from './organisms/Footer';
@@ -11,4 +12,5 @@ export { default as Header } from './organisms/Header';
 export { default as ReviewListItem } from './organisms/ReviewListItem';
 
 export { default as BaseTemplate } from './templates/BaseTemplate';
+export { default as BookListTemplate } from './templates/BookListTemplate';
 export { default as ReviewListTemplate } from './templates/ReviewListTemplate';
