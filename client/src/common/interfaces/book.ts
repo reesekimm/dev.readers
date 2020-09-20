@@ -15,3 +15,7 @@ export interface Book {
   /** 알라딘 상품 페이지 링크 */
   link?: string;
 }
+
+export interface Books {
+  books: Book[];
+}

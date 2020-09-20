@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 
-import { ReviewListTemplate, ReviewListItem } from '@components';
+import { MainTemplate } from '@components';
 import reviews from '../assets/reviews';
 
 function Main(): React.ReactElement {
@@ -10,11 +10,7 @@ function Main(): React.ReactElement {
       <Head>
         <title>dev.readers</title>
       </Head>
-      <ReviewListTemplate
-        reviews={reviews.map((review) => (
-          <ReviewListItem key={review.id} type="list" {...review} />
-        ))}
-      />
+      <MainTemplate reviews={reviews} />
     </>
   );
 }

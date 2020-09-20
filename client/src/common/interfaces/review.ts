@@ -27,3 +27,7 @@ export interface Review {
   // Comments: Comment[];
   // Likers: Liker[];
 }
+
+export interface Reviews {
+  reviews: Review[];
+}
