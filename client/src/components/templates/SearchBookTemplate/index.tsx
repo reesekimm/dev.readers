@@ -10,7 +10,7 @@ interface Props {
 function SearchBookTemplate({ books }: Props): React.ReactElement {
   return (
     <BaseTemplate>
-      <Search />
+      <Search style={{ margin: '2rem auto 4rem' }} />
       <BookList books={books} />
     </BaseTemplate>
   );

@@ -28,6 +28,4 @@ export interface Review {
   // Likers: Liker[];
 }
 
-export interface Reviews {
-  reviews: Review[];
-}
+export type Reviews = Review[];

@@ -13,7 +13,7 @@ export interface Props {
   type?: string;
   /** 버튼 스타일 (primary(default), secondary, bordered, plain) */
   styleType?: string;
-  /** 버튼 타입 (submit(default), reset, button) */
+  /** 버튼 타입 (button(default), submit, reset) */
   btnType?: string;
   /** onclick handler */
   onClick?: () => void;

@@ -16,6 +16,4 @@ export interface Book {
   link?: string;
 }
 
-export interface Books {
-  books: Book[];
-}
+export type Books = Book[];

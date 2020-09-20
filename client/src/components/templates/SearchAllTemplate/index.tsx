@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { IBook, IReview } from '@interfaces';
-import { BaseTemplate, BookList, ReviewList, Search, Text } from '@components';
+import { BaseTemplate, BookList, ReviewList, Search, Text, Button, Divider } from '@components';
+import * as S from './style';
 
 interface Props {
   books: IBook.Books;
@@ -11,10 +12,21 @@ interface Props {
 function SearcAllTemplate({ books, reviews }: Props): React.ReactElement {
   return (
     <BaseTemplate>
-      <Search />
-      <Text fontSize="lg">도서</Text>
+      <Search style={{ margin: '2rem auto 1rem' }} />
+      <S.SubtitleContainer>
+        <Text fontSize="md" fontWeight="bold">
+          도서
+        </Text>
+        <Button styleType="plain">더보기</Button>
+      </S.SubtitleContainer>
       <BookList books={books} />
-      <Text fontSize="lg">리뷰</Text>
+      <Divider style={{ marginTop: '3rem' }} />
+      <S.SubtitleContainer>
+        <Text fontSize="md" fontWeight="bold">
+          리뷰
+        </Text>
+        <Button styleType="plain">더보기</Button>
+      </S.SubtitleContainer>
       <ReviewList reviews={reviews} />
     </BaseTemplate>
   );
