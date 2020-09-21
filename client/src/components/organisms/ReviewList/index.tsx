@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IReview } from '@interfaces';
+import { IReview } from '@types';
 import { ReviewListItem } from '@components';
 import * as S from './style';
 

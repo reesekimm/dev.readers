@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { IBook } from '@interfaces';
+import { IBook } from '@types';
 import { Text, Img } from '@components';
 import * as S from './style';
 

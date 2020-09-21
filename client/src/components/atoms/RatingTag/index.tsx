@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IReview } from '@interfaces';
+import { IReview } from '@types';
 import * as S from './style';
 
 export interface Props {

@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { HeartOutlined, HeartTwoTone, MessageOutlined } from '@ant-design/icons';
 
 import { Text, BookInfo } from '@components';
-import { IReview } from '@interfaces';
+import { IReview } from '@types';
 import * as S from './style';
 
 interface Props extends IReview.Review {

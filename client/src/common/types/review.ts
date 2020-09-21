@@ -1,4 +1,4 @@
-import { IBook, IUser } from '@interfaces';
+import { IBook, IUser } from '@types';
 
 export interface Liker {
   id: number | string; // TODO: DB 연동후 number로 고정

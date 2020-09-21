@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IBook } from '@interfaces';
+import { IBook } from '@types';
 import { BookListItem } from '@components';
 import * as S from './style';
 
