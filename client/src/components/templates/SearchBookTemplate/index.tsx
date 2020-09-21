@@ -1,17 +1,17 @@
 import React from 'react';
 
-import { IBook } from '@interfaces';
-import { BaseTemplate, BookList, Search } from '@components';
+import { BaseTemplate } from '@components';
 
 interface Props {
-  books: IBook.Books;
+  searchBar: React.ReactNode;
+  bookList: React.ReactNode;
 }
 
-function SearchBookTemplate({ books }: Props): React.ReactElement {
+function SearchBookTemplate({ searchBar, bookList = null }: Props): React.ReactElement {
   return (
     <BaseTemplate>
-      <Search style={{ margin: '2rem auto 4rem' }} />
-      <BookList books={books} />
+      {searchBar}
+      {bookList}
     </BaseTemplate>
   );
 }

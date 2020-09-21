@@ -1,25 +1,29 @@
 import React from 'react';
 
-import { IBook, IReview } from '@interfaces';
-import { BaseTemplate, BookList, ReviewList, Search, Text, Button, Divider } from '@components';
+import { BaseTemplate, Text, Button, Divider } from '@components';
 import * as S from './style';
 
 interface Props {
-  books: IBook.Books;
-  reviews: IReview.Reviews;
+  searchBar: React.ReactNode;
+  bookList: React.ReactNode;
+  reviewList: React.ReactNode;
 }
 
-function SearcAllTemplate({ books, reviews }: Props): React.ReactElement {
+function SearcAllTemplate({
+  searchBar,
+  bookList = null,
+  reviewList = null,
+}: Props): React.ReactElement {
   return (
     <BaseTemplate>
-      <Search style={{ margin: '2rem auto 1rem' }} />
+      {searchBar}
       <S.SubtitleContainer>
         <Text fontSize="md" fontWeight="bold">
           도서
         </Text>
         <Button styleType="plain">더보기</Button>
       </S.SubtitleContainer>
-      <BookList books={books} />
+      {bookList}
       <Divider style={{ marginTop: '3rem' }} />
       <S.SubtitleContainer>
         <Text fontSize="md" fontWeight="bold">
@@ -27,7 +31,7 @@ function SearcAllTemplate({ books, reviews }: Props): React.ReactElement {
         </Text>
         <Button styleType="plain">더보기</Button>
       </S.SubtitleContainer>
-      <ReviewList reviews={reviews} />
+      {reviewList}
     </BaseTemplate>
   );
 }
