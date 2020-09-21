@@ -1,13 +1,13 @@
 export { default as Button } from './atoms/Button';
 export { default as Divider } from './atoms/Divider';
 export { default as Img } from './atoms/Img';
+export { default as Input } from './atoms/Input';
 export { default as RatingTag } from './atoms/RatingTag';
 export { default as Text } from './atoms/Text';
 
 export { default as BookInfo } from './molecules/BookInfo';
 export { default as BookListItem } from './molecules/BookListItem';
 export { default as ReviewListItem } from './molecules/ReviewListItem';
-export { default as Search } from './molecules/Search';
 
 export { default as BookList } from './organisms/BookList';
 export { default as Footer } from './organisms/Footer';

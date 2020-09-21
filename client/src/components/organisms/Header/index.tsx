@@ -19,7 +19,7 @@ function Header(): React.ReactElement {
           </a>
         </Link>
         <S.ButtonContainer>
-          <Button type="inLink" href="/search/all" styleType="plain">
+          <Button type="inLink" href="/search/book" styleType="plain">
             <SearchOutlined style={iconStyle} />
           </Button>
           <Button styleType="plain">로그인</Button>

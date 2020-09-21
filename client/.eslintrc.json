@@ -35,9 +35,11 @@
     }
   },
   "rules": {
+    "jsx-a11y/label-has-associated-control": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
-    "react/jsx-one-expression-per-line": "off"
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-wrap-multilines": "off"
   }
 }
