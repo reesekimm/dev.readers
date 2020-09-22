@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { SearchBookTemplate, BookList, Input } from '@components';
+import { InputRef } from '../../components/atoms/Input';
 import searchResult from '../../assets/aladin_search.json';
 
 function Search(): React.ReactElement {
@@ -9,9 +10,9 @@ function Search(): React.ReactElement {
 
   const [inputValue, setInputValue] = useState<string>('');
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<InputRef>(null);
   useEffect(() => {
-    inputRef.current?.focus();
+    inputRef.current?.exposedFocusMethod();
   }, []);
 
   const onChangeInput = useCallback(

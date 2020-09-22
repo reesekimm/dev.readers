@@ -1,4 +1,4 @@
-import React, { forwardRef, useMemo } from 'react';
+import React, { forwardRef, useImperativeHandle, useMemo, useRef } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 
 import * as S from './style';
@@ -19,11 +19,22 @@ export interface Props {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const WrappedInput = forwardRef<HTMLInputElement, Props>(function Input(
+export interface InputRef {
+  exposedFocusMethod: () => void;
+}
+
+const WrappedInput = forwardRef<InputRef, Props>(function Input(
   { inputName, type = 'text', defaultValue, placeholder, value, onChange, ...props }: Props,
   ref
 ): React.ReactElement {
   const iconStyle = useMemo(() => ({ color: '#616161', fontSize: '18px', marginLeft: '5px' }), []);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  useImperativeHandle(ref, () => ({
+    exposedFocusMethod: () => {
+      inputRef.current?.focus();
+    },
+  }));
 
   return (
     <S.Container {...props}>
@@ -35,7 +46,7 @@ const WrappedInput = forwardRef<HTMLInputElement, Props>(function Input(
         defaultValue={defaultValue}
         value={value}
         onChange={onChange}
-        ref={ref}
+        ref={inputRef}
         autoComplete="off"
       />
     </S.Container>
