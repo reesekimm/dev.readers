@@ -18,7 +18,7 @@ function Search(): React.ReactElement {
   const onChangeInput = useCallback(
     (e) => {
       setInputValue(e.target.value);
-      router.push(`/search/book?query=${e.target.value}`, undefined, { shallow: true });
+      router.replace(`/search/book?query=${e.target.value}`, undefined, { shallow: true });
     },
     [router]
   );
