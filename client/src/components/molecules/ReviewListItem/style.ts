@@ -10,6 +10,10 @@ export const Container = styled.div`
   }
 `;
 
+export const Content = styled.div`
+  cursor: pointer;
+`;
+
 export const Actions = styled.div`
   display: flex;
   justify-content: space-between;

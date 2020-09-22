@@ -12,6 +12,7 @@ export { default as ReviewListItem } from './molecules/ReviewListItem';
 export { default as BookList } from './organisms/BookList';
 export { default as Footer } from './organisms/Footer';
 export { default as Header } from './organisms/Header';
+export { default as Modal } from './organisms/Modal';
 export { default as ReviewList } from './organisms/ReviewList';
 
 export { default as BaseTemplate } from './templates/BaseTemplate';
