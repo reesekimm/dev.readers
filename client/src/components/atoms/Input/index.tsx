@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 
 import * as S from './style';
@@ -19,15 +19,10 @@ export interface Props {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function Input({
-  inputName,
-  type = 'text',
-  defaultValue,
-  placeholder,
-  value,
-  onChange,
-  ...props
-}: Props): React.ReactElement {
+const WrappedInput = forwardRef<HTMLInputElement, Props>(function Input(
+  { inputName, type = 'text', defaultValue, placeholder, value, onChange, ...props }: Props,
+  ref
+): React.ReactElement {
   const iconStyle = useMemo(() => ({ color: '#616161', fontSize: '18px', marginLeft: '5px' }), []);
 
   return (
@@ -40,10 +35,11 @@ function Input({
         defaultValue={defaultValue}
         value={value}
         onChange={onChange}
+        ref={ref}
         autoComplete="off"
       />
     </S.Container>
   );
-}
+});
 
-export default Input;
+export default WrappedInput;

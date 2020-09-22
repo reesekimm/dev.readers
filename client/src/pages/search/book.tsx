@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { SearchBookTemplate, BookList, Input } from '@components';
@@ -8,6 +8,11 @@ function Search(): React.ReactElement {
   const router = useRouter();
 
   const [inputValue, setInputValue] = useState<string>('');
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const onChangeInput = useCallback(
     (e) => {
@@ -26,6 +31,7 @@ function Search(): React.ReactElement {
           placeholder="도서명을 검색해 보세요"
           value={inputValue}
           onChange={onChangeInput}
+          ref={inputRef}
           style={{ margin: '1rem auto 4rem' }}
         />
       }
