@@ -19,14 +19,14 @@ export const Wrapper = styled.div`
 
 export const ModalStyle = css<ModalStyleProps>`
   background: #fff;
-  padding: 1.5rem;
+  padding: 2rem;
   border-radius: 0.5rem;
-  min-width: 300px;
+  box-shadow: ${({ theme }) => theme.shadows.xl};
 `;
 
 export const LargeModal = styled.div`
   ${ModalStyle}
-  max-width: ${({ theme }) => theme.breakpoints.lg};
+  width: ${({ theme }) => theme.breakpoints.lg};
   margin: 0 2rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
@@ -60,4 +60,7 @@ export const SmallModal = styled.div`
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid ${({ theme }) => theme.palette.gray2};
 `;

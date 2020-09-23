@@ -23,8 +23,9 @@ function App({ Component }: AppProps): React.ReactElement {
       </Head>
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
-        <Component />
+        <div id="feedback-modal-root" />
         <div id="modal-root" />
+        <Component />
       </ThemeProvider>
     </>
   );
