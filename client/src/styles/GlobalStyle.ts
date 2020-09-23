@@ -24,6 +24,10 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
+  ul, ol {
+    list-style-type: none;
+  }
+
   .anticon {
     font-size: 1.7rem;
   }

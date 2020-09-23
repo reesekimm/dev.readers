@@ -53,7 +53,7 @@ function Button({
     );
 
   return (
-    <S.StyledButton styleType={styleType} type={btnType} {...props}>
+    <S.StyledButton styleType={styleType} type={btnType} onClick={onClick} {...props}>
       {children}
     </S.StyledButton>
   );

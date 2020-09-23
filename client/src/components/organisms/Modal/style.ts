@@ -22,11 +22,19 @@ export const ModalStyle = css<ModalStyleProps>`
   padding: 2rem;
   border-radius: 0.5rem;
   box-shadow: ${({ theme }) => theme.shadows.xl};
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+`;
+
+export const Content = styled.div`
+  flex: 1;
 `;
 
 export const LargeModal = styled.div`
   ${ModalStyle}
   width: ${({ theme }) => theme.breakpoints.lg};
+  height: 600px;
   margin: 0 2rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {

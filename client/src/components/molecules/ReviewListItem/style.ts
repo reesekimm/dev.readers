@@ -5,13 +5,18 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid ${({ theme }) => theme.palette.gray2};
   & > span {
     flex: 1;
   }
 `;
 
-export const Content = styled.div`
+export const Content = styled.p`
   cursor: pointer;
+  flex: 1;
+  margin: 1rem 0;
+  text-align: justify;
 `;
 
 export const Actions = styled.div`

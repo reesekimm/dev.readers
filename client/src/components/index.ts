@@ -7,6 +7,9 @@ export { default as Text } from './atoms/Text';
 
 export { default as BookInfo } from './molecules/BookInfo';
 export { default as BookListItem } from './molecules/BookListItem';
+export { default as Comment } from './molecules/Comment';
+export { default as CommentForm } from './molecules/CommentForm';
+export { default as ReviewActionBar } from './molecules/ReviewActionBar';
 export { default as ReviewListItem } from './molecules/ReviewListItem';
 
 export { default as BookList } from './organisms/BookList';
@@ -17,5 +20,6 @@ export { default as ReviewList } from './organisms/ReviewList';
 
 export { default as BaseTemplate } from './templates/BaseTemplate';
 export { default as MainTemplate } from './templates/MainTemplate';
+export { default as ReviewDetailTemplate } from './templates/ReviewDetailTemplate';
 export { default as SearchAllTemplate } from './templates/SearchAllTemplate';
 export { default as SearchBookTemplate } from './templates/SearchBookTemplate';

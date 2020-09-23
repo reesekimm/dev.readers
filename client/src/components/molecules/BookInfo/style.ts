@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-export const Container = styled.div``;
-
-export const Summary = styled.div`
+export const Container = styled.div`
   display: flex;
   height: fit-content;
-  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid ${({ theme }) => theme.palette.gray2};
+  border-radius: 0.5rem;
 
   & > div:last-child {
     padding-left: 1rem;
@@ -25,8 +25,8 @@ export const Summary = styled.div`
 
 export const ImageContainer = styled.div`
   /* book cover ratio - 1 : 1.27 */
-  width: 70px;
-  height: 88.9px;
+  width: 100px;
+  height: 127px;
   overflow: hidden;
   border-radius: 0.5rem;
   box-shadow: ${({ theme }) => theme.shadows.lg};

@@ -13,7 +13,7 @@ function ReviewList({ reviews, ...props }: Props): React.ReactElement {
   return (
     <S.Container {...props}>
       {reviews.map((review: IReview.Review) => (
-        <ReviewListItem key={review.id} type="list" {...review} />
+        <ReviewListItem key={review.id} {...review} />
       ))}
     </S.Container>
   );

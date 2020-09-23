@@ -10,6 +10,7 @@ export interface TextStyleProps {
 
 export const TextStyle = css<TextStyleProps>`
   display: inline-block;
+  margin: 0;
   color: ${(props) =>
     props.theme.palette[props.color as keyof typeof props.theme.palette] ||
     props.theme.palette.gray6};
@@ -44,6 +45,7 @@ export const H3 = styled.h3`
 
 export const Span = styled.span`
   ${TextStyle}
+  line-height: 2;
   font-size: ${(props) =>
     props.theme.fontSizes[props.fontSize as keyof typeof props.theme.fontSizes] ||
     props.theme.fontSizes.sm};

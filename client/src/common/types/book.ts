@@ -10,8 +10,6 @@ export interface Book {
   pubDate: string;
   /** 표지 이미지 */
   cover?: string; // TODO: cover 없을 경우 대체 이미지 제공
-  /** 책 소개 */
-  description?: string;
   /** 알라딘 상품 페이지 링크 */
   link?: string;
 }

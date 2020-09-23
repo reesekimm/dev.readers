@@ -19,6 +19,7 @@ export const ButtonStyle = css<ButtonStyleProps>`
   outline: none;
   white-space: nowrap;
   background: transparent;
+  min-width: 100px;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
   opacity: ${(props) =>
@@ -57,6 +58,7 @@ export const ButtonStyle = css<ButtonStyleProps>`
     css`
       color: ${props.theme.palette.secondary};
       margin: 0;
+      min-width: 0;
     `}
 `;
 

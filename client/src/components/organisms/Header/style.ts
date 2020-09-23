@@ -7,6 +7,7 @@ export const Container = styled.nav`
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid ${({ theme }) => theme.palette.gray2};
+  padding: 1rem 0;
 `;
 
 export const NavItemContainer = styled.div`

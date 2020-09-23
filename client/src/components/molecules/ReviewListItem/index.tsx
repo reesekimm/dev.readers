@@ -1,24 +1,15 @@
-import React, { useCallback, useState } from 'react';
-import { HeartOutlined, HeartTwoTone, MessageOutlined } from '@ant-design/icons';
+import React from 'react';
 
-import { Text, BookInfo, Modal } from '@components';
+import { Text, BookInfo, ReviewActionBar, Modal, ReviewDetailTemplate } from '@components';
 import { useModal } from '@hooks';
 import { IReview } from '@types';
 import * as S from './style';
 
-interface Props extends IReview.Review {
-  type: string;
-}
-
-function ReviewListItem({ id, User, Book, type, rating, content }: Props): React.ReactElement {
-  const [liked, setLiked] = useState(false);
+function ReviewListItem(review: IReview.Review): React.ReactElement {
+  const { id, User, Book, rating, content, createdAt, Comments, Likers } = review;
   const { modalIsOpened, toggleModal } = useModal();
 
-  const bookInfo = { ...Book, type, rating } as const;
-
-  const toggleLiked = useCallback(() => {
-    setLiked((prev) => !prev);
-  }, []);
+  const bookInfo = { ...Book, rating } as const;
 
   return (
     <S.Container>
@@ -35,21 +26,21 @@ function ReviewListItem({ id, User, Book, type, rating, content }: Props): React
           <Text color="gray5">{content}</Text>
         )}
       </S.Content>
-      <S.Actions>
-        <Text color="gray4" fontSize="xsm" fontWeight="medium">
-          {User.nickname}
-        </Text>
-        <div>
-          <MessageOutlined key="comment" onClick={toggleModal} />
-          {liked ? (
-            <HeartTwoTone key="heart" twoToneColor="#eb2f96" onClick={toggleLiked} />
-          ) : (
-            <HeartOutlined key="like" onClick={toggleLiked} />
-          )}
-        </div>
-      </S.Actions>
-      <Modal modalSize="lg" modalIsOpened={modalIsOpened} closeModal={toggleModal}>
-        {content}
+      <ReviewActionBar
+        id={id}
+        User={User}
+        createdAt={createdAt}
+        NumberOfComments={Comments.length}
+        NumberOfLikes={Likers.length}
+        onClickComment={toggleModal}
+      />
+      <Modal
+        title="리뷰 상세"
+        modalSize="lg"
+        modalIsOpened={modalIsOpened}
+        closeModal={toggleModal}
+      >
+        <ReviewDetailTemplate {...review} />
       </Modal>
     </S.Container>
   );

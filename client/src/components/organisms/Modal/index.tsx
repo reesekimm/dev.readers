@@ -59,7 +59,7 @@ function Modal({
             <CloseOutlined style={{ fontSize: '2rem', marginLeft: 'auto' }} onClick={closeModal} />
           </S.Header>
         )}
-        <div>{children}</div>
+        <S.Content>{children}</S.Content>
       </ModalWithCustomizedSize>
     </S.Wrapper>
   );
