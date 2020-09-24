@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { HeartOutlined, HeartFilled, MessageOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -35,44 +35,31 @@ function ReviewActionBar({
     setLiked((prev) => !prev);
   }, []);
 
-  const styles = useMemo(
-    () => ({
-      button: { color: '#616161' },
-      icon: { fontSize: '2rem', color: '#fc5c65' },
-      text: { marginLeft: '0.5rem' },
-    }),
-    []
-  );
-
   return (
     <S.Container {...props}>
       <div>
         <Text color="gray5" fontSize="xsm" fontWeight="medium">
           {User.nickname}
         </Text>
-        <Text color="gray4" fontSize="xsm" style={styles.text}>
+        <Text color="gray4" fontSize="xsm">
           {dayjs(createdAt).fromNow()}
         </Text>
       </div>
       <div>
         {onClickComment && (
-          <Button styleType="plain" onClick={onClickComment} style={styles.button}>
+          <Button styleType="plain" onClick={onClickComment}>
             <S.ButtonContent>
-              <MessageOutlined key="comment" style={{ ...styles.icon, color: '#616161' }} />
-              <Text color="gray4" fontSize="xsm" style={styles.text}>
+              <MessageOutlined key="comment" />
+              <Text color="gray4" fontSize="xsm">
                 댓글 {NumberOfComments}
               </Text>
             </S.ButtonContent>
           </Button>
         )}
-        <Button styleType="plain" onClick={toggleLiked} style={styles.button}>
+        <Button styleType="plain" onClick={toggleLiked}>
           <S.ButtonContent>
-            {liked ? (
-              <HeartFilled key="heart" style={styles.icon} />
-            ) : (
-              <HeartOutlined key="like" style={styles.icon} />
-            )}
-            <Text color="gray4" fontSize="xsm" style={styles.text}>
+            {liked ? <HeartFilled key="heart" /> : <HeartOutlined key="like" />}
+            <Text color="gray4" fontSize="xsm">
               좋아요 {NumberOfLikes}
             </Text>
           </S.ButtonContent>

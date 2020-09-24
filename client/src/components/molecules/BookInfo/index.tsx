@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Rate } from 'antd';
 
 import { Text, Button, Img } from '@components';
@@ -22,14 +22,6 @@ function BookInfo({
   type = 'list',
   ...props
 }: Props): React.ReactElement {
-  const styles = useMemo(
-    () => ({
-      button: { position: 'absolute', right: 0, bottom: 0, padding: 0 },
-      text: { lineHeight: 1.2 },
-    }),
-    []
-  );
-
   return (
     <S.Container {...props}>
       <S.ImageContainer>
@@ -46,15 +38,11 @@ function BookInfo({
         </S.TextContainer>
         {type !== 'list' && (
           <>
-            <S.TextContainer className="hide">
-              <Text fontSize="xsm" style={styles.text}>
-                {author}
-              </Text>
-              <Text fontSize="xsm" style={styles.text}>
-                {publisher}
-              </Text>
+            <S.TextContainer>
+              <Text fontSize="xsm">{author}</Text>
+              <Text fontSize="xsm">{publisher}</Text>
             </S.TextContainer>
-            <Button href={link} type="exLink" styleType="plain" style={styles.button}>
+            <Button href={link} type="exLink" styleType="plain">
               자세히 보기
             </Button>
           </>

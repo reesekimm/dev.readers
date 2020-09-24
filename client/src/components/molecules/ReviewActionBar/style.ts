@@ -5,6 +5,22 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+
+  button {
+    color: #616161;
+  }
+
+  .anticon {
+    font-size: 2rem;
+  }
+
+  .anticon-heart {
+    color: #fc5c65;
+  }
+
+  span:not(:first-child) {
+    margin-left: 0.5rem;
+  }
 `;
 
 export const ButtonContent = styled.div`

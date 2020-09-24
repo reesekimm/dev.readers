@@ -14,6 +14,16 @@ export const Container = styled.div`
   justify-content: space-between;
   cursor: pointer;
 
+  h2,
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    margin: 0;
+    line-height: 1.2;
+  }
+
   /* breakpoints xsm (320px) 미만에서 커버이미지 width, height 고정 */
   width: 91.6px;
   ${ImageContainer} {
