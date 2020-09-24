@@ -7,8 +7,8 @@ import * as S from './style';
 
 interface Props extends IBook.Book {
   [key: string]: unknown;
-  type?: 'list' | 'detailed';
-  rating: number;
+  type?: 'list' | 'detailed' | 'write';
+  rating?: number;
 }
 
 function BookInfo({
@@ -30,8 +30,6 @@ function BookInfo({
     []
   );
 
-  const includeDetails = type === 'detailed';
-
   return (
     <S.Container {...props}>
       <S.ImageContainer>
@@ -46,7 +44,7 @@ function BookInfo({
             {pubDate.slice(0, 4)}
           </Text>
         </S.TextContainer>
-        {includeDetails && (
+        {type !== 'list' && (
           <>
             <S.TextContainer className="hide">
               <Text fontSize="xsm" style={styles.text}>
@@ -61,7 +59,7 @@ function BookInfo({
             </Button>
           </>
         )}
-        <Rate disabled defaultValue={rating} allowHalf />
+        {type !== 'write' && <Rate disabled defaultValue={rating} allowHalf />}
       </div>
     </S.Container>
   );

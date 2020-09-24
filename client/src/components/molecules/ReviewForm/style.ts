@@ -2,14 +2,15 @@ import styled from 'styled-components';
 
 export const Form = styled.form`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 `;
 
 export const Textarea = styled.textarea`
+  flex: 1;
   width: 100%;
-  height: 100px;
   resize: none;
   padding: 1rem;
   margin-bottom: 1rem;

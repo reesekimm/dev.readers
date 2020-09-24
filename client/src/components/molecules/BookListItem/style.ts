@@ -12,6 +12,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  cursor: pointer;
 
   /* breakpoints xsm (320px) 미만에서 커버이미지 width, height 고정 */
   width: 91.6px;

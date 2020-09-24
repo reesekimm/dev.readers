@@ -1,5 +1,4 @@
 import React from 'react';
-import { Rate } from 'antd';
 
 import { Text, BookInfo, Divider, ReviewActionBar, CommentForm, Comment } from '@components';
 import { IReview } from '@types';

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { CloseOutlined } from '@ant-design/icons';
 import { AnyStyledComponent } from 'styled-components';
 
-import { Text } from '@components';
+import { Text, Divider } from '@components';
 import { useClickOutside } from '@hooks';
 import * as S from './style';
 
@@ -54,10 +54,16 @@ function Modal({
     <S.Wrapper>
       <ModalWithCustomizedSize ref={clickOutsideRef}>
         {modalSize !== 'sm' && (
-          <S.Header>
-            {title && <Text fontWeight="bold">{title}</Text>}
-            <CloseOutlined style={{ fontSize: '2rem', marginLeft: 'auto' }} onClick={closeModal} />
-          </S.Header>
+          <>
+            <S.Header>
+              {title && <Text fontWeight="bold">{title}</Text>}
+              <CloseOutlined
+                style={{ fontSize: '2rem', marginLeft: 'auto' }}
+                onClick={closeModal}
+              />
+            </S.Header>
+            <Divider />
+          </>
         )}
         <S.Content>{children}</S.Content>
       </ModalWithCustomizedSize>

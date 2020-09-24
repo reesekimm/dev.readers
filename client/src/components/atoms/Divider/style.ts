@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 
 export const Divider = styled.hr`
-  border: none;
+  border: 0.5px solid ${({ theme }) => theme.palette.gray2};
   width: 100%;
   margin: 1rem 0;
-  height: 1px;
-  background-color: ${({ theme }) => theme.palette.gray2};
 `;
