@@ -8,6 +8,11 @@ export const Container = styled.nav`
   align-items: center;
   border-bottom: 1px solid ${({ theme }) => theme.palette.gray2};
   padding: 1rem 0;
+
+  .anticon {
+    color: #616161;
+    font-size: 2rem;
+  }
 `;
 
 export const NavItemContainer = styled.div`

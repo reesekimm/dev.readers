@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { SearchOutlined } from '@ant-design/icons';
 
@@ -6,8 +6,6 @@ import { Text, Button } from '@components';
 import * as S from './style';
 
 function Header(): React.ReactElement {
-  const iconStyle = useMemo(() => ({ color: '#616161', fontSize: '18px' }), []);
-
   return (
     <S.Container>
       <S.NavItemContainer>
@@ -20,7 +18,7 @@ function Header(): React.ReactElement {
         </Link>
         <S.ButtonContainer>
           <Button type="inLink" href="/search/book" styleType="plain">
-            <SearchOutlined style={iconStyle} />
+            <SearchOutlined />
           </Button>
           <Button styleType="plain">로그인</Button>
         </S.ButtonContainer>

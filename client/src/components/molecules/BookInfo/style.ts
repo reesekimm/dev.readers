@@ -14,11 +14,16 @@ export const Container = styled.div`
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-  }
 
-  @media only screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    .hide {
-      display: none;
+    span {
+      line-height: 1.2;
+    }
+
+    a {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      padding: 0;
     }
   }
 `;
