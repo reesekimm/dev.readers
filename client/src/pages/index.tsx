@@ -1,15 +1,16 @@
 import React from 'react';
 import Head from 'next/head';
 
-import { BaseTemplate } from '../components';
+import { MainTemplate, ReviewList } from '@components';
+import reviews from '../assets/reviews';
 
 function Main(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>dev.readers | Main</title>
+        <title>dev.readers</title>
       </Head>
-      <BaseTemplate>Main</BaseTemplate>
+      <MainTemplate reviewList={<ReviewList reviews={reviews} />} />
     </>
   );
 }
