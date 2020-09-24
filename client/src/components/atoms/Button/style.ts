@@ -64,6 +64,9 @@ export const ButtonStyle = css<ButtonStyleProps>`
 
 export const Anchor = styled.a`
   ${ButtonStyle}
+  &:hover {
+    color: ${({ theme }) => theme.palette.primary};
+  }
 `;
 
 export const StyledButton = styled.button`

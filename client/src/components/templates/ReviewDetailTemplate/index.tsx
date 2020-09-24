@@ -15,8 +15,6 @@ function ReviewDetailTemplate({
   Comments,
   Likers,
 }: IReview.Review): React.ReactElement {
-  console.log(id, User, Book, rating, content, createdAt, Comments, Likers);
-
   const bookInfo = { ...Book, type: 'detailed', rating } as const;
 
   return (
