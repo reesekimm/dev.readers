@@ -9,6 +9,10 @@ function BookListItem(book: IBook.Book): React.ReactElement {
   const { title, author, pubDate, cover } = book;
   const { modalIsOpened, toggleModal } = useModal();
 
+  // TODO: 리뷰 작성 여부에 따른 Flow control 필요
+  // 이미 리뷰를 작성한 경우 : 리뷰 상세
+  // 리뷰를 작성하지 않은 경우 : 리뷰 작성
+
   return (
     <S.Container>
       <S.ImageContainer onClick={toggleModal}>

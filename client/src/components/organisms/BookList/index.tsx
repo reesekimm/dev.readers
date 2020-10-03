@@ -10,6 +10,8 @@ interface Props {
 }
 
 function BookList({ books, ...props }: Props): React.ReactElement {
+  if (!books.length) return <div style={{ height: '300px' }} />;
+
   return (
     <S.Container {...props}>
       {books.map((book: IBook.Book) => (
