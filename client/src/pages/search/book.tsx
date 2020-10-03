@@ -13,6 +13,7 @@ function Search(): React.ReactElement {
   const [inputValue, setInputValue] = useState<string>('');
   const [results, setResults] = useState<IBook.Books>([]);
 
+  /** 검색창 auto-focus */
   const inputRef = useRef<InputRef>(null);
   useEffect(() => {
     inputRef.current?.exposedFocusMethod();
@@ -21,6 +22,8 @@ function Search(): React.ReactElement {
   const onChangeInput = useCallback(
     (e) => {
       setInputValue(e.target.value);
+
+      /** 서버 재시작 없이 URL path 업데이트 */
       router.replace(`/search/book?query=${e.target.value}`, undefined, { shallow: true });
     },
     [router]
