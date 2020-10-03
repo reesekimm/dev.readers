@@ -10,7 +10,7 @@ interface Props {
 }
 
 function BookList({ books, ...props }: Props): React.ReactElement {
-  if (!books.length) return <div style={{ height: '300px' }} />;
+  if (!books) return <div style={{ height: '300px' }} />;
 
   return (
     <S.Container {...props}>
