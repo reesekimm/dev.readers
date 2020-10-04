@@ -20,7 +20,7 @@ function BookListItem({ book, lastBookElementRef, ...props }: Props): React.Reac
   // 리뷰를 작성하지 않은 경우 : 리뷰 작성
 
   return (
-    <S.Container className="book" ref={lastBookElementRef} {...props}>
+    <S.Container ref={lastBookElementRef} {...props}>
       <S.ImageContainer onClick={toggleModal}>
         <Img src={cover} alt={title} />
       </S.ImageContainer>
