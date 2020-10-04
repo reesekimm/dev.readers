@@ -1,8 +1,8 @@
 const axios = require('axios');
 
 exports.searchBook = async (req, res) => {
-  const { query, start } = req.query;
-  const url = `${process.env.ALADIN_API}Query=${encodeURIComponent(query)}&Start=${start}`;
+  const { query, page } = req.query;
+  const url = `${process.env.ALADIN_API}Query=${encodeURIComponent(query)}&Start=${page}`;
 
   try {
     const { data } = await axios.get(url);

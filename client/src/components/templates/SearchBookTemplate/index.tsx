@@ -16,7 +16,8 @@ function SearchBookTemplate({
   return (
     <BaseTemplate>
       {searchBar}
-      {loading ? 'loading...' : bookList}
+      {bookList}
+      {loading && 'loading...'}
     </BaseTemplate>
   );
 }

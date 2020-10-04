@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useDebounce } from '@hooks';
+import { useDebounce, useDidMountEffect } from '@hooks';
 import { SearchBookTemplate, BookList, Input } from '@components';
 import { RootState } from '@features';
 import { actions } from '../../features/search';
@@ -12,12 +12,13 @@ function Search(): React.ReactElement {
   const router = useRouter();
 
   const dispatch = useDispatch();
-  const { searchBookResult } = useSelector((state: RootState) => state.search);
+  const { searchBookResult, hasMoreResults } = useSelector((state: RootState) => state.search);
   const { searchBook } = useSelector((state: RootState) => state.loading);
 
   const [inputValue, setInputValue] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
+  const query = useDebounce(inputValue, 500);
 
-  const firstMount = useRef<boolean>(true);
   const inputRef = useRef<InputRef>(null);
   useEffect(() => {
     inputRef.current?.exposedFocusMethod();
@@ -33,18 +34,42 @@ function Search(): React.ReactElement {
     [router]
   );
 
-  const query = useDebounce(inputValue, 500);
-  useEffect(() => {
+  useDidMountEffect(() => {
+    dispatch(actions.clearResult());
+    setPage(1);
     if (query) {
       try {
-        dispatch(actions.searchBook({ query, start: 1 }));
+        dispatch(actions.searchBook({ query, page }));
       } catch (error) {
         console.log(error);
       }
-      return;
     }
-    firstMount.current ? (firstMount.current = false) : dispatch(actions.clearResult());
   }, [query, dispatch]);
+
+  useEffect(() => {
+    if (query) {
+      try {
+        dispatch(actions.searchBook({ query, page }));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [page, dispatch]);
+
+  const observer = useRef(null);
+  const lastBookElementRef = useCallback(
+    (node) => {
+      if (searchBook) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMoreResults) {
+          setPage((prev) => prev + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [hasMoreResults, searchBook]
+  );
 
   return (
     <SearchBookTemplate
@@ -59,7 +84,7 @@ function Search(): React.ReactElement {
           style={{ margin: '1rem auto 4rem' }}
         />
       }
-      bookList={<BookList books={searchBookResult} />}
+      bookList={<BookList books={searchBookResult} lastBookElementRef={lastBookElementRef} />}
       loading={searchBook}
     />
   );

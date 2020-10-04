@@ -7,15 +7,18 @@ import * as S from './style';
 interface Props {
   [key: string]: unknown;
   books: IBook.Books;
+  lastBookElementRef: unknown;
 }
 
-function BookList({ books, ...props }: Props): React.ReactElement {
-  if (!books) return <div style={{ height: '300px' }} />;
-
+function BookList({ books, lastBookElementRef, ...props }: Props): React.ReactElement {
   return (
     <S.Container {...props}>
-      {books.map((book: IBook.Book) => (
-        <BookListItem key={book.itemId} {...book} />
+      {books.map((book: IBook.Book, index) => (
+        <BookListItem
+          key={book.itemId}
+          book={book}
+          lastBookElementRef={index + 1 === books.length ? lastBookElementRef : null}
+        />
       ))}
     </S.Container>
   );

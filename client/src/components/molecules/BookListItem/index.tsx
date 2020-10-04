@@ -5,7 +5,13 @@ import { useModal } from '@hooks';
 import { IBook } from '@types';
 import * as S from './style';
 
-function BookListItem(book: IBook.Book): React.ReactElement {
+interface Props {
+  [key: string]: unknown;
+  book: IBook.Book;
+  lastBookElementRef: unknown;
+}
+
+function BookListItem({ book, lastBookElementRef, ...props }: Props): React.ReactElement {
   const { title, author, pubDate, cover } = book;
   const { modalIsOpened, toggleModal } = useModal();
 
@@ -14,7 +20,7 @@ function BookListItem(book: IBook.Book): React.ReactElement {
   // 리뷰를 작성하지 않은 경우 : 리뷰 작성
 
   return (
-    <S.Container>
+    <S.Container className="book" ref={lastBookElementRef} {...props}>
       <S.ImageContainer onClick={toggleModal}>
         <Img src={cover} alt={title} />
       </S.ImageContainer>

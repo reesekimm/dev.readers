@@ -5,7 +5,9 @@ import { SearchState, Query } from './types';
 export const initialState: SearchState = {
   searchDone: false,
   searchError: null,
-  searchBookResult: null,
+  totalResults: 0,
+  hasMoreResults: true,
+  searchBookResult: [],
 };
 
 const searchSlice = createSlice({
@@ -18,14 +20,18 @@ const searchSlice = createSlice({
     },
     searchBookSuccess: (state, action) => {
       state.searchDone = true;
-      state.searchBookResult = JSON.parse(action.payload).item;
+      state.totalResults = JSON.parse(action.payload).totalResults;
+      state.hasMoreResults =
+        JSON.parse(action.payload).item.length === JSON.parse(action.payload).itemsPerPage;
+      state.searchBookResult = [...state.searchBookResult, ...JSON.parse(action.payload).item];
     },
     searchBookFailure: (state, action) => {
       state.searchDone = true;
       state.searchError = action.payload;
     },
     clearResult: (state) => {
-      state.searchBookResult = null;
+      state.totalResults = 0;
+      state.searchBookResult = [];
     },
   },
 });
