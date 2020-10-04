@@ -37,6 +37,7 @@ const userSlice = createSlice({
       state.me = generateDummyUser();
     },
     loginFailure: (state, action: PayloadAction<string>) => {
+      state.logInDone = true;
       state.logInError = action.payload;
     },
   },

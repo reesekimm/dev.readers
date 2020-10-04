@@ -4,6 +4,11 @@ import { HYDRATE } from 'next-redux-wrapper';
 
 import { UserState, reducer as userReducer, initialState as userInitialState } from './user';
 import {
+  SearchState,
+  reducer as searchReducer,
+  initialState as searchInitialState,
+} from './search';
+import {
   LoadingState,
   reducer as loadingReducer,
   initialState as loadingInitialState,
@@ -11,6 +16,7 @@ import {
 
 export interface RootState {
   user: UserState;
+  search: SearchState;
   loading: LoadingState;
 }
 
@@ -19,6 +25,7 @@ export default function createReducer() {
     index: (
       state: RootState = {
         user: userInitialState,
+        search: searchInitialState,
         loading: loadingInitialState,
       },
       action: AnyAction
@@ -34,6 +41,7 @@ export default function createReducer() {
       }
     },
     user: userReducer,
+    search: searchReducer,
     loading: loadingReducer,
   });
 

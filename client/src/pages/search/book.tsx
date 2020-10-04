@@ -1,14 +1,23 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { useDebounce, useDidMountEffect, useInfiniteScroll } from '@hooks';
 import { SearchBookTemplate, BookList, Input } from '@components';
+import { RootState } from '@features';
+import { actions } from '../../features/search';
 import { InputRef } from '../../components/atoms/Input';
-import searchResult from '../../assets/aladin_search.json';
 
 function Search(): React.ReactElement {
   const router = useRouter();
 
+  const dispatch = useDispatch();
+  const { searchBookResult, hasMoreResults } = useSelector((state: RootState) => state.search);
+  const { searchBook } = useSelector((state: RootState) => state.loading);
+
   const [inputValue, setInputValue] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
+  const query = useDebounce(inputValue, 500);
 
   const inputRef = useRef<InputRef>(null);
   useEffect(() => {
@@ -18,10 +27,42 @@ function Search(): React.ReactElement {
   const onChangeInput = useCallback(
     (e) => {
       setInputValue(e.target.value);
+
+      /** 서버 재시작 없이 URL path 업데이트 */
       router.replace(`/search/book?query=${e.target.value}`, undefined, { shallow: true });
     },
     [router]
   );
+
+  useDidMountEffect(() => {
+    dispatch(actions.clearResult());
+    setPage(1);
+    if (query) {
+      try {
+        dispatch(actions.searchBook({ query, page }));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [query, dispatch]);
+
+  useEffect(() => {
+    if (query) {
+      try {
+        dispatch(actions.searchBook({ query, page }));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [page, dispatch]);
+
+  const lastBookElementRef = useInfiniteScroll({
+    hasMore: hasMoreResults,
+    loading: searchBook,
+    callback: () => {
+      setPage((prev) => prev + 1);
+    },
+  });
 
   return (
     <SearchBookTemplate
@@ -36,7 +77,8 @@ function Search(): React.ReactElement {
           style={{ margin: '1rem auto 4rem' }}
         />
       }
-      bookList={<BookList books={searchResult.item} />}
+      bookList={<BookList books={searchBookResult} lastBookElementRef={lastBookElementRef} />}
+      loading={searchBook}
     />
   );
 }
