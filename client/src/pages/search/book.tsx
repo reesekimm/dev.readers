@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useDebounce, useDidMountEffect } from '@hooks';
+import { useDebounce, useDidMountEffect, useInfiniteScroll } from '@hooks';
 import { SearchBookTemplate, BookList, Input } from '@components';
 import { RootState } from '@features';
 import { actions } from '../../features/search';
@@ -56,20 +56,13 @@ function Search(): React.ReactElement {
     }
   }, [page, dispatch]);
 
-  const observer = useRef(null);
-  const lastBookElementRef = useCallback(
-    (node) => {
-      if (searchBook) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMoreResults) {
-          setPage((prev) => prev + 1);
-        }
-      });
-      if (node) observer.current.observe(node);
+  const lastBookElementRef = useInfiniteScroll({
+    hasMore: hasMoreResults,
+    loading: searchBook,
+    callback: () => {
+      setPage((prev) => prev + 1);
     },
-    [hasMoreResults, searchBook]
-  );
+  });
 
   return (
     <SearchBookTemplate
