@@ -59,6 +59,7 @@ function Search(): React.ReactElement {
   const lastBookElementRef = useInfiniteScroll({
     hasMore: hasMoreResults,
     loading: searchBook,
+    page,
     callback: () => {
       setPage((prev) => prev + 1);
     },
@@ -77,7 +78,9 @@ function Search(): React.ReactElement {
           style={{ margin: '1rem auto 4rem' }}
         />
       }
-      bookList={<BookList books={searchBookResult} lastBookElementRef={lastBookElementRef} />}
+      bookList={
+        <BookList books={searchBookResult} page={page} lastBookElementRef={lastBookElementRef} />
+      }
       loading={searchBook}
     />
   );
