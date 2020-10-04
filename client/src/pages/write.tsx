@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDebounce, useInfiniteScroll } from '@hooks';
 import { SearchBookTemplate, BookList, Input } from '@components';
 import { RootState } from '@features';
-import { actions } from '../../features/search';
-import { InputRef } from '../../components/atoms/Input';
+import { actions } from '../features/search';
+import { InputRef } from '../components/atoms/Input';
 
-function Search(): React.ReactElement {
+function Write(): React.ReactElement {
   const router = useRouter();
 
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ function Search(): React.ReactElement {
       setInputValue(e.target.value);
 
       /** 서버 재시작 없이 URL path 업데이트 */
-      router.replace(`/search/book?query=${e.target.value}`, undefined, { shallow: true });
+      router.replace(`/write?query=${e.target.value}`, undefined, { shallow: true });
     },
     [router]
   );
@@ -71,7 +71,7 @@ function Search(): React.ReactElement {
         <Input
           inputName="search"
           type="search"
-          placeholder="도서명을 검색해 보세요"
+          placeholder="리뷰를 작성할 도서명을 검색하세요"
           value={inputValue}
           onChange={onChangeInput}
           ref={inputRef}
@@ -86,4 +86,4 @@ function Search(): React.ReactElement {
   );
 }
 
-export default Search;
+export default Write;
