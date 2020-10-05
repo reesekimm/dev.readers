@@ -9,15 +9,16 @@ export interface User {
   nickname: string;
 }
 
-interface ReviewId {
+export interface Review {
   id: number | string;
+  isbn13: string;
 }
 
-interface Me {
-  // TODO: 서버 연결 후 id type number로 고정
+export interface Me {
+  // TODO: DB 연동 후 id type number로 고정
   id: number | string;
   nickname: string;
-  Reviews: ReviewId[];
+  Reviews: Review[];
   Followings: User[];
   Followers: User[];
 }

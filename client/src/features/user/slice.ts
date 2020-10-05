@@ -2,16 +2,26 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { UserState } from './types';
 
-export const initialState: UserState = {
-  logInDone: false,
-  logInError: null,
-  me: null,
-};
-
 const generateDummyUser = () => ({
   id: 1,
   nickname: 'Reese',
-  Reviews: [],
+  Reviews: [
+    {
+      id: 3,
+      isbn13: '9788966262595',
+      // 자바스크립트는 왜 그 모양일까? - 더글러스 크락포드가 알려주는 위험한 자바스크립트를 안전하게 사용하는 법
+    },
+    {
+      id: 5,
+      isbn13: '9791158391720',
+      // '코어 자바스크립트 - 핵심 개념과 동작 원리로 이해하는 자바스크립트 프로그래밍',
+    },
+    {
+      id: 11,
+      isbn13: '9788963413181',
+      // 'Javascript Basic to Advanced Expert Programming',
+    },
+  ],
   Followings: [
     { id: 3, nickname: 'Uni' },
     { id: 44, nickname: 'Daniel' },
@@ -23,6 +33,12 @@ const generateDummyUser = () => ({
     { id: 9, nickname: 'David' },
   ],
 });
+
+export const initialState: UserState = {
+  logInDone: false,
+  logInError: null,
+  me: generateDummyUser(),
+};
 
 const userSlice = createSlice({
   name: 'user',

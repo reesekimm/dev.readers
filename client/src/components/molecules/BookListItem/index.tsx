@@ -15,10 +15,6 @@ function BookListItem({ book, lastBookElementRef, ...props }: Props): React.Reac
   const { title, author, pubDate, cover } = book;
   const { modalIsOpened, toggleModal } = useModal();
 
-  // TODO: 리뷰 작성 여부에 따른 Flow control 필요
-  // 이미 리뷰를 작성한 경우 : 리뷰 상세
-  // 리뷰를 작성하지 않은 경우 : 리뷰 작성
-
   return (
     <S.Container ref={lastBookElementRef} {...props}>
       <S.ImageContainer onClick={toggleModal}>
@@ -33,13 +29,13 @@ function BookListItem({ book, lastBookElementRef, ...props }: Props): React.Reac
         </Text>
       </div>
       <Modal
-        title="리뷰 작성"
+        modalFor="리뷰 작성"
         modalSize="md"
+        content={book}
+        Template={WriteReviewTemplate}
         modalIsOpened={modalIsOpened}
         closeModal={toggleModal}
-      >
-        <WriteReviewTemplate {...book} />
-      </Modal>
+      />
     </S.Container>
   );
 }

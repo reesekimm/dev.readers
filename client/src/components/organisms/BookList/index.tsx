@@ -19,7 +19,7 @@ function BookList({ books, page, lastBookElementRef, ...props }: Props): React.R
           key={book.itemId}
           book={book}
           lastBookElementRef={index + 1 === books.length ? lastBookElementRef : null}
-          data-page={page}
+          data-page={index + 1 === books.length ? page : null}
         />
       ))}
     </S.Container>

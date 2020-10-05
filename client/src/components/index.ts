@@ -20,6 +20,7 @@ export { default as Modal } from './organisms/Modal';
 export { default as ReviewList } from './organisms/ReviewList';
 
 export { default as BaseTemplate } from './templates/BaseTemplate';
+export { default as FeedbackTemplate } from './templates/FeedbackTemplate';
 export { default as MainTemplate } from './templates/MainTemplate';
 export { default as ReviewDetailTemplate } from './templates/ReviewDetailTemplate';
 export { default as SearchAllTemplate } from './templates/SearchAllTemplate';

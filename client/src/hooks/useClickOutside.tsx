@@ -8,6 +8,7 @@ export default function useClickOutside(onClose: () => void) {
     if (!innerElement) return;
 
     function clickListener(e: MouseEvent) {
+      if (e.target.closest('#click-outside-disabled')) return;
       if (innerElement && !innerElement.contains(e.target)) {
         onClose?.();
       }
