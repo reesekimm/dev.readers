@@ -20,10 +20,9 @@ const searchSlice = createSlice({
     },
     searchBookSuccess: (state, action) => {
       state.searchDone = true;
-      state.totalResults = JSON.parse(action.payload).totalResults;
-      state.hasMoreResults =
-        JSON.parse(action.payload).item.length === JSON.parse(action.payload).itemsPerPage;
-      state.searchBookResult = [...state.searchBookResult, ...JSON.parse(action.payload).item];
+      state.totalResults = action.payload.totalResults;
+      state.hasMoreResults = action.payload.item.length === action.payload.itemsPerPage;
+      state.searchBookResult = [...state.searchBookResult, ...action.payload.item];
     },
     searchBookFailure: (state, action) => {
       state.searchDone = true;
