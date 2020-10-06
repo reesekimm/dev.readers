@@ -35,13 +35,13 @@ function ReviewListItem(review: IReview.Review): React.ReactElement {
         onClickComment={toggleModal}
       />
       <Modal
-        title="리뷰 상세"
+        modalFor="review_detail"
         modalSize="lg"
+        content={review}
+        Template={ReviewDetailTemplate}
         modalIsOpened={modalIsOpened}
         closeModal={toggleModal}
-      >
-        <ReviewDetailTemplate {...review} />
-      </Modal>
+      />
     </S.Container>
   );
 }
