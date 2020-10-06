@@ -1,11 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Rate } from 'antd';
 
 import { RootState } from '@features';
 import { BookInfo, ReviewForm, Modal, FeedbackTemplate, ReviewDetailTemplate } from '@components';
 import { useModal } from '@hooks';
 import { IBook, IUser } from '@types';
+import { actions } from '../../../features/review';
 import * as S from './style';
 
 interface Props {
@@ -20,7 +21,10 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
   const { modalIsOpened: feedbackModalIsOpened, toggleModal: toggleFeedbackModal } = useModal();
   const { modalIsOpened: detailModalIsOpened, toggleModal: toggleDetailModal } = useModal();
 
+  const dispatch = useDispatch();
   const { me } = useSelector((state: RootState) => state.user);
+  const { Review } = useSelector((state: RootState) => state.review);
+  const { getReview } = useSelector((state: RootState) => state.loading);
 
   const [reviewInfo, setReviewInfo] = useState<IUser.Review | null>(null);
 
@@ -41,8 +45,14 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
   }, []);
 
   const callback = useCallback(() => {
-    // console.log(reviewInfo);
+    console.log(reviewInfo);
+    if (reviewInfo) dispatch(actions.getReview(reviewInfo));
   }, [reviewInfo]);
+
+  const onCloseReviewDetailModal = useCallback(() => {
+    toggleDetailModal();
+    dispatch(actions.clearReview());
+  }, [dispatch, toggleDetailModal]);
 
   const [rate, setRate] = useState<number>();
   const onChangeRate = useCallback((value) => {
@@ -66,11 +76,12 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
       <Modal
         modalFor="review_detail"
         modalSize="lg"
-        content={null}
+        content={Review}
         Template={ReviewDetailTemplate}
         modalIsOpened={detailModalIsOpened}
-        closeModal={toggleDetailModal}
+        closeModal={onCloseReviewDetailModal}
         apiCallback={callback}
+        isLoading={getReview}
       />
     </S.Container>
   );

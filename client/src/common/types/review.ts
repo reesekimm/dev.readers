@@ -23,3 +23,10 @@ export interface Review {
 }
 
 export type Reviews = Review[];
+
+export interface ReviewState {
+  /** 이미 리뷰를 작성한 도서 클릭시 제공할 데이터 */
+  Review: Review | null;
+  getReviewDone: boolean;
+  getReviewError: string | null;
+}

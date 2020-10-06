@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { CloseOutlined } from '@ant-design/icons';
 import { AnyStyledComponent } from 'styled-components';
 
-import { RootState } from '@features';
-import { Text, Divider } from '@components';
+import { Text } from '@components';
 import { useClickOutside } from '@hooks';
 import * as S from './style';
 
@@ -24,6 +22,8 @@ interface Props {
   closeModal: () => void;
   /** api 요청 콜백 */
   apiCallback?: () => void;
+  /** loading 여부 */
+  isLoading?: boolean;
 }
 
 /** 사이즈별 modal 컴포넌트 맵핑을 위한 interface */
@@ -45,10 +45,10 @@ function Modal({
   modalIsOpened,
   closeModal,
   apiCallback,
+  isLoading,
 }: Props): React.ReactPortal | null {
   const modalRoot = useRef<Element | null>(null);
   const clickOutsideRef = useClickOutside(closeModal);
-  const [data, setData] = useState(content);
 
   useEffect(() => {
     const wrapper = document.getElementById('modal-root');
@@ -65,9 +65,11 @@ function Modal({
     });
 
     modalRoot.current = subWrapper;
-
-    if (apiCallback) apiCallback();
   }, []);
+
+  useEffect(() => {
+    if (modalIsOpened && apiCallback) apiCallback();
+  }, [modalIsOpened, apiCallback]);
 
   const ModalWithCustomizedSize = modals[modalSize];
 
@@ -83,10 +85,13 @@ function Modal({
                 onClick={closeModal}
               />
             </S.Header>
-            <Divider />
           </>
         )}
-        <S.Content>{data && <Template content={data} closeModal={closeModal} />}</S.Content>
+        <S.Content>
+          {isLoading
+            ? 'loading...'
+            : content && <Template content={content} closeModal={closeModal} />}
+        </S.Content>
       </ModalWithCustomizedSize>
     </S.Wrapper>
   );
