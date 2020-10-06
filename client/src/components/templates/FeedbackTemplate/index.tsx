@@ -1,27 +1,38 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { Text, Button } from '@components';
 
-interface Props {
-  feedback: string;
+interface Content {
+  feedbackPhrase: string;
   onConfirm: () => void;
-  onCancel?: () => void;
+  cancelable: boolean;
 }
 
-function FeedbackTemplate({ ...content }: Props): React.ReactElement {
-  const { feedback, onConfirm, onCancel } = content;
+interface Props {
+  content: Content;
+  closeModal: () => void;
+}
+
+function FeedbackTemplate({ content, closeModal }: Props): React.ReactElement {
+  const { feedbackPhrase, onConfirm, cancelable } = content;
+
+  const closeModalBeforeInvokingConfirmFunc = useCallback(() => {
+    closeModal();
+    onConfirm();
+  }, []);
+
   return (
     <div>
       <Text fontSize="sm" fontWeight="medium">
-        {feedback}
+        {feedbackPhrase}
       </Text>
       <div>
-        {onCancel && (
-          <Button styleType="bordered" onClick={onCancel}>
+        {cancelable && (
+          <Button styleType="bordered" onClick={closeModal}>
             취소
           </Button>
         )}
-        <Button onClick={onConfirm}>확인</Button>
+        <Button onClick={closeModalBeforeInvokingConfirmFunc}>확인</Button>
       </div>
     </div>
   );

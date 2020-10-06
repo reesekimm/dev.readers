@@ -29,7 +29,7 @@ function BookListItem({ book, lastBookElementRef, ...props }: Props): React.Reac
         </Text>
       </div>
       <Modal
-        modalFor="리뷰 작성"
+        modalFor="review_write"
         modalSize="md"
         content={book}
         Template={WriteReviewTemplate}

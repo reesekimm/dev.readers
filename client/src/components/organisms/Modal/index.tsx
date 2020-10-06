@@ -10,7 +10,7 @@ import { useClickOutside } from '@hooks';
 import * as S from './style';
 
 interface Props {
-  /** modal 타입 ('리뷰 상세', '리뷰 작성', '리뷰 수정') */
+  /** modal 타입 (review_detail(리뷰상세), review_write(리뷰작성), feedback(피드백), ...) */
   modalFor: string;
   /** modal 내용 (데이터 객체) */
   content: unknown;
@@ -21,7 +21,7 @@ interface Props {
   /** modal 상태 (열려있을 경우 true) */
   modalIsOpened: boolean;
   /** modal 닫기 콜백 함수 */
-  closeModal?: () => void;
+  closeModal: () => void;
   /** api 요청 콜백 */
   apiCallback?: () => void;
 }
@@ -46,15 +46,26 @@ function Modal({
   closeModal,
   apiCallback,
 }: Props): React.ReactPortal | null {
-  const modalRoot = useRef<HTMLElement | null>(null);
+  const modalRoot = useRef<Element | null>(null);
   const clickOutsideRef = useClickOutside(closeModal);
   const [data, setData] = useState(content);
 
   useEffect(() => {
-    modalRoot.current =
-      modalSize === 'sm'
-        ? document.getElementById('feedback-modal-root')
-        : document.getElementById('modal-root');
+    const wrapper = document.getElementById('modal-root');
+    let subWrapper = wrapper.querySelector(`.${modalFor}`);
+
+    if (!subWrapper) {
+      subWrapper = document.createElement('div');
+      subWrapper.className = modalFor;
+      wrapper.insertAdjacentElement('afterbegin', subWrapper);
+    }
+
+    [...wrapper.children].forEach((div) => {
+      div.style.display = 'block';
+    });
+
+    modalRoot.current = subWrapper;
+
     if (apiCallback) apiCallback();
   }, []);
 
@@ -75,7 +86,7 @@ function Modal({
             <Divider />
           </>
         )}
-        <S.Content>{data && <Template {...data} />}</S.Content>
+        <S.Content>{data && <Template content={data} closeModal={closeModal} />}</S.Content>
       </ModalWithCustomizedSize>
     </S.Wrapper>
   );

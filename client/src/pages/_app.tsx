@@ -42,7 +42,6 @@ class WrappedApp extends App<AppInitialProps> {
         </Head>
         <ThemeProvider theme={lightTheme}>
           <GlobalStyle />
-          <div id="feedback-modal-root" />
           <div id="modal-root" />
           <Component {...pageProps} />
         </ThemeProvider>

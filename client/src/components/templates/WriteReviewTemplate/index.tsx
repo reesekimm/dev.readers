@@ -8,11 +8,17 @@ import { useModal } from '@hooks';
 import { IBook, IUser } from '@types';
 import * as S from './style';
 
-function WriteReviewTemplate({ ...content }: IBook.Book): React.ReactElement {
+interface Props {
+  content: IBook.Book;
+  /** template을 감싸고 있는 Modal을 닫는 callback */
+  closeModal: () => void;
+}
+
+function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement {
   const bookInfo = { ...content, type: 'write' } as const;
 
   const { modalIsOpened: feedbackModalIsOpened, toggleModal: toggleFeedbackModal } = useModal();
-  const { modalIsOpened, toggleModal } = useModal();
+  const { modalIsOpened: detailModalIsOpened, toggleModal: toggleDetailModal } = useModal();
 
   const { me } = useSelector((state: RootState) => state.user);
 
@@ -24,17 +30,18 @@ function WriteReviewTemplate({ ...content }: IBook.Book): React.ReactElement {
       toggleFeedbackModal();
       setReviewInfo(myReview);
     }
-  }, [me.Reviews]);
+  }, []);
 
   const onConfirm = useCallback(() => {
-    console.log('confirm');
-    toggleFeedbackModal();
-    // TODO: 리뷰 작성 모달 닫기
-    toggleModal();
-  }, [toggleFeedbackModal, toggleModal]);
+    /** 리뷰 상세 modal 열기 */
+    toggleDetailModal();
+    /** 리뷰 작성 modal 닫기 */
+    const wrapper = document.getElementById('modal-root');
+    wrapper.querySelector('.review_write').style.display = 'none';
+  }, []);
 
   const callback = useCallback(() => {
-    console.log(reviewInfo);
+    // console.log(reviewInfo);
   }, [reviewInfo]);
 
   const [rate, setRate] = useState<number>();
@@ -49,19 +56,20 @@ function WriteReviewTemplate({ ...content }: IBook.Book): React.ReactElement {
       <Rate allowHalf allowClear value={rate} onChange={onChangeRate} />
       <ReviewForm style={{ flex: 1 }} />
       <Modal
-        modalFor="알림"
+        modalFor="feedback"
         modalSize="sm"
-        content={{ feedback: '이미 리뷰를 작성하셨어요!', onConfirm }}
+        content={{ feedbackPhrase: '이미 리뷰를 작성하셨네요!', onConfirm }}
         Template={FeedbackTemplate}
         modalIsOpened={feedbackModalIsOpened}
+        closeModal={toggleFeedbackModal}
       />
       <Modal
-        modalFor="리뷰 상세"
+        modalFor="review_detail"
         modalSize="lg"
         content={null}
         Template={ReviewDetailTemplate}
-        modalIsOpened={modalIsOpened}
-        closeModal={toggleModal}
+        modalIsOpened={detailModalIsOpened}
+        closeModal={toggleDetailModal}
         apiCallback={callback}
       />
     </S.Container>
