@@ -2,22 +2,17 @@ import { AnyAction } from 'redux';
 import { combineReducers } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 
-import { UserState, reducer as userReducer, initialState as userInitialState } from './user';
-import {
-  SearchState,
-  reducer as searchReducer,
-  initialState as searchInitialState,
-} from './search';
-import {
-  LoadingState,
-  reducer as loadingReducer,
-  initialState as loadingInitialState,
-} from './loading';
+import { IUser, IReview, ISearch, ILoading } from '@types';
+import { initialState as userInitialState, reducer as userReducer } from './user';
+import { initialState as reviewInitialState, reducer as reviewReducer } from './review';
+import { initialState as searchInitialState, reducer as searchReducer } from './search';
+import { initialState as loadingInitialState, reducer as loadingReducer } from './loading';
 
 export interface RootState {
-  user: UserState;
-  search: SearchState;
-  loading: LoadingState;
+  user: IUser.UserState;
+  review: IReview.ReviewState;
+  search: ISearch.SearchState;
+  loading: ILoading.LoadingState;
 }
 
 export default function createReducer() {
@@ -25,6 +20,7 @@ export default function createReducer() {
     index: (
       state: RootState = {
         user: userInitialState,
+        review: reviewInitialState,
         search: searchInitialState,
         loading: loadingInitialState,
       },
@@ -41,6 +37,7 @@ export default function createReducer() {
       }
     },
     user: userReducer,
+    review: reviewReducer,
     search: searchReducer,
     loading: loadingReducer,
   });

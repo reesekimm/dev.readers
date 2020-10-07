@@ -1,12 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { UserState } from './types';
-
-export const initialState: UserState = {
-  logInDone: false,
-  logInError: null,
-  me: null,
-};
+import { IUser } from '@types';
 
 const generateDummyUser = () => ({
   id: 1,
@@ -22,7 +16,14 @@ const generateDummyUser = () => ({
     { id: 23, nickname: 'Harry' },
     { id: 9, nickname: 'David' },
   ],
+  Likes: [],
 });
+
+export const initialState: IUser.UserState = {
+  logInDone: false,
+  logInError: null,
+  me: null,
+};
 
 const userSlice = createSlice({
   name: 'user',
@@ -39,6 +40,9 @@ const userSlice = createSlice({
     loginFailure: (state, action: PayloadAction<string>) => {
       state.logInDone = true;
       state.logInError = action.payload;
+    },
+    addReview: (state, action: PayloadAction<IUser.Review>) => {
+      state.me?.Reviews.unshift(action.payload);
     },
   },
 });

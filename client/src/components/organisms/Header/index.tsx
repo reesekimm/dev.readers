@@ -13,7 +13,7 @@ function Header(): React.ReactElement {
   const { me } = useSelector((state: RootState) => state.user);
 
   const onClickLogin = useCallback(() => {
-    dispatch(actions.login('github'));
+    dispatch(actions.login());
   }, []);
 
   return (
@@ -29,6 +29,9 @@ function Header(): React.ReactElement {
         <S.ButtonContainer>
           <Button type="inLink" href="/search/book" styleType="plain">
             <SearchOutlined />
+          </Button>
+          <Button type="inLink" href="/write" styleType="plain">
+            리뷰쓰기
           </Button>
           <Button styleType="plain" onClick={onClickLogin}>
             {me ? me.nickname : '로그인'}

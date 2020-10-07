@@ -8,6 +8,8 @@ export interface Book {
   publisher: string;
   /** 출판일 */
   pubDate: string;
+  /** ISBN13 */
+  isbn13: string;
   /** 표지 이미지 */
   cover?: string; // TODO: cover 없을 경우 대체 이미지 제공
   /** 알라딘 상품 페이지 링크 */

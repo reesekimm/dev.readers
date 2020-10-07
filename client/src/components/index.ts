@@ -2,6 +2,7 @@ export { default as Button } from './atoms/Button';
 export { default as Divider } from './atoms/Divider';
 export { default as Img } from './atoms/Img';
 export { default as Input } from './atoms/Input';
+export { default as Loading } from './atoms/Loading';
 export { default as RatingTag } from './atoms/RatingTag';
 export { default as Text } from './atoms/Text';
 
@@ -20,6 +21,7 @@ export { default as Modal } from './organisms/Modal';
 export { default as ReviewList } from './organisms/ReviewList';
 
 export { default as BaseTemplate } from './templates/BaseTemplate';
+export { default as FeedbackTemplate } from './templates/FeedbackTemplate';
 export { default as MainTemplate } from './templates/MainTemplate';
 export { default as ReviewDetailTemplate } from './templates/ReviewDetailTemplate';
 export { default as SearchAllTemplate } from './templates/SearchAllTemplate';

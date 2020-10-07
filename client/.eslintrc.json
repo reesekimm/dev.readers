@@ -41,6 +41,7 @@
     "react/jsx-props-no-spreading": "off",
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-wrap-multilines": "off",
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "no-console": "off"
   }
 }

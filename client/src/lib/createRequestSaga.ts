@@ -9,12 +9,15 @@ export default function createRequestSaga(type, request) {
     yield put(actions.start(type.toString()));
     console.log('[payload]', action.payload);
     try {
-      const result = yield call(request, action.payload);
-      // yield delay(1000);
+      let result;
+      if (typeof request === 'string') {
+        yield delay(1000);
+      } else {
+        result = yield call(request, action.payload);
+      }
       yield put({
         type: success,
-        payload: result.data,
-        // payload: action.payload,
+        payload: result ? result.data : action.payload,
       });
     } catch (e) {
       console.log(e);

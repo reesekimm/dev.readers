@@ -3,21 +3,33 @@ import styled, { css } from 'styled-components';
 interface ModalStyleProps {
   modalSize: string;
 }
+const ModalWrapperStyle = css<ModalStyleProps>`
+  z-index: ${({ modalSize }) => {
+    switch (modalSize) {
+      case 'sm':
+        return 9999;
+      case 'md':
+        return 900;
+      default:
+        return 9000;
+    }
+  }};
+`;
 
 export const Wrapper = styled.div`
+  ${ModalWrapperStyle}
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 999;
   background: rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-export const ModalStyle = css<ModalStyleProps>`
+const ModalStyle = css<ModalStyleProps>`
   background: #fff;
   padding: 2rem;
   border-radius: 0.5rem;
@@ -69,4 +81,5 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1.5rem;
 `;

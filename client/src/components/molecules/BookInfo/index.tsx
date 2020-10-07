@@ -39,7 +39,7 @@ function BookInfo({
         {type !== 'list' && (
           <>
             <S.TextContainer>
-              <Text fontSize="xsm">{author}</Text>
+              <Text fontSize="xsm">{author.split(' 지음')[0]}</Text>
               <Text fontSize="xsm">{publisher}</Text>
             </S.TextContainer>
             <Button href={link} type="exLink" styleType="plain">

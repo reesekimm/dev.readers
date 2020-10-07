@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { LoadingOutlined } from '@ant-design/icons';
 
 import * as S from './style';
 
@@ -19,6 +20,8 @@ export interface Props {
   onClick?: () => void;
   /** 버튼 비활성화 여부 */
   disabled?: boolean;
+  /** loading indicator 렌더링 여부 */
+  isLoading?: boolean;
 }
 
 function Button({
@@ -28,6 +31,7 @@ function Button({
   styleType = 'primary',
   btnType = 'button',
   onClick,
+  isLoading = false,
   ...props
 }: Props): React.ReactElement {
   if (type === 'exLink')
@@ -54,7 +58,7 @@ function Button({
 
   return (
     <S.StyledButton styleType={styleType} type={btnType} onClick={onClick} {...props}>
-      {children}
+      {isLoading ? <LoadingOutlined /> : children}
     </S.StyledButton>
   );
 }

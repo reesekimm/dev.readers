@@ -4,23 +4,20 @@ import { Text, BookInfo, Divider, ReviewActionBar, CommentForm, Comment } from '
 import { IReview } from '@types';
 import * as S from './style';
 
-function ReviewDetailTemplate({
-  id,
-  User,
-  Book,
-  rating,
-  content,
-  createdAt,
-  Comments,
-  Likers,
-}: IReview.Review): React.ReactElement {
+interface Props {
+  content: IReview.Review;
+  closeModal: () => void;
+}
+
+function ReviewDetailTemplate({ content, closeModal }: Props): React.ReactElement {
+  const { id, User, Book, rating, content: data, createdAt, Comments, Likers } = content;
   const bookInfo = { ...Book, type: 'detailed', rating } as const;
 
   return (
     <S.Container>
       <S.ReviewContainer>
         <BookInfo {...bookInfo} />
-        <S.Content>{content}</S.Content>
+        <S.Content>{data}</S.Content>
         <ReviewActionBar
           id={id}
           User={User}
