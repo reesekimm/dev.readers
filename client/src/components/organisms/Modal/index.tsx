@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseOutlined } from '@ant-design/icons';
 import { AnyStyledComponent } from 'styled-components';
 
 import { Text } from '@components';
-import { useClickOutside } from '@hooks';
 import * as S from './style';
 
 interface Props {
@@ -48,23 +47,10 @@ function Modal({
   isLoading,
 }: Props): React.ReactPortal | null {
   const modalRoot = useRef<Element | null>(null);
-  const clickOutsideRef = useClickOutside(closeModal);
 
   useEffect(() => {
     const wrapper = document.getElementById('modal-root');
-    let subWrapper = wrapper.querySelector(`.${modalFor}`);
-
-    if (!subWrapper) {
-      subWrapper = document.createElement('div');
-      subWrapper.className = modalFor;
-      wrapper.insertAdjacentElement('afterbegin', subWrapper);
-    }
-
-    [...wrapper.children].forEach((div) => {
-      div.style.display = 'block';
-    });
-
-    modalRoot.current = subWrapper;
+    modalRoot.current = wrapper;
   }, []);
 
   useEffect(() => {
@@ -74,8 +60,8 @@ function Modal({
   const ModalWithCustomizedSize = modals[modalSize];
 
   const modal = (
-    <S.Wrapper modalSize={modalSize} id={modalSize === 'sm' ? 'click-outside-disabled' : ''}>
-      <ModalWithCustomizedSize ref={modalSize !== 'sm' ? clickOutsideRef : null}>
+    <S.Wrapper modalSize={modalSize} className={modalFor}>
+      <ModalWithCustomizedSize>
         {modalSize !== 'sm' && (
           <>
             <S.Header>

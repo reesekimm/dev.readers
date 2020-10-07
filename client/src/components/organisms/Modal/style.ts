@@ -4,7 +4,16 @@ interface ModalStyleProps {
   modalSize: string;
 }
 const ModalWrapperStyle = css<ModalStyleProps>`
-  z-index: ${({ modalSize }) => (modalSize === 'sm' ? 9999 : 999)};
+  z-index: ${({ modalSize }) => {
+    switch (modalSize) {
+      case 'sm':
+        return 9999;
+      case 'md':
+        return 900;
+      default:
+        return 9000;
+    }
+  }};
 `;
 
 export const Wrapper = styled.div`

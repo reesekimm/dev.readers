@@ -39,7 +39,7 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
   const onConfirm = useCallback(() => {
     /** 리뷰 상세 modal 열기 */
     toggleDetailModal();
-    /** 리뷰 작성 modal 닫기 */
+    /** 리뷰 작성 modal 닫기 (숨기기) */
     const wrapper = document.getElementById('modal-root');
     wrapper.querySelector('.review_write').style.display = 'none';
   }, []);
@@ -50,9 +50,9 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
   }, [reviewInfo]);
 
   const onCloseReviewDetailModal = useCallback(() => {
-    toggleDetailModal();
+    closeModal();
     dispatch(actions.clearReview());
-  }, [dispatch, toggleDetailModal]);
+  }, [dispatch, closeModal]);
 
   const [rate, setRate] = useState<number>();
   const onChangeRate = useCallback((value) => {
@@ -68,7 +68,7 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
       <Modal
         modalFor="feedback"
         modalSize="sm"
-        content={{ feedbackPhrase: '이미 리뷰를 작성하셨네요!', onConfirm }}
+        content={{ feedbackPhrase: '이미 작성하신 리뷰가 있어요!', onConfirm }}
         Template={FeedbackTemplate}
         modalIsOpened={feedbackModalIsOpened}
         closeModal={toggleFeedbackModal}
