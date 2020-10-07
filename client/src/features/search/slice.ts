@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { SearchState, Query } from './types';
+import { ISearch } from '@types';
 
-export const initialState: SearchState = {
+export const initialState: ISearch.SearchState = {
   searchDone: false,
   searchError: null,
   totalResults: 0,
@@ -14,7 +14,7 @@ const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
-    searchBook: (state, action: PayloadAction<Query>) => {
+    searchBook: (state, action: PayloadAction<ISearch.Query>) => {
       state.searchDone = false;
       state.searchError = null;
     },

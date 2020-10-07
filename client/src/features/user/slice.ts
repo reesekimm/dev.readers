@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { UserState } from './types';
+import { IUser } from '@types';
 
 const generateDummyUser = () => ({
   id: 1,
@@ -34,7 +34,7 @@ const generateDummyUser = () => ({
   ],
 });
 
-export const initialState: UserState = {
+export const initialState: IUser.UserState = {
   logInDone: false,
   logInError: null,
   me: generateDummyUser(),

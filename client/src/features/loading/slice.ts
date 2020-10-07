@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { LoadingState } from './types';
+import { ILoading } from '@types';
 
-export const initialState: LoadingState = {};
+export const initialState: ILoading.LoadingState = {};
 
 const loadingSlice = createSlice({
   name: 'loading',
