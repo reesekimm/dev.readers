@@ -4,7 +4,7 @@ import { Rate } from 'antd';
 
 import { RootState } from '@features';
 import { BookInfo, ReviewForm, Modal, FeedbackTemplate, ReviewDetailTemplate } from '@components';
-import { useModal } from '@hooks';
+import { useModal, useInput } from '@hooks';
 import { IBook, IUser } from '@types';
 import { actions } from '../../../features/review';
 import * as S from './style';
@@ -28,6 +28,7 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
 
   const [reviewInfo, setReviewInfo] = useState<IUser.Review | null>(null);
 
+  /** 작성된 리뷰가 있는지 확인 후 피드백 */
   useEffect(() => {
     const myReview = me?.Reviews.find((review: IUser.Review) => review.isbn13 === content.isbn13);
     if (myReview) {
@@ -36,35 +37,54 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
     }
   }, []);
 
+  /** 작성된 리뷰가 있을 경우 */
+
+  /** [feedback modal] '확인' 버튼 콜백 */
   const onConfirm = useCallback(() => {
-    /** 리뷰 상세 modal 열기 */
+    // 리뷰 상세 modal 열기
     toggleDetailModal();
-    /** 리뷰 작성 modal 닫기 (숨기기) */
+    // 리뷰 작성 modal 닫기 (숨기기)
     const wrapper = document.getElementById('modal-root');
     wrapper.querySelector('.review_write').style.display = 'none';
   }, []);
 
+  /** [review detail modal] 리뷰 가져오기 */
   const callback = useCallback(() => {
     console.log(reviewInfo);
     if (reviewInfo) dispatch(actions.getReview(reviewInfo));
   }, [reviewInfo]);
 
+  /** [review detail modal] '닫기' 버튼 콜백 */
   const onCloseReviewDetailModal = useCallback(() => {
     closeModal();
     dispatch(actions.clearReview());
   }, [dispatch, closeModal]);
 
+  /** 작성된 리뷰가 없을 경우 (리뷰 작성 OR 수정) */
+
   const [rate, setRate] = useState<number>();
+  const [text, onChangeText] = useInput('');
+
   const onChangeRate = useCallback((value) => {
     setRate(value);
-    console.log(value);
   }, []);
+
+  const onSubmit = useCallback(() => {
+    console.log(rate, text);
+  }, [text, rate]);
 
   return (
     <S.Container>
       <BookInfo {...bookInfo} />
       <Rate allowHalf allowClear value={rate} onChange={onChangeRate} />
-      <ReviewForm style={{ flex: 1 }} />
+      <ReviewForm
+        value={text}
+        onChange={onChangeText}
+        onSubmit={onSubmit}
+        submitButtonText="작성"
+        buttonDisabled={!rate || !text}
+        style={{ flex: 1 }}
+      />
       <Modal
         modalFor="feedback"
         modalSize="sm"
