@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 
 import { Text, Button } from '@components';
+import * as S from './style';
 
 interface Content {
   feedbackPhrase: string;
@@ -22,19 +23,21 @@ function FeedbackTemplate({ content, closeModal }: Props): React.ReactElement {
   }, []);
 
   return (
-    <div>
-      <Text fontSize="sm" fontWeight="medium">
-        {feedbackPhrase}
-      </Text>
-      <div>
+    <S.Container>
+      <S.TextContainer>
+        <Text fontSize="sm" fontWeight="medium">
+          {feedbackPhrase}
+        </Text>
+      </S.TextContainer>
+      <S.ButtonContainer>
         {cancelable && (
           <Button styleType="bordered" onClick={closeModal}>
             취소
           </Button>
         )}
         <Button onClick={closeModalBeforeInvokingConfirmFunc}>확인</Button>
-      </div>
-    </div>
+      </S.ButtonContainer>
+    </S.Container>
   );
 }
 

@@ -65,7 +65,6 @@ function Modal({
         {modalSize !== 'sm' && (
           <>
             <S.Header>
-              {modalFor && <Text fontWeight="bold">{modalFor}</Text>}
               <CloseOutlined
                 style={{ fontSize: '2rem', marginLeft: 'auto' }}
                 onClick={closeModal}
