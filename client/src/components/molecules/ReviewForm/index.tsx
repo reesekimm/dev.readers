@@ -8,6 +8,7 @@ interface Props {
   value: string | number;
   submitButtonText: string;
   buttonDisabled: boolean;
+  isLoading: boolean;
   onChange: () => void;
   onSubmit: () => void;
 }
@@ -16,6 +17,7 @@ function ReviewForm({
   value,
   submitButtonText,
   buttonDisabled,
+  isLoading,
   onChange,
   onSubmit,
   ...props
@@ -23,7 +25,13 @@ function ReviewForm({
   return (
     <S.Form {...props}>
       <S.Textarea value={value} onChange={onChange} />
-      <Button type="submit" onClick={onSubmit} disabled={buttonDisabled} style={{ margin: 0 }}>
+      <Button
+        type="submit"
+        onClick={onSubmit}
+        disabled={buttonDisabled}
+        isLoading={isLoading}
+        style={{ margin: 0 }}
+      >
         {submitButtonText}
       </Button>
     </S.Form>

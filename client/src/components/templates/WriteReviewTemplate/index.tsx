@@ -24,7 +24,7 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
   const dispatch = useDispatch();
   const { me } = useSelector((state: RootState) => state.user);
   const { Review } = useSelector((state: RootState) => state.review);
-  const { getReview } = useSelector((state: RootState) => state.loading);
+  const { addReview, getReview } = useSelector((state: RootState) => state.loading);
 
   const [reviewInfo, setReviewInfo] = useState<IUser.Review | null>(null);
 
@@ -62,27 +62,29 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
 
   /** 작성된 리뷰가 없을 경우 (리뷰 작성 OR 수정) */
 
-  const [rate, setRate] = useState<number>();
+  const [rating, setRating] = useState<number>();
   const [text, onChangeText] = useInput('');
 
   const onChangeRate = useCallback((value) => {
-    setRate(value);
+    setRating(value);
   }, []);
 
   const onSubmit = useCallback(() => {
-    console.log(rate, text);
-  }, [text, rate]);
+    dispatch(actions.addReview({ Book: content, rating, content: text }));
+    closeModal();
+  }, [text, rating]);
 
   return (
     <S.Container>
       <BookInfo {...bookInfo} />
-      <Rate allowHalf allowClear value={rate} onChange={onChangeRate} />
+      <Rate allowHalf allowClear value={rating} onChange={onChangeRate} />
       <ReviewForm
         value={text}
         onChange={onChangeText}
         onSubmit={onSubmit}
         submitButtonText="작성"
-        buttonDisabled={!rate || !text}
+        buttonDisabled={!rating || !text}
+        isLoading={addReview}
         style={{ flex: 1 }}
       />
       <Modal

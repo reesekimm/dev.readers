@@ -1,12 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import shortId from 'shortid';
 
 import { IReview, IUser } from '@types';
 import reviews from '../../assets/reviews';
 
 export const initialState: IReview.ReviewState = {
+  mainReviews: [],
+  addReviewDone: false,
+  addReviewError: null,
   Review: null,
   getReviewDone: false,
   getReviewError: null,
+};
+
+const generateDummyReview = (data) => {
+  return {
+    ...data,
+    id: shortId.generate(),
+    User: {
+      id: 1,
+      nickname: 'reese',
+    },
+    createdAt: '2020-08-30T08:52:15.000Z',
+    Comments: [],
+    Likers: [],
+  };
 };
 
 const reviewSlice = createSlice({
@@ -28,6 +46,18 @@ const reviewSlice = createSlice({
     },
     clearReview: (state) => {
       state.Review = null;
+    },
+    addReview: (state, actions) => {
+      state.addReviewDone = false;
+      state.addReviewError = null;
+    },
+    addReviewSuccess: (state, action: PayloadAction<IReview.Review>) => {
+      state.mainReviews.unshift(generateDummyReview(action.payload));
+      state.addReviewDone = true;
+    },
+    addReviewFailure: (state, action: PayloadAction<string>) => {
+      state.addReviewDone = true;
+      state.addReviewError = action.payload;
     },
   },
 });
