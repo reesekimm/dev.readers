@@ -1,9 +1,18 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Rate } from 'antd';
+import { GithubOutlined } from '@ant-design/icons';
 
 import { RootState } from '@features';
-import { BookInfo, ReviewForm, Modal, FeedbackTemplate, ReviewDetailTemplate } from '@components';
+import {
+  Button,
+  Text,
+  BookInfo,
+  ReviewForm,
+  Modal,
+  FeedbackTemplate,
+  ReviewDetailTemplate,
+} from '@components';
 import { useModal, useInput } from '@hooks';
 import { IBook, IUser } from '@types';
 import { actions } from '../../../features/review';
@@ -78,15 +87,29 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
     <S.Container>
       <BookInfo {...bookInfo} />
       <Rate allowHalf allowClear value={rating} onChange={onChangeRate} />
-      <ReviewForm
-        value={text}
-        onChange={onChangeText}
-        onSubmit={onSubmit}
-        submitButtonText="작성"
-        buttonDisabled={!rating || !text}
-        isLoading={addReview}
-        style={{ flex: 1 }}
-      />
+      {me ? (
+        <ReviewForm
+          value={text}
+          onChange={onChangeText}
+          onSubmit={onSubmit}
+          submitButtonText="작성"
+          buttonDisabled={!rating || !text}
+          isLoading={addReview}
+          style={{ flex: 1 }}
+        />
+      ) : (
+        <S.Login>
+          <Text fontSize="sm" fontWeight="medium">
+            리뷰를 남기시려면 로그인이 필요해요!
+          </Text>
+          <Button>
+            <S.ButtonContent>
+              <GithubOutlined />
+              Github으로 로그인 하기
+            </S.ButtonContent>
+          </Button>
+        </S.Login>
+      )}
       <Modal
         modalFor="feedback"
         modalSize="sm"

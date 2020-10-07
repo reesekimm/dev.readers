@@ -22,7 +22,7 @@ const generateDummyUser = () => ({
 export const initialState: IUser.UserState = {
   logInDone: false,
   logInError: null,
-  me: generateDummyUser(),
+  me: null,
 };
 
 const userSlice = createSlice({

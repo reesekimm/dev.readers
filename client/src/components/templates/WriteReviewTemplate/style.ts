@@ -17,3 +17,27 @@ export const Container = styled.div`
     }
   }
 `;
+
+export const Login = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+  border: 1px solid ${({ theme }) => theme.palette.gray2};
+  border-radius: 0.5rem;
+  & > span {
+    margin-bottom: 1rem;
+  }
+`;
+
+export const ButtonContent = styled.div`
+  display: flex;
+  align-items: center;
+
+  .anticon-github {
+    font-size: 24px;
+    margin-right: 7px;
+  }
+`;
