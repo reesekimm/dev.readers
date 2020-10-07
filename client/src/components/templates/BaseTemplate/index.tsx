@@ -9,11 +9,11 @@ interface Props {
 
 function BeseTemplate({ children }: Props): React.ReactElement {
   return (
-    <>
+    <S.Container>
       <Header />
-      <S.Container>{children}</S.Container>
+      <S.Content>{children}</S.Content>
       <Footer />
-    </>
+    </S.Container>
   );
 }
 

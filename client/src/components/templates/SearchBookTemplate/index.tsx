@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BaseTemplate } from '@components';
+import { Loading, BaseTemplate } from '@components';
 
 interface Props {
   searchBar: React.ReactNode;
@@ -17,7 +17,7 @@ function SearchBookTemplate({
     <BaseTemplate>
       {searchBar}
       {bookList}
-      {loading && 'loading...'}
+      {loading && <Loading />}
     </BaseTemplate>
   );
 }

@@ -13,8 +13,8 @@ function ReviewListItem(review: IReview.Review): React.ReactElement {
 
   return (
     <S.Container>
-      <BookInfo {...bookInfo} />
       <S.Content onClick={toggleModal}>
+        <BookInfo {...bookInfo} />
         {content.length > 200 ? (
           <Text color="gray5">
             {`${content.slice(0, 200)}...`}{' '}

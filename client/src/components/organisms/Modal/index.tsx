@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { CloseOutlined } from '@ant-design/icons';
 import { AnyStyledComponent } from 'styled-components';
 
-import { Text } from '@components';
+import { Loading } from '@components';
 import * as S from './style';
 
 interface Props {
@@ -73,9 +73,11 @@ function Modal({
           </>
         )}
         <S.Content>
-          {isLoading
-            ? 'loading...'
-            : content && <Template content={content} closeModal={closeModal} />}
+          {isLoading ? (
+            <Loading style={{ flex: 1, height: '90%' }} />
+          ) : (
+            content && <Template content={content} closeModal={closeModal} />
+          )}
         </S.Content>
       </ModalWithCustomizedSize>
     </S.Wrapper>
