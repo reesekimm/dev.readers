@@ -4,6 +4,7 @@ import { CloseOutlined } from '@ant-design/icons';
 import { AnyStyledComponent } from 'styled-components';
 
 import { Loading } from '@components';
+import { useModal } from '@hooks';
 import * as S from './style';
 
 interface Props {
@@ -19,8 +20,6 @@ interface Props {
   modalIsOpened: boolean;
   /** modal 닫기 콜백 함수 */
   closeModal: () => void;
-  /** api 요청 콜백 */
-  apiCallback?: () => void;
   /** loading 여부 */
   isLoading?: boolean;
 }
@@ -43,24 +42,20 @@ function Modal({
   modalSize = 'lg',
   modalIsOpened,
   closeModal,
-  apiCallback,
   isLoading,
 }: Props): React.ReactPortal | null {
   const modalRoot = useRef<Element | null>(null);
+  const { ref } = useModal(closeModal);
 
   useEffect(() => {
     const wrapper = document.getElementById('modal-root');
     modalRoot.current = wrapper;
   }, []);
 
-  useEffect(() => {
-    if (modalIsOpened && apiCallback) apiCallback();
-  }, [modalIsOpened, apiCallback]);
-
   const ModalWithCustomizedSize = modals[modalSize];
 
   const modal = (
-    <S.Wrapper modalSize={modalSize} className={modalFor}>
+    <S.Wrapper modalSize={modalSize} className="close_modal" ref={modalSize !== 'sm' ? ref : null}>
       <ModalWithCustomizedSize>
         {modalSize !== 'sm' && (
           <>
