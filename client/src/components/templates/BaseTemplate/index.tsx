@@ -43,7 +43,7 @@ function BeseTemplate({ children }: Props): React.ReactElement {
       <Modal
         modalFor="review_detail"
         modalSize="lg"
-        content={Review}
+        content={Review || reviewDetailData}
         Template={ReviewDetailTemplate}
         modalIsOpened={reviewDetailModalIsOpened}
         closeModal={closeReviewDetailModal}

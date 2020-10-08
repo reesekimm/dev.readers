@@ -1,4 +1,4 @@
-import { IBook } from '@types';
+import { IBook, IReview } from '@types';
 
 export interface ModalState {
   writeReviewModal: {
@@ -7,6 +7,6 @@ export interface ModalState {
   };
   reviewDetailModal: {
     isOpened: boolean;
-    data: IBook.ISBN | null;
+    data: IReview.Review | IBook.ISBN | null;
   };
 }

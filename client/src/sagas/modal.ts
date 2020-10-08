@@ -22,7 +22,7 @@ function* watchOpenReviewDetailModal() {
     const action = yield take(actions.openReviewDetailModal.toString());
     if (action) {
       yield call(actions.openReviewDetailModal, action.payload);
-      yield put(reviewActions.getReview(action.payload));
+      if (action.payload.isbn) yield put(reviewActions.getReview(action.payload));
     }
   }
 }
@@ -32,7 +32,7 @@ function* watchCloseReviewDetailModal() {
     const action = yield take(actions.closeReviewDetailModal.toString());
     if (action) {
       yield call(actions.closeReviewDetailModal);
-      yield call(reviewActions.clearReview);
+      yield put(reviewActions.clearReview());
     }
   }
 }
