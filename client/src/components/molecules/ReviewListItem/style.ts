@@ -12,8 +12,11 @@ export const Container = styled.div`
   }
 `;
 
-export const Content = styled.p`
+export const ContentWrapper = styled.div`
   cursor: pointer;
+`;
+
+export const Content = styled.p`
   flex: 1;
   margin: 1rem 0;
   text-align: justify;

@@ -18,19 +18,21 @@ function ReviewListItem(review: IReview.Review): React.ReactElement {
 
   return (
     <S.Container>
-      <S.Content onClick={openReviewDetailModal}>
+      <S.ContentWrapper onClick={openReviewDetailModal}>
         <BookInfo {...bookInfo} />
-        {content.length > 200 ? (
-          <Text color="gray5">
-            {`${content.slice(0, 200)}...`}{' '}
-            <Text color="gray3" fontSize="xsm" fontWeight="medium">
-              더보기
+        <S.Content>
+          {content.length > 200 ? (
+            <Text color="gray5">
+              {`${content.slice(0, 200)}...`}{' '}
+              <Text color="gray3" fontSize="xsm" fontWeight="medium">
+                더보기
+              </Text>
             </Text>
-          </Text>
-        ) : (
-          <Text color="gray5">{content}</Text>
-        )}
-      </S.Content>
+          ) : (
+            <Text color="gray5">{content}</Text>
+          )}
+        </S.Content>
+      </S.ContentWrapper>
       <ReviewActionBar
         id={id}
         User={User}
