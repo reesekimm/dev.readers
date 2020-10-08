@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import shortId from 'shortid';
 
-import { IReview, IUser } from '@types';
+import { IReview, IUser, IBook } from '@types';
 import reviews from '../../assets/reviews';
 
 export const initialState: IReview.ReviewState = {
@@ -31,12 +31,12 @@ const reviewSlice = createSlice({
   name: 'review',
   initialState,
   reducers: {
-    getReview: (state, action: PayloadAction<IUser.Review>) => {
+    getReview: (state, action: PayloadAction<IBook.ISBN>) => {
       state.Review = null;
       state.getReviewDone = false;
       state.getReviewError = null;
     },
-    getReviewSuccess: (state) => {
+    getReviewSuccess: (state, action: PayloadAction<IBook.ISBN>) => {
       state.getReviewDone = true;
       state.Review = reviews.find((review) => review.Book.isbn13 === '9788966262595');
     },

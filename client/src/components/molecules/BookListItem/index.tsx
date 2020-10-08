@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { Text, Img, Modal, WriteReviewTemplate } from '@components';
-import { useModal } from '@hooks';
+import { Text, Img } from '@components';
 import { IBook } from '@types';
 import * as S from './style';
+import { actions } from '../../../features/modal';
 
 interface Props {
   [key: string]: unknown;
@@ -13,14 +14,18 @@ interface Props {
 
 function BookListItem({ book, lastBookElementRef, ...props }: Props): React.ReactElement {
   const { title, author, pubDate, cover } = book;
-  const { modalIsOpened, toggleModal } = useModal();
+
+  const dispatch = useDispatch();
+  const openWriteReviewModal = useCallback(() => {
+    dispatch(actions.openWriteReviewModal(book));
+  }, []);
 
   return (
-    <S.Container ref={lastBookElementRef} {...props}>
-      <S.ImageContainer onClick={toggleModal}>
+    <S.Container onClick={openWriteReviewModal} ref={lastBookElementRef} {...props}>
+      <S.ImageContainer>
         <Img src={cover} alt={title} />
       </S.ImageContainer>
-      <div onClick={toggleModal}>
+      <div>
         <Text tag="h2" fontSize="sm" fontWeight="medium">
           {title}
         </Text>
@@ -28,14 +33,6 @@ function BookListItem({ book, lastBookElementRef, ...props }: Props): React.Reac
           {pubDate.slice(0, 4)} ・ {author.split(' 지음')[0]}
         </Text>
       </div>
-      <Modal
-        modalFor="review_write"
-        modalSize="md"
-        content={book}
-        Template={WriteReviewTemplate}
-        modalIsOpened={modalIsOpened}
-        closeModal={toggleModal}
-      />
     </S.Container>
   );
 }

@@ -17,3 +17,7 @@ export interface Book {
 }
 
 export type Books = Book[];
+
+export interface ISBN {
+  isbn13: string;
+}
