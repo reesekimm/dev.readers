@@ -2,17 +2,19 @@ import { AnyAction } from 'redux';
 import { combineReducers } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 
-import { IUser, IReview, ISearch, ILoading } from '@types';
+import { IUser, IReview, ISearch, ILoading, IModal } from '@types';
 import { initialState as userInitialState, reducer as userReducer } from './user';
 import { initialState as reviewInitialState, reducer as reviewReducer } from './review';
 import { initialState as searchInitialState, reducer as searchReducer } from './search';
 import { initialState as loadingInitialState, reducer as loadingReducer } from './loading';
+import { initialState as modalInitialState, reducer as modalReducer } from './modal';
 
 export interface RootState {
   user: IUser.UserState;
   review: IReview.ReviewState;
   search: ISearch.SearchState;
   loading: ILoading.LoadingState;
+  modal: IModal.ModalState;
 }
 
 export default function createReducer() {
@@ -23,6 +25,7 @@ export default function createReducer() {
         review: reviewInitialState,
         search: searchInitialState,
         loading: loadingInitialState,
+        modal: modalInitialState,
       },
       action: AnyAction
     ) => {
@@ -40,6 +43,7 @@ export default function createReducer() {
     review: reviewReducer,
     search: searchReducer,
     loading: loadingReducer,
+    modal: modalReducer,
   });
 
   return rootReducer;

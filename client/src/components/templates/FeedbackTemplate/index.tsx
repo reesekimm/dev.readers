@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import { Text, Button } from '@components';
 import * as S from './style';
@@ -17,11 +17,6 @@ interface Props {
 function FeedbackTemplate({ content, closeModal }: Props): React.ReactElement {
   const { feedbackPhrase, onConfirm, cancelable } = content;
 
-  const closeModalBeforeInvokingConfirmFunc = useCallback(() => {
-    closeModal();
-    onConfirm();
-  }, []);
-
   return (
     <S.Container>
       <S.TextContainer>
@@ -35,7 +30,7 @@ function FeedbackTemplate({ content, closeModal }: Props): React.ReactElement {
             취소
           </Button>
         )}
-        <Button onClick={closeModalBeforeInvokingConfirmFunc}>확인</Button>
+        <Button onClick={onConfirm}>확인</Button>
       </S.ButtonContainer>
     </S.Container>
   );

@@ -4,18 +4,11 @@ import { Rate } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
 
 import { RootState } from '@features';
-import {
-  Button,
-  Text,
-  BookInfo,
-  ReviewForm,
-  Modal,
-  FeedbackTemplate,
-  ReviewDetailTemplate,
-} from '@components';
+import { Button, Text, BookInfo, ReviewForm, Modal, FeedbackTemplate } from '@components';
 import { useModal, useInput } from '@hooks';
 import { IBook, IUser } from '@types';
 import { actions } from '../../../features/review';
+import { actions as modalActions } from '../../../features/modal';
 import * as S from './style';
 
 interface Props {
@@ -28,46 +21,24 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
   const bookInfo = { ...content, type: 'write' } as const;
 
   const { modalIsOpened: feedbackModalIsOpened, toggleModal: toggleFeedbackModal } = useModal();
-  const { modalIsOpened: detailModalIsOpened, toggleModal: toggleDetailModal } = useModal();
 
   const dispatch = useDispatch();
   const { me } = useSelector((state: RootState) => state.user);
-  const { Review } = useSelector((state: RootState) => state.review);
-  const { addReview, getReview } = useSelector((state: RootState) => state.loading);
-
-  const [reviewInfo, setReviewInfo] = useState<IUser.Review | null>(null);
+  const { addReview } = useSelector((state: RootState) => state.loading);
 
   /** 작성된 리뷰가 있는지 확인 후 피드백 */
   useEffect(() => {
     const myReview = me?.Reviews.find((review: IUser.Review) => review.isbn13 === content.isbn13);
-    if (myReview) {
-      toggleFeedbackModal();
-      setReviewInfo(myReview);
-    }
+    if (myReview) toggleFeedbackModal();
   }, []);
 
   /** 작성된 리뷰가 있을 경우 */
 
   /** [feedback modal] '확인' 버튼 콜백 */
   const onConfirm = useCallback(() => {
-    // 리뷰 상세 modal 열기
-    toggleDetailModal();
-    // 리뷰 작성 modal 닫기 (숨기기)
-    const wrapper = document.getElementById('modal-root');
-    wrapper.querySelector('.review_write').style.display = 'none';
+    dispatch(modalActions.closeWriteReviewModal());
+    dispatch(modalActions.openReviewDetailModal({ isbn: content.isbn13 }));
   }, []);
-
-  /** [review detail modal] 리뷰 가져오기 */
-  const callback = useCallback(() => {
-    console.log(reviewInfo);
-    if (reviewInfo) dispatch(actions.getReview(reviewInfo));
-  }, [reviewInfo]);
-
-  /** [review detail modal] '닫기' 버튼 콜백 */
-  const onCloseReviewDetailModal = useCallback(() => {
-    closeModal();
-    dispatch(actions.clearReview());
-  }, [dispatch, closeModal]);
 
   /** 작성된 리뷰가 없을 경우 (리뷰 작성 OR 수정) */
 
@@ -117,16 +88,6 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
         Template={FeedbackTemplate}
         modalIsOpened={feedbackModalIsOpened}
         closeModal={toggleFeedbackModal}
-      />
-      <Modal
-        modalFor="review_detail"
-        modalSize="lg"
-        content={Review}
-        Template={ReviewDetailTemplate}
-        modalIsOpened={detailModalIsOpened}
-        closeModal={onCloseReviewDetailModal}
-        apiCallback={callback}
-        isLoading={getReview}
       />
     </S.Container>
   );
