@@ -59,6 +59,7 @@ export const ButtonStyle = css<ButtonStyleProps>`
       color: ${props.theme.palette.secondary};
       margin: 0;
       min-width: 0;
+      padding: 0.8rem;
     `}
 `;
 

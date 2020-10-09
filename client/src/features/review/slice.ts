@@ -1,13 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import shortId from 'shortid';
 
-import { IReview, IUser, IBook } from '@types';
+import { IReview, IBook } from '@types';
 import reviews from '../../assets/reviews';
 
 export const initialState: IReview.ReviewState = {
   mainReviews: [],
   addReviewDone: false,
   addReviewError: null,
+  editReviewDone: false,
+  editReviewError: null,
+  deleteReviewDone: false,
+  deleteReviewError: null,
   Review: null,
   getReviewDone: false,
   getReviewError: null,
@@ -31,6 +35,57 @@ const reviewSlice = createSlice({
   name: 'review',
   initialState,
   reducers: {
+    addReview: (state, actions) => {
+      state.addReviewDone = false;
+      state.addReviewError = null;
+    },
+    addReviewSuccess: (state, action: PayloadAction<IReview.Review>) => {
+      state.mainReviews.unshift(generateDummyReview(action.payload));
+      state.addReviewDone = true;
+    },
+    addReviewFailure: (state, action: PayloadAction<string>) => {
+      state.addReviewDone = true;
+      state.addReviewError = action.payload;
+    },
+    resetAddReviewState: (state) => {
+      state.addReviewDone = false;
+      state.addReviewError = null;
+    },
+    editReview: (state, action) => {
+      state.editReviewDone = false;
+      state.editReviewError = null;
+    },
+    editReviewSuccess: (state, action) => {
+      const reviewIndex = state.mainReviews.findIndex((review) => review.id === action.payload.id);
+      state.mainReviews[reviewIndex].rating = action.payload.rating;
+      state.mainReviews[reviewIndex].content = action.payload.content;
+      state.editReviewDone = true;
+      state.editReviewError = null;
+    },
+    editReviewFailure: (state, action) => {
+      state.editReviewDone = true;
+      state.editReviewError = action.payload;
+    },
+    resetEditReviewState: (state) => {
+      state.editReviewDone = false;
+      state.editReviewError = null;
+    },
+    deleteReview: (state, action: PayloadAction<IReview.ReviewId>) => {
+      state.deleteReviewDone = false;
+      state.deleteReviewError = null;
+    },
+    deleteReviewSuccess: (state, action) => {
+      const reviewIndex = state.mainReviews.findIndex((review) => review.id === action.payload);
+      state.mainReviews.splice(reviewIndex, 1);
+      state.deleteReviewDone = true;
+    },
+    deleteReviewFailure: (state, action) => {
+      state.deleteReviewError = action.payload;
+    },
+    resetDeleteReviewState: (state) => {
+      state.deleteReviewDone = false;
+      state.deleteReviewError = null;
+    },
     getReview: (state, action: PayloadAction<IBook.ISBN>) => {
       state.Review = null;
       state.getReviewDone = false;
@@ -46,18 +101,6 @@ const reviewSlice = createSlice({
     },
     clearReview: (state) => {
       state.Review = null;
-    },
-    addReview: (state, actions) => {
-      state.addReviewDone = false;
-      state.addReviewError = null;
-    },
-    addReviewSuccess: (state, action: PayloadAction<IReview.Review>) => {
-      state.mainReviews.unshift(generateDummyReview(action.payload));
-      state.addReviewDone = true;
-    },
-    addReviewFailure: (state, action: PayloadAction<string>) => {
-      state.addReviewDone = true;
-      state.addReviewError = action.payload;
     },
   },
 });

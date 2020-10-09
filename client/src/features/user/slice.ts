@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IUser } from '@types';
+import { IUser, IReview } from '@types';
 
 const generateDummyUser = () => ({
   id: 1,
@@ -20,9 +20,9 @@ const generateDummyUser = () => ({
 });
 
 export const initialState: IUser.UserState = {
+  me: null,
   logInDone: false,
   logInError: null,
-  me: null,
 };
 
 const userSlice = createSlice({
@@ -43,6 +43,10 @@ const userSlice = createSlice({
     },
     addReview: (state, action: PayloadAction<IUser.Review>) => {
       state.me?.Reviews.unshift(action.payload);
+    },
+    deleteReview: (state, action: PayloadActions<IReview.ReviewId>) => {
+      const reviewIndex = state.me?.Reviews.findIndex((review) => review.id === action.payload);
+      state?.me.Reviews.splice(reviewIndex, 1);
     },
   },
 });

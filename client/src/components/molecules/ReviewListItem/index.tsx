@@ -14,7 +14,7 @@ function ReviewListItem(review: IReview.Review): React.ReactElement {
   const dispatch = useDispatch();
   const openReviewDetailModal = useCallback(() => {
     dispatch(actions.openReviewDetailModal(review));
-  }, []);
+  }, [review]);
 
   return (
     <S.Container>
@@ -33,14 +33,7 @@ function ReviewListItem(review: IReview.Review): React.ReactElement {
           )}
         </S.Content>
       </S.ContentWrapper>
-      <ReviewActionBar
-        id={id}
-        User={User}
-        createdAt={createdAt}
-        NumberOfComments={Comments.length}
-        NumberOfLikes={Likers.length}
-        onClickComment={openReviewDetailModal}
-      />
+      <ReviewActionBar type="list" content={review} onClickComment={openReviewDetailModal} />
     </S.Container>
   );
 }

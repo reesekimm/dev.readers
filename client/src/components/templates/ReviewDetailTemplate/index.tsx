@@ -18,13 +18,7 @@ function ReviewDetailTemplate({ content, closeModal }: Props): React.ReactElemen
       <S.ReviewContainer>
         <BookInfo {...bookInfo} />
         <S.Content>{data}</S.Content>
-        <ReviewActionBar
-          id={id}
-          User={User}
-          createdAt={createdAt}
-          NumberOfComments={Comments.length}
-          NumberOfLikes={Likers.length}
-        />
+        <ReviewActionBar type="detail" content={content} />
       </S.ReviewContainer>
       <S.CommentContainer>
         <div>
