@@ -87,11 +87,35 @@ function* watchClearReview() {
   }
 }
 
+function* watchResetAddReviewState() {
+  while (true) {
+    const action = yield take(actions.resetAddReviewState.toString());
+    if (action) yield call(actions.resetAddReviewState);
+  }
+}
+
+function* watchResetEditReviewState() {
+  while (true) {
+    const action = yield take(actions.resetEditReviewState.toString());
+    if (action) yield call(actions.resetEditReviewState);
+  }
+}
+
+function* watchResetDeleteReviewState() {
+  while (true) {
+    const action = yield take(actions.resetDeleteReviewState.toString());
+    if (action) yield call(actions.resetDeleteReviewState);
+  }
+}
+
 export default function* reviewSaga(): Generator {
   yield all([
     fork(watchAddReview),
+    fork(watchResetAddReviewState),
     fork(watchEditReview),
+    fork(watchResetEditReviewState),
     fork(watchDeleteReview),
+    fork(watchResetDeleteReviewState),
     fork(watchGetReview),
     fork(watchClearReview),
   ]);

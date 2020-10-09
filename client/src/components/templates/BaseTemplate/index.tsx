@@ -1,10 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { message } from 'antd';
 
 import { RootState } from '@features';
 import { Header, Footer, Modal, WriteReviewTemplate, ReviewDetailTemplate } from '@components';
 import * as S from './style';
 import { actions } from '../../../features/modal';
+import { actions as reviewActions } from '../../../features/review';
 
 interface Props {
   children: React.ReactNode;
@@ -12,7 +14,15 @@ interface Props {
 
 function BeseTemplate({ children }: Props): React.ReactElement {
   const dispatch = useDispatch();
-  const { Review } = useSelector((state: RootState) => state.review);
+  const {
+    Review,
+    addReviewDone,
+    addReviewError,
+    editReviewDone,
+    editReviewError,
+    deleteReviewDone,
+    deleteReviewError,
+  } = useSelector((state: RootState) => state.review);
   const {
     writeReviewModal: { isOpened: writeReviewModalIsOpened, data: writeReviewData },
     reviewDetailModal: { isOpened: reviewDetailModalIsOpened, data: reviewDetailData },
@@ -26,6 +36,40 @@ function BeseTemplate({ children }: Props): React.ReactElement {
   const closeReviewDetailModal = useCallback(() => {
     dispatch(actions.closeReviewDetailModal());
   }, []);
+
+  useEffect(() => {
+    if (addReviewDone)
+      message.success('리뷰 작성 완료!', 2).then(() => {
+        dispatch(reviewActions.resetAddReviewState());
+      });
+    if (addReviewError)
+      message.error('리뷰 작성 실패', 2).then(() => {
+        dispatch(reviewActions.resetAddReviewState());
+      });
+    if (editReviewDone)
+      message.success('리뷰 수정 완료!', 2).then(() => {
+        dispatch(reviewActions.resetEditReviewState());
+      });
+    if (editReviewError)
+      message.error('리뷰 수정 실패', 2).then(() => {
+        dispatch(reviewActions.resetEditReviewState());
+      });
+    if (deleteReviewDone)
+      message.success('리뷰 삭제 완료!', 2).then(() => {
+        dispatch(reviewActions.resetDeleteReviewState());
+      });
+    if (deleteReviewError)
+      message.error('리뷰 삭제 실패', 2).then(() => {
+        dispatch(reviewActions.resetDeleteReviewState());
+      });
+  }, [
+    addReviewDone,
+    addReviewError,
+    editReviewDone,
+    editReviewError,
+    deleteReviewDone,
+    deleteReviewError,
+  ]);
 
   return (
     <S.Container>

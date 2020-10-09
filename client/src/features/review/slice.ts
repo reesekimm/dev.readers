@@ -47,6 +47,10 @@ const reviewSlice = createSlice({
       state.addReviewDone = true;
       state.addReviewError = action.payload;
     },
+    resetAddReviewState: (state) => {
+      state.addReviewDone = false;
+      state.addReviewError = null;
+    },
     editReview: (state, action) => {
       state.editReviewDone = false;
       state.editReviewError = null;
@@ -62,6 +66,10 @@ const reviewSlice = createSlice({
       state.editReviewDone = true;
       state.editReviewError = action.payload;
     },
+    resetEditReviewState: (state) => {
+      state.editReviewDone = false;
+      state.editReviewError = null;
+    },
     deleteReview: (state, action: PayloadAction<IReview.ReviewId>) => {
       state.deleteReviewDone = false;
       state.deleteReviewError = null;
@@ -73,6 +81,10 @@ const reviewSlice = createSlice({
     },
     deleteReviewFailure: (state, action) => {
       state.deleteReviewError = action.payload;
+    },
+    resetDeleteReviewState: (state) => {
+      state.deleteReviewDone = false;
+      state.deleteReviewError = null;
     },
     getReview: (state, action: PayloadAction<IBook.ISBN>) => {
       state.Review = null;
