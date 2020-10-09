@@ -14,7 +14,7 @@ function ReviewListItem(review: IReview.Review): React.ReactElement {
   const dispatch = useDispatch();
   const openReviewDetailModal = useCallback(() => {
     dispatch(actions.openReviewDetailModal(review));
-  }, []);
+  }, [review]);
 
   return (
     <S.Container>
