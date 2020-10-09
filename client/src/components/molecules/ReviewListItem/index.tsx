@@ -33,15 +33,7 @@ function ReviewListItem(review: IReview.Review): React.ReactElement {
           )}
         </S.Content>
       </S.ContentWrapper>
-      <ReviewActionBar
-        id={id}
-        User={User}
-        createdAt={createdAt}
-        NumberOfComments={Comments.length}
-        NumberOfLikes={Likers.length}
-        onClickComment={openReviewDetailModal}
-        type="list"
-      />
+      <ReviewActionBar type="list" content={review} onClickComment={openReviewDetailModal} />
     </S.Container>
   );
 }

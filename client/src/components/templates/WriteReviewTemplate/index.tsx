@@ -6,25 +6,27 @@ import { GithubOutlined } from '@ant-design/icons';
 import { RootState } from '@features';
 import { Button, Text, BookInfo, ReviewForm, Modal, FeedbackTemplate } from '@components';
 import { useModal, useInput } from '@hooks';
-import { IBook, IUser } from '@types';
+import { IBook, IUser, IReview } from '@types';
 import { actions } from '../../../features/review';
 import { actions as modalActions } from '../../../features/modal';
 import * as S from './style';
 
 interface Props {
-  content: IBook.Book;
+  content: IBook.Book | IReview.ReviewInfo;
   /** template을 감싸고 있는 Modal을 닫는 callback */
   closeModal: () => void;
 }
 
 function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement {
-  const bookInfo = { ...content, type: 'write' } as const;
+  const bookInfo = content.isbn
+    ? { ...content, type: 'write' }
+    : { ...content.Book, type: 'write' };
 
   const { modalIsOpened: feedbackModalIsOpened, toggleModal: toggleFeedbackModal } = useModal();
 
   const dispatch = useDispatch();
   const { me } = useSelector((state: RootState) => state.user);
-  const { addReview } = useSelector((state: RootState) => state.loading);
+  const { addReview, editReview } = useSelector((state: RootState) => state.loading);
 
   /** 작성된 리뷰가 있는지 확인 후 피드백 */
   useEffect(() => {
@@ -42,17 +44,22 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
 
   /** 작성된 리뷰가 없을 경우 (리뷰 작성 OR 수정) */
 
-  const [rating, setRating] = useState<number>();
-  const [text, onChangeText] = useInput('');
+  const [rating, setRating] = useState<number>(content.rating || 0);
+  const [text, onChangeText] = useInput(content.content || '');
 
   const onChangeRate = useCallback((value) => {
     setRating(value);
   }, []);
 
-  const onSubmit = useCallback(() => {
+  const onClickWriteReview = useCallback(() => {
     dispatch(actions.addReview({ Book: content, rating, content: text }));
     closeModal();
-  }, [text, rating]);
+  }, [rating, text]);
+
+  const onClickEditReview = useCallback(() => {
+    dispatch(actions.editReview({ id: content.id, rating, content: text }));
+    closeModal();
+  }, [rating, text]);
 
   return (
     <S.Container>
@@ -62,10 +69,10 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
         <ReviewForm
           value={text}
           onChange={onChangeText}
-          onSubmit={onSubmit}
-          submitButtonText="작성"
+          onSubmit={content.id ? onClickEditReview : onClickWriteReview}
+          submitButtonText={content.id ? '수정' : '작성'}
           buttonDisabled={!rating || !text}
-          isLoading={addReview}
+          isLoading={content.id ? editReview : addReview}
           style={{ flex: 1 }}
         />
       ) : (

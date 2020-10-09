@@ -6,6 +6,8 @@ import { actions } from '../features/review';
 import { actions as userActions } from '../features/user';
 import { actions as loadingActions } from '../features/loading';
 
+/** 리뷰 작성 */
+
 function* addReview({ type, payload }) {
   const success = `${type}Success`;
   const failure = `${type}Failure`;
@@ -31,6 +33,16 @@ function* addReview({ type, payload }) {
 function* watchAddReview() {
   yield takeLatest(actions.addReview, addReview);
 }
+
+/** 리뷰 수정 */
+
+const editReview = createRequestSaga(actions.editReview, `api.editReview`);
+
+function* watchEditReview() {
+  yield takeLatest(actions.editReview, editReview);
+}
+
+/** 리뷰 삭제 */
 
 function* deleteReview({ type, payload }) {
   const success = `${type}Success`;
@@ -58,11 +70,15 @@ function* watchDeleteReview() {
   yield takeLatest(actions.deleteReview, deleteReview);
 }
 
+/** 내가 작성한 리뷰 가져오기 */
+
 const getReview = createRequestSaga(actions.getReview, `api.getReview`);
 
 function* watchGetReview() {
   yield takeLatest(actions.getReview, getReview);
 }
+
+/** 내가 작성한 리뷰 삭제 */
 
 function* watchClearReview() {
   while (true) {
@@ -74,6 +90,7 @@ function* watchClearReview() {
 export default function* reviewSaga(): Generator {
   yield all([
     fork(watchAddReview),
+    fork(watchEditReview),
     fork(watchDeleteReview),
     fork(watchGetReview),
     fork(watchClearReview),

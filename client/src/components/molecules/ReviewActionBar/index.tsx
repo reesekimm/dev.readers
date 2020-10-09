@@ -14,7 +14,7 @@ import 'dayjs/locale/ko';
 import { RootState } from '@features';
 import { Text, Button, Modal, FeedbackTemplate } from '@components';
 import { useModal } from '@hooks';
-import { IReview, IUser } from '@types';
+import { IReview } from '@types';
 import * as S from './style';
 import { actions } from '../../../features/review';
 import { actions as modalActions } from '../../../features/modal';
@@ -23,26 +23,20 @@ dayjs.extend(relativeTime);
 dayjs.locale('ko');
 
 interface Props {
-  id: IReview.ReviewId;
-  User: IUser.User;
-  createdAt: IReview.createdAt;
-  NumberOfComments: number;
-  NumberOfLikes: number;
-  onClickComment?: () => void;
   /** Action Bar 타입 (list(default) : 리뷰 목록, detail : 리뷰 상세) */
   type: string;
+  content: IReview.Review;
+  onClickComment?: () => void;
 }
 
 function ReviewActionBar({
-  id,
-  User,
-  createdAt,
-  NumberOfComments,
-  NumberOfLikes,
-  onClickComment,
   type = 'list',
+  content,
+  onClickComment,
   ...props
 }: Props): React.ReactElement {
+  const { id, User, Book, rating, content: data, createdAt, Comments, Likers } = content;
+
   const dispatch = useDispatch();
   const myId = useSelector((state: RootState) => state.user.me?.id);
   const { deleteReview } = useSelector((state: RootState) => state.loading);
@@ -53,6 +47,11 @@ function ReviewActionBar({
 
   const toggleLiked = useCallback(() => {
     setLiked((prev) => !prev);
+  }, []);
+
+  const onClickEditReview = useCallback(() => {
+    dispatch(modalActions.closeReviewDetailModal());
+    dispatch(modalActions.openWriteReviewModal({ id, Book, rating, content: data }));
   }, []);
 
   const onClickDeleteReview = useCallback(() => {
@@ -80,14 +79,14 @@ function ReviewActionBar({
             <S.ButtonContent>
               <MessageOutlined key="comment" />
               <Text color="gray4" fontSize="xsm">
-                댓글 {NumberOfComments}
+                댓글 {Comments.length}
               </Text>
             </S.ButtonContent>
           </Button>
         )}
         {myId && User.id === myId && type === 'detail' ? (
           <>
-            <Button styleType="plain">
+            <Button styleType="plain" onClick={onClickEditReview}>
               <S.ButtonContent>
                 <EditOutlined />
                 <Text color="gray4" fontSize="xsm">
@@ -121,7 +120,7 @@ function ReviewActionBar({
             <S.ButtonContent>
               {liked ? <HeartFilled key="heart" /> : <HeartOutlined key="like" />}
               <Text color="gray4" fontSize="xsm">
-                좋아요 {NumberOfLikes}
+                좋아요 {Likers.length}
               </Text>
             </S.ButtonContent>
           </Button>

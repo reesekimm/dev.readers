@@ -47,7 +47,7 @@ function BookInfo({
             </Button>
           </>
         )}
-        {type !== 'write' && <Rate disabled defaultValue={rating} allowHalf />}
+        {type !== 'write' && <Rate disabled value={rating} allowHalf />}
       </div>
     </S.Container>
   );

@@ -3,7 +3,7 @@ import { IBook, IReview } from '@types';
 export interface ModalState {
   writeReviewModal: {
     isOpened: boolean;
-    data: IBook.Book | null;
+    data: IBook.Book | IReview.ReviewInfo | null;
   };
   reviewDetailModal: {
     isOpened: boolean;

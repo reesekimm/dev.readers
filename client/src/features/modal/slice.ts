@@ -17,7 +17,7 @@ const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    openWriteReviewModal: (state, action: PayloadAction<IBook.Book>) => {
+    openWriteReviewModal: (state, action: PayloadAction<IBook.Book | IReview.ReviewInfo>) => {
       state.writeReviewModal.isOpened = true;
       state.writeReviewModal.data = action.payload;
     },
