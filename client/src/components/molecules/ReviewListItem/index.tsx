@@ -40,6 +40,7 @@ function ReviewListItem(review: IReview.Review): React.ReactElement {
         NumberOfComments={Comments.length}
         NumberOfLikes={Likers.length}
         onClickComment={openReviewDetailModal}
+        type="list"
       />
     </S.Container>
   );

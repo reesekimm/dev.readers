@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import shortId from 'shortid';
 
-import { IReview, IUser, IBook } from '@types';
+import { IReview, IBook } from '@types';
 import reviews from '../../assets/reviews';
 
 export const initialState: IReview.ReviewState = {
   mainReviews: [],
   addReviewDone: false,
   addReviewError: null,
+  deleteReviewDone: false,
+  deleteReviewError: null,
   Review: null,
   getReviewDone: false,
   getReviewError: null,
@@ -58,6 +60,18 @@ const reviewSlice = createSlice({
     addReviewFailure: (state, action: PayloadAction<string>) => {
       state.addReviewDone = true;
       state.addReviewError = action.payload;
+    },
+    deleteReview: (state, action: PayloadAction<IReview.ReviewId>) => {
+      state.deleteReviewDone = false;
+      state.deleteReviewError = null;
+    },
+    deleteReviewSuccess: (state, action) => {
+      const reviewIndex = state.mainReviews.findIndex((review) => review.id === action.payload);
+      state.mainReviews.splice(reviewIndex, 1);
+      state.deleteReviewDone = true;
+    },
+    deleteReviewFailure: (state, action) => {
+      state.deleteReviewError = action.payload;
     },
   },
 });

@@ -28,11 +28,37 @@ function* addReview({ type, payload }) {
   yield put(loadingActions.finish(type.toString()));
 }
 
-const getReview = createRequestSaga(actions.getReview, `api.getReview`);
-
 function* watchAddReview() {
   yield takeLatest(actions.addReview, addReview);
 }
+
+function* deleteReview({ type, payload }) {
+  const success = `${type}Success`;
+  const failure = `${type}Failure`;
+  yield put(loadingActions.start(type.toString()));
+  console.log('[payload]', payload);
+  try {
+    yield delay(1000);
+    yield put({
+      type: success,
+      payload,
+    });
+    yield put(userActions.deleteReview(payload));
+  } catch (e) {
+    console.log(e);
+    yield put({
+      type: failure,
+      payload: e.response.data,
+    });
+  }
+  yield put(loadingActions.finish(type.toString()));
+}
+
+function* watchDeleteReview() {
+  yield takeLatest(actions.deleteReview, deleteReview);
+}
+
+const getReview = createRequestSaga(actions.getReview, `api.getReview`);
 
 function* watchGetReview() {
   yield takeLatest(actions.getReview, getReview);
@@ -46,5 +72,10 @@ function* watchClearReview() {
 }
 
 export default function* reviewSaga(): Generator {
-  yield all([fork(watchAddReview), fork(watchGetReview), fork(watchClearReview)]);
+  yield all([
+    fork(watchAddReview),
+    fork(watchDeleteReview),
+    fork(watchGetReview),
+    fork(watchClearReview),
+  ]);
 }

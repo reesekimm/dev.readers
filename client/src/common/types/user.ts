@@ -1,7 +1,7 @@
 export interface UserState {
+  me: Me | null;
   logInDone: boolean;
   logInError: string | null;
-  me: Me | null;
 }
 
 export interface User {

@@ -24,6 +24,7 @@ function ReviewDetailTemplate({ content, closeModal }: Props): React.ReactElemen
           createdAt={createdAt}
           NumberOfComments={Comments.length}
           NumberOfLikes={Likers.length}
+          type="detail"
         />
       </S.ReviewContainer>
       <S.CommentContainer>
