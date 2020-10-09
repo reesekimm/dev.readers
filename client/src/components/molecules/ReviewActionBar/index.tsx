@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   HeartOutlined,
@@ -38,16 +38,23 @@ function ReviewActionBar({
   const { id, User, Book, rating, content: data, createdAt, Comments, Likers } = content;
 
   const dispatch = useDispatch();
-  const myId = useSelector((state: RootState) => state.user.me?.id);
+  const { me } = useSelector((state: RootState) => state.user);
+  const { mainReviews } = useSelector((state: RootState) => state.review);
   const { deleteReview } = useSelector((state: RootState) => state.loading);
-
   const { modalIsOpened: feedbackModalIsOpened, toggleModal: toggleFeedbackModal } = useModal();
 
-  const [liked, setLiked] = useState(false);
+  const liked = me?.Likes.find((review) => review.id === id);
 
-  const toggleLiked = useCallback(() => {
-    setLiked((prev) => !prev);
+  const onLike = useCallback(() => {
+    dispatch(actions.likeReview(id));
   }, []);
+
+  const [numOfLikers, setNumOfLikers] = useState(Likers.length);
+
+  useEffect(() => {
+    const latesNumberOfLikers = mainReviews.find((review) => review.id === id).Likers.length;
+    setNumOfLikers(latesNumberOfLikers);
+  }, [mainReviews]);
 
   const onClickEditReview = useCallback(() => {
     dispatch(modalActions.closeReviewDetailModal());
@@ -62,6 +69,8 @@ function ReviewActionBar({
     dispatch(actions.deleteReview(id));
     dispatch(modalActions.closeReviewDetailModal());
   }, []);
+
+  const showMoreActions = me && me.id && me.id === User.id && type === 'detail';
 
   return (
     <S.Container {...props}>
@@ -84,7 +93,7 @@ function ReviewActionBar({
             </S.ButtonContent>
           </Button>
         )}
-        {myId && User.id === myId && type === 'detail' ? (
+        {showMoreActions && (
           <>
             <Button styleType="plain" onClick={onClickEditReview}>
               <S.ButtonContent>
@@ -115,16 +124,15 @@ function ReviewActionBar({
               closeModal={toggleFeedbackModal}
             />
           </>
-        ) : (
-          <Button styleType="plain" onClick={toggleLiked}>
-            <S.ButtonContent>
-              {liked ? <HeartFilled key="heart" /> : <HeartOutlined key="like" />}
-              <Text color="gray4" fontSize="xsm">
-                좋아요 {Likers.length}
-              </Text>
-            </S.ButtonContent>
-          </Button>
         )}
+        <Button styleType="plain" onClick={liked ? null : onLike}>
+          <S.ButtonContent>
+            {liked ? <HeartFilled key="heart" /> : <HeartOutlined key="like" />}
+            <Text color="gray4" fontSize="xsm">
+              좋아요 {numOfLikers}
+            </Text>
+          </S.ButtonContent>
+        </Button>
       </div>
     </S.Container>
   );

@@ -12,6 +12,8 @@ export const initialState: IReview.ReviewState = {
   editReviewError: null,
   deleteReviewDone: false,
   deleteReviewError: null,
+  likeReviewDone: false,
+  likeReviewError: null,
   Review: null,
   getReviewDone: false,
   getReviewError: null,
@@ -63,7 +65,6 @@ const reviewSlice = createSlice({
       state.editReviewError = null;
     },
     editReviewFailure: (state, action) => {
-      state.editReviewDone = true;
       state.editReviewError = action.payload;
     },
     resetEditReviewState: (state) => {
@@ -85,6 +86,21 @@ const reviewSlice = createSlice({
     resetDeleteReviewState: (state) => {
       state.deleteReviewDone = false;
       state.deleteReviewError = null;
+    },
+    likeReview: (state, action) => {
+      state.likeReviewDone = false;
+      state.likeReviewError = null;
+    },
+    likeReviewSuccess: (state, action) => {
+      const reviewToLike = state.mainReviews.find(
+        (review) => review.id === action.payload.ReviewId
+      );
+      reviewToLike.Likers.push({ id: action.payload.UserId });
+      state.likeReviewDone = true;
+    },
+    likeReviewFailure: (state, action) => {
+      state.likeReviewDone = true;
+      state.likeReviewError = action.payload;
     },
     getReview: (state, action: PayloadAction<IBook.ISBN>) => {
       state.Review = null;

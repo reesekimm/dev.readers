@@ -70,6 +70,34 @@ function* watchDeleteReview() {
   yield takeLatest(actions.deleteReview, deleteReview);
 }
 
+/** 좋아요 */
+
+function* likeReview({ type, payload }) {
+  const success = `${type}Success`;
+  const failure = `${type}Failure`;
+  yield put(loadingActions.start(type.toString()));
+  console.log('[payload]', payload);
+  try {
+    yield delay(1000);
+    yield put({
+      type: success,
+      payload: { ReviewId: payload, UserId: 1 },
+    });
+    yield put(userActions.addLike({ id: payload }));
+  } catch (e) {
+    console.log(e);
+    yield put({
+      type: failure,
+      payload: e.response.data,
+    });
+  }
+  yield put(loadingActions.finish(type.toString()));
+}
+
+function* watchLikeReview() {
+  yield takeLatest(actions.likeReview, likeReview);
+}
+
 /** 내가 작성한 리뷰 가져오기 */
 
 const getReview = createRequestSaga(actions.getReview, `api.getReview`);
@@ -116,6 +144,7 @@ export default function* reviewSaga(): Generator {
     fork(watchResetEditReviewState),
     fork(watchDeleteReview),
     fork(watchResetDeleteReviewState),
+    fork(watchLikeReview),
     fork(watchGetReview),
     fork(watchClearReview),
   ]);
