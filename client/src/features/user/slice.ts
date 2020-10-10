@@ -48,6 +48,15 @@ const userSlice = createSlice({
       const reviewIndex = state.me?.Reviews.findIndex((review) => review.id === action.payload);
       state?.me.Reviews.splice(reviewIndex, 1);
     },
+    addLike: (state, action) => {
+      state.me?.Likes.push(action.payload);
+    },
+    cancelLike: (state, action) => {
+      const reviewIndex = state.me?.Likes.findIndex(
+        (review) => review.id === action.payload.ReviewId
+      );
+      state.me?.Likes.splice(reviewIndex, 1);
+    },
   },
 });
 

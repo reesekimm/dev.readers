@@ -43,6 +43,11 @@ export interface ReviewState {
   editReviewError: string | null;
   deleteReviewDone: boolean;
   deleteReviewError: string | null;
+  selectedReviewId: ReviewId | null;
+  addLikeDone: boolean;
+  addLikeError: string | null;
+  cancelLikeDone: boolean;
+  cancelLikeError: string | null;
   /** 이미 리뷰를 작성한 도서 클릭시 제공할 데이터 */
   Review: Review | null;
   getReviewDone: boolean;

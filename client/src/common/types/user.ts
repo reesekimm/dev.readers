@@ -1,3 +1,5 @@
+import { IReview } from '@types';
+
 export interface UserState {
   me: Me | null;
   logInDone: boolean;
@@ -20,6 +22,7 @@ export interface Me {
   id: number | string;
   nickname: string;
   Reviews: Review[];
+  Likes: { id: IReview.ReviewId }[];
   Followings: User[];
   Followers: User[];
 }

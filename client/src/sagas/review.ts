@@ -56,6 +56,7 @@ function* deleteReview({ type, payload }) {
       payload,
     });
     yield put(userActions.deleteReview(payload));
+    yield put(userActions.cancelLike(payload));
   } catch (e) {
     console.log(e);
     yield put({
@@ -68,6 +69,62 @@ function* deleteReview({ type, payload }) {
 
 function* watchDeleteReview() {
   yield takeLatest(actions.deleteReview, deleteReview);
+}
+
+/** 좋아요 */
+
+function* addLike({ type, payload }) {
+  const success = `${type}Success`;
+  const failure = `${type}Failure`;
+  yield put(loadingActions.start(type.toString()));
+  console.log('[payload]', payload);
+  try {
+    yield delay(1000);
+    yield put(userActions.addLike({ id: payload }));
+    yield put({
+      type: success,
+      payload: { ReviewId: payload, UserId: 1 },
+    });
+  } catch (e) {
+    console.log(e);
+    yield put({
+      type: failure,
+      payload: e.response.data,
+    });
+  }
+  yield put(loadingActions.finish(type.toString()));
+}
+
+function* watchAddLike() {
+  yield takeLatest(actions.addLike, addLike);
+}
+
+/** 좋아요 취소  */
+
+function* cancelLike({ type, payload }) {
+  const success = `${type}Success`;
+  const failure = `${type}Failure`;
+  yield put(loadingActions.start(type.toString()));
+  console.log('[payload]', payload);
+  try {
+    yield delay(1000);
+    yield put(userActions.cancelLike({ id: payload }));
+    yield put({
+      type: success,
+      payload: { ReviewId: payload, UserId: 1 },
+    });
+  } catch (e) {
+    console.log(e);
+    yield put({
+      type: failure,
+      payload: e.response.data,
+    });
+  }
+  yield put(loadingActions.finish(type.toString()));
+}
+
+function* watchCancelLike() {
+  yield takeLatest(actions.cancelLike, cancelLike);
 }
 
 /** 내가 작성한 리뷰 가져오기 */
@@ -116,6 +173,8 @@ export default function* reviewSaga(): Generator {
     fork(watchResetEditReviewState),
     fork(watchDeleteReview),
     fork(watchResetDeleteReviewState),
+    fork(watchAddLike),
+    fork(watchCancelLike),
     fork(watchGetReview),
     fork(watchClearReview),
   ]);

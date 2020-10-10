@@ -26,6 +26,5 @@ export const Container = styled.div`
 export const ButtonContent = styled.div`
   min-width: 60px;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
 `;
