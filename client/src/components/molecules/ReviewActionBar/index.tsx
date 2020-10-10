@@ -6,6 +6,7 @@ import {
   MessageOutlined,
   EditOutlined,
   DeleteOutlined,
+  LoadingOutlined,
 } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -39,14 +40,17 @@ function ReviewActionBar({
 
   const dispatch = useDispatch();
   const { me } = useSelector((state: RootState) => state.user);
-  const { mainReviews } = useSelector((state: RootState) => state.review);
-  const { deleteReview } = useSelector((state: RootState) => state.loading);
+  const { mainReviews, selectedReviewId } = useSelector((state: RootState) => state.review);
+  const { deleteReview, addLike, cancelLike } = useSelector((state: RootState) => state.loading);
   const { modalIsOpened: feedbackModalIsOpened, toggleModal: toggleFeedbackModal } = useModal();
 
   const liked = me?.Likes.find((review) => review.id === id);
-
   const onLike = useCallback(() => {
-    dispatch(actions.likeReview(id));
+    dispatch(actions.addLike(id));
+  }, []);
+
+  const onCancelLike = useCallback(() => {
+    dispatch(actions.cancelLike(id));
   }, []);
 
   const [numOfLikers, setNumOfLikers] = useState(Likers.length);
@@ -71,6 +75,7 @@ function ReviewActionBar({
   }, []);
 
   const showMoreActions = me && me.id && me.id === User.id && type === 'detail';
+  const showLoadingIndicator = (addLike || cancelLike) && id === selectedReviewId;
 
   return (
     <S.Container {...props}>
@@ -125,9 +130,15 @@ function ReviewActionBar({
             />
           </>
         )}
-        <Button styleType="plain" onClick={liked ? null : onLike}>
+        <Button styleType="plain" id={id} onClick={liked ? onCancelLike : onLike}>
           <S.ButtonContent>
-            {liked ? <HeartFilled key="heart" /> : <HeartOutlined key="like" />}
+            {showLoadingIndicator ? (
+              <LoadingOutlined />
+            ) : liked ? (
+              <HeartFilled key="heart" />
+            ) : (
+              <HeartOutlined key="like" />
+            )}
             <Text color="gray4" fontSize="xsm">
               좋아요 {numOfLikers}
             </Text>

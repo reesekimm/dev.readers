@@ -12,8 +12,11 @@ export const initialState: IReview.ReviewState = {
   editReviewError: null,
   deleteReviewDone: false,
   deleteReviewError: null,
-  likeReviewDone: false,
-  likeReviewError: null,
+  selectedReviewId: null,
+  addLikeDone: false,
+  addLikeError: null,
+  cancelLikeDone: false,
+  cancelLikeError: null,
   Review: null,
   getReviewDone: false,
   getReviewError: null,
@@ -87,20 +90,44 @@ const reviewSlice = createSlice({
       state.deleteReviewDone = false;
       state.deleteReviewError = null;
     },
-    likeReview: (state, action) => {
-      state.likeReviewDone = false;
-      state.likeReviewError = null;
+    addLike: (state, action: PayloadAction<IReview.ReviewId>) => {
+      state.addLikeDone = false;
+      state.addLikeError = null;
+      state.selectedReviewId = action.payload;
     },
-    likeReviewSuccess: (state, action) => {
+    addLikeSuccess: (state, action) => {
       const reviewToLike = state.mainReviews.find(
         (review) => review.id === action.payload.ReviewId
       );
       reviewToLike.Likers.push({ id: action.payload.UserId });
-      state.likeReviewDone = true;
+      state.addLikeDone = true;
+      state.selectedReviewId = null;
     },
-    likeReviewFailure: (state, action) => {
-      state.likeReviewDone = true;
-      state.likeReviewError = action.payload;
+    addLikeFailure: (state, action) => {
+      state.addLikeDone = true;
+      state.addLikeError = action.payload;
+      state.selectedReviewId = null;
+    },
+    cancelLike: (state, action: PayloadAction<IReview.ReviewId>) => {
+      state.cancelLikeDone = false;
+      state.cancelLikeError = null;
+      state.selectedReviewId = action.payload;
+    },
+    cancelLikeSuccess: (state, action) => {
+      const reviewToUnlike = state.mainReviews.find(
+        (review) => review.id === action.payload.ReviewId
+      );
+      const indexOfLiker = reviewToUnlike.Likers.findIndex(
+        (liker) => liker.id === action.payload.UserId
+      );
+      reviewToUnlike.Likers.splice(indexOfLiker, 1);
+      state.cancelLikeDone = true;
+      state.selectedReviewId = null;
+    },
+    cancelLikeFailure: (state, action) => {
+      state.cancelLikeDone = true;
+      state.cancelLikeError = action.payload;
+      state.selectedReviewId = null;
     },
     getReview: (state, action: PayloadAction<IBook.ISBN>) => {
       state.Review = null;

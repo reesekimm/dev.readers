@@ -72,18 +72,18 @@ function* watchDeleteReview() {
 
 /** 좋아요 */
 
-function* likeReview({ type, payload }) {
+function* addLike({ type, payload }) {
   const success = `${type}Success`;
   const failure = `${type}Failure`;
   yield put(loadingActions.start(type.toString()));
   console.log('[payload]', payload);
   try {
     yield delay(1000);
+    yield put(userActions.addLike({ id: payload }));
     yield put({
       type: success,
       payload: { ReviewId: payload, UserId: 1 },
     });
-    yield put(userActions.addLike({ id: payload }));
   } catch (e) {
     console.log(e);
     yield put({
@@ -94,8 +94,36 @@ function* likeReview({ type, payload }) {
   yield put(loadingActions.finish(type.toString()));
 }
 
-function* watchLikeReview() {
-  yield takeLatest(actions.likeReview, likeReview);
+function* watchAddLike() {
+  yield takeLatest(actions.addLike, addLike);
+}
+
+/** 좋아요 취소  */
+
+function* cancelLike({ type, payload }) {
+  const success = `${type}Success`;
+  const failure = `${type}Failure`;
+  yield put(loadingActions.start(type.toString()));
+  console.log('[payload]', payload);
+  try {
+    yield delay(1000);
+    yield put(userActions.cancelLike({ id: payload }));
+    yield put({
+      type: success,
+      payload: { ReviewId: payload, UserId: 1 },
+    });
+  } catch (e) {
+    console.log(e);
+    yield put({
+      type: failure,
+      payload: e.response.data,
+    });
+  }
+  yield put(loadingActions.finish(type.toString()));
+}
+
+function* watchCancelLike() {
+  yield takeLatest(actions.cancelLike, cancelLike);
 }
 
 /** 내가 작성한 리뷰 가져오기 */
@@ -144,7 +172,8 @@ export default function* reviewSaga(): Generator {
     fork(watchResetEditReviewState),
     fork(watchDeleteReview),
     fork(watchResetDeleteReviewState),
-    fork(watchLikeReview),
+    fork(watchAddLike),
+    fork(watchCancelLike),
     fork(watchGetReview),
     fork(watchClearReview),
   ]);
