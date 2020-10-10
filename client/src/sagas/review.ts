@@ -56,6 +56,7 @@ function* deleteReview({ type, payload }) {
       payload,
     });
     yield put(userActions.deleteReview(payload));
+    yield put(userActions.cancelLike(payload));
   } catch (e) {
     console.log(e);
     yield put({
