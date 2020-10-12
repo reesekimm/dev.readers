@@ -74,7 +74,7 @@ function ReviewActionBar({
     dispatch(modalActions.closeReviewDetailModal());
   }, []);
 
-  const showMoreActions = me && me.id && me.id === User.id && type === 'detail';
+  const showMoreActions = me && me.id === User.id && type === 'detail';
   const showLoadingIndicator = (addLike || cancelLike) && id === selectedReviewId;
 
   return (

@@ -6,6 +6,8 @@ const generateDummyUser = () => ({
   id: 1,
   nickname: 'Reese',
   Reviews: [],
+  Likes: [],
+  Comments: [],
   Followings: [
     { id: 3, nickname: 'Uni' },
     { id: 44, nickname: 'Daniel' },
@@ -16,7 +18,6 @@ const generateDummyUser = () => ({
     { id: 23, nickname: 'Harry' },
     { id: 9, nickname: 'David' },
   ],
-  Likes: [],
 });
 
 export const initialState: IUser.UserState = {
@@ -56,6 +57,17 @@ const userSlice = createSlice({
         (review) => review.id === action.payload.ReviewId
       );
       state.me?.Likes.splice(reviewIndex, 1);
+    },
+    addComment: (state, action: PayloadActions<IUser.Comment>) => {
+      state.me?.Comments.unshift(action.payload);
+    },
+    deleteComment: (state, action) => {
+      const indexOfComment = state.me?.Comments.findIndex(
+        (comment) =>
+          comment.ReviewId === action.payload.ReviewId &&
+          comment.CommentId === action.payload.CommentId
+      );
+      state.me?.Comments.splice(indexOfComment, 1);
     },
   },
 });

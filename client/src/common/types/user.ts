@@ -17,12 +17,18 @@ export interface Review {
   isbn13: string;
 }
 
+export interface Comment {
+  ReviewId: number | string;
+  CommentId: number | string;
+}
+
 export interface Me {
   // TODO: DB 연동 후 id type number로 고정
   id: number | string;
   nickname: string;
   Reviews: Review[];
   Likes: { id: IReview.ReviewId }[];
+  Comments: Comment[];
   Followings: User[];
   Followers: User[];
 }

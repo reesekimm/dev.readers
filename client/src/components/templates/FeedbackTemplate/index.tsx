@@ -7,6 +7,7 @@ interface Content {
   feedbackPhrase: string;
   onConfirm: () => void;
   cancelable: boolean;
+  isLoading: boolean;
 }
 
 interface Props {
@@ -15,7 +16,7 @@ interface Props {
 }
 
 function FeedbackTemplate({ content, closeModal }: Props): React.ReactElement {
-  const { feedbackPhrase, onConfirm, cancelable } = content;
+  const { feedbackPhrase, onConfirm, cancelable, isLoading } = content;
 
   return (
     <S.Container>
@@ -30,7 +31,9 @@ function FeedbackTemplate({ content, closeModal }: Props): React.ReactElement {
             취소
           </Button>
         )}
-        <Button onClick={onConfirm}>확인</Button>
+        <Button onClick={onConfirm} isLoading={isLoading}>
+          확인
+        </Button>
       </S.ButtonContainer>
     </S.Container>
   );

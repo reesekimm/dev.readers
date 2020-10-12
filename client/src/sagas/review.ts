@@ -1,4 +1,5 @@
 import { all, fork, takeLatest, take, call, put, delay } from 'redux-saga/effects';
+import shortId from 'shortid';
 
 import * as api from '../lib/api';
 import createRequestSaga from '../lib/createRequestSaga';
@@ -165,6 +166,77 @@ function* watchResetDeleteReviewState() {
   }
 }
 
+/** 댓글 작성 */
+
+function* addComment({ type, payload }) {
+  const success = `${type}Success`;
+  const failure = `${type}Failure`;
+  yield put(loadingActions.start(type.toString()));
+  console.log('[payload]', payload);
+  const commentId = shortId.generate();
+  try {
+    yield delay(1000);
+    yield put(userActions.addComment({ ReviewId: payload.ReviewId, CommentId: commentId }));
+    yield put({
+      type: success,
+      payload: {
+        id: commentId,
+        ReviewId: payload.ReviewId,
+        User: { id: 1, nickname: 'Reese' },
+        content: payload.content,
+        createdAt: '2020-09-06T07:47:13.000Z',
+      },
+    });
+  } catch (e) {
+    console.log(e);
+    yield put({
+      type: failure,
+      payload: e.response.data,
+    });
+  }
+  yield put(loadingActions.finish(type.toString()));
+}
+
+function* watchAddComment() {
+  yield takeLatest(actions.addComment, addComment);
+}
+
+/** 댓글 수정 */
+
+const editComment = createRequestSaga(actions.editComment, `api.editComment`);
+
+function* watchEditComment() {
+  yield takeLatest(actions.editComment, editComment);
+}
+
+/** 댓글 삭제 */
+
+function* deleteComment({ type, payload }) {
+  const success = `${type}Success`;
+  const failure = `${type}Failure`;
+  yield put(loadingActions.start(type.toString()));
+  console.log('[payload]', payload);
+  try {
+    yield delay(1000);
+    yield put(userActions.deleteComment(payload));
+    yield put({
+      type: success,
+      payload,
+    });
+  } catch (e) {
+    console.log(e);
+    yield put({
+      type: failure,
+      payload: e.response.data,
+    });
+  }
+  yield put(loadingActions.finish(type.toString()));
+}
+
+function* watchDeleteComment() {
+  yield takeLatest(actions.deleteComment, deleteComment);
+}
+
 export default function* reviewSaga(): Generator {
   yield all([
     fork(watchAddReview),
@@ -177,5 +249,8 @@ export default function* reviewSaga(): Generator {
     fork(watchCancelLike),
     fork(watchGetReview),
     fork(watchClearReview),
+    fork(watchAddComment),
+    fork(watchEditComment),
+    fork(watchDeleteComment),
   ]);
 }

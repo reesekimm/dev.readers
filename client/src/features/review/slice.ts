@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import shortId from 'shortid';
 
-import { IReview, IBook } from '@types';
+import { IReview, IBook, IUser } from '@types';
 import reviews from '../../assets/reviews';
 
 export const initialState: IReview.ReviewState = {
@@ -20,6 +20,12 @@ export const initialState: IReview.ReviewState = {
   Review: null,
   getReviewDone: false,
   getReviewError: null,
+  addCommentDone: false,
+  addCommentError: null,
+  editCommentDone: false,
+  editCommentError: null,
+  deleteCommentDone: false,
+  deleteCommentError: null,
 };
 
 const generateDummyReview = (data) => {
@@ -144,6 +150,57 @@ const reviewSlice = createSlice({
     },
     clearReview: (state) => {
       state.Review = null;
+    },
+    addComment: (state, action: PayloadAction<IReview.CommentInfo>) => {
+      state.addCommentDone = false;
+      state.addCommentError = null;
+    },
+    addCommentSuccess: (state, action: PayloadActions<IReview.Comment>) => {
+      const reviewToAddComment = state.mainReviews.find(
+        (review) => review.id === action.payload.ReviewId
+      );
+      reviewToAddComment?.Comments.push(action.payload);
+      state.addCommentDone = true;
+    },
+    addCommentFailure: (state, action) => {
+      state.addCommentDone = true;
+      state.addCommentError = action.payload;
+    },
+    editComment: (state, action) => {
+      state.editCommentDone = false;
+      state.editCommentError = null;
+    },
+    editCommentSuccess: (state, action) => {
+      const reviewToUpdateComment = state.mainReviews.find(
+        (review) => review.id === action.payload.ReviewId
+      );
+      const commentToUpdate = reviewToUpdateComment.Comments.find(
+        (comment) => comment.id === action.payload.CommentId
+      );
+      commentToUpdate.content = action.payload.content;
+      state.editCommentDone = true;
+      state.editCommentError = null;
+    },
+    editCommentFailure: (state, action) => {
+      state.editCommentDone = true;
+      state.editCommentError = action.payload;
+    },
+    deleteComment: (state, action: PayloadActions<IUser.Comment>) => {
+      state.deleteCommentDone = false;
+      state.deleteCommentError = null;
+    },
+    deleteCommentSuccess: (state, action: PayloadActions<IUser.Comment>) => {
+      const reviewToDeleteComment = state.mainReviews.find(
+        (review) => review.id === action.payload.ReviewId
+      );
+      const indexOfComment = reviewToDeleteComment?.Comments.findIndex(
+        (comment) => comment.id === action.payload.CommentId
+      );
+      reviewToDeleteComment?.Comments.splice(indexOfComment, 1);
+    },
+    deleteCommentFailure: (state, action) => {
+      state.deleteCommentDone = true;
+      state.deleteCommentError = action.payload;
     },
   },
 });

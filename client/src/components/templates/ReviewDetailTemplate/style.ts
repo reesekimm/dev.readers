@@ -29,6 +29,7 @@ export const Content = styled.p`
   max-height: 280px;
   overflow: auto;
   margin: 1rem 0;
+  white-space: pre-wrap;
 `;
 
 export const CommentContainer = styled.div`
@@ -41,6 +42,7 @@ export const CommentContainer = styled.div`
 
 export const CommentList = styled.ul`
   flex: 1;
+  width: 100%;
 `;
 
 export const NoComment = styled.div`
