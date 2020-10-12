@@ -61,4 +61,6 @@ export interface ReviewState {
   getReviewError: string | null;
   addCommentDone: boolean;
   addCommentError: string | null;
+  deleteCommentDone: boolean;
+  deleteCommentError: string | null;
 }

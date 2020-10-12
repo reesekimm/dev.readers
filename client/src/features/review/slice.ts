@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import shortId from 'shortid';
 
-import { IReview, IBook } from '@types';
+import { IReview, IBook, IUser } from '@types';
 import reviews from '../../assets/reviews';
 
 export const initialState: IReview.ReviewState = {
@@ -22,6 +22,8 @@ export const initialState: IReview.ReviewState = {
   getReviewError: null,
   addCommentDone: false,
   addCommentError: null,
+  deleteCommentDone: false,
+  deleteCommentError: null,
 };
 
 const generateDummyReview = (data) => {
@@ -161,6 +163,23 @@ const reviewSlice = createSlice({
     addCommentFailure: (state, action) => {
       state.addCommentDone = true;
       state.addCommentError = action.payload;
+    },
+    deleteComment: (state, action: PayloadActions<IUser.Comment>) => {
+      state.deleteCommentDone = false;
+      state.deleteCommentError = null;
+    },
+    deleteCommentSuccess: (state, action: PayloadActions<IUser.Comment>) => {
+      const reviewToDeleteComment = state.mainReviews.find(
+        (review) => review.id === action.payload.ReviewId
+      );
+      const indexOfComment = reviewToDeleteComment?.Comments.findIndex(
+        (comment) => comment.id === action.payload.CommentId
+      );
+      reviewToDeleteComment?.Comments.splice(indexOfComment, 1);
+    },
+    deleteCommentFailure: (state, action) => {
+      state.deleteCommentDone = true;
+      state.deleteCommentError = action.payload;
     },
   },
 });

@@ -61,6 +61,14 @@ const userSlice = createSlice({
     addComment: (state, action: PayloadActions<IUser.Comment>) => {
       state.me?.Comments.unshift(action.payload);
     },
+    deleteComment: (state, action) => {
+      const indexOfComment = state.me?.Comments.findIndex(
+        (comment) =>
+          comment.ReviewId === action.payload.ReviewId &&
+          comment.CommentId === action.payload.CommentId
+      );
+      state.me?.Comments.splice(indexOfComment, 1);
+    },
   },
 });
 

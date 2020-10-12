@@ -201,6 +201,34 @@ function* watchAddComment() {
   yield takeLatest(actions.addComment, addComment);
 }
 
+/** 댓글 삭제 */
+
+function* deleteComment({ type, payload }) {
+  const success = `${type}Success`;
+  const failure = `${type}Failure`;
+  yield put(loadingActions.start(type.toString()));
+  console.log('[payload]', payload);
+  try {
+    yield delay(1000);
+    yield put(userActions.deleteComment(payload));
+    yield put({
+      type: success,
+      payload,
+    });
+  } catch (e) {
+    console.log(e);
+    yield put({
+      type: failure,
+      payload: e.response.data,
+    });
+  }
+  yield put(loadingActions.finish(type.toString()));
+}
+
+function* watchDeleteComment() {
+  yield takeLatest(actions.deleteComment, deleteComment);
+}
+
 export default function* reviewSaga(): Generator {
   yield all([
     fork(watchAddReview),
@@ -214,5 +242,6 @@ export default function* reviewSaga(): Generator {
     fork(watchGetReview),
     fork(watchClearReview),
     fork(watchAddComment),
+    fork(watchDeleteComment),
   ]);
 }
