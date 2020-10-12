@@ -20,6 +20,8 @@ export const initialState: IReview.ReviewState = {
   Review: null,
   getReviewDone: false,
   getReviewError: null,
+  addCommentDone: false,
+  addCommentError: null,
 };
 
 const generateDummyReview = (data) => {
@@ -144,6 +146,21 @@ const reviewSlice = createSlice({
     },
     clearReview: (state) => {
       state.Review = null;
+    },
+    addComment: (state, action: PayloadAction<IReview.CommentInfo>) => {
+      state.addCommentDone = false;
+      state.addCommentError = null;
+    },
+    addCommentSuccess: (state, action: PayloadActions<IReview.Comment>) => {
+      const reviewToAddComment = state.mainReviews.find(
+        (review) => review.id === action.payload.ReviewId
+      );
+      reviewToAddComment?.Comments.push(action.payload);
+      state.addCommentDone = true;
+    },
+    addCommentFailure: (state, action) => {
+      state.addCommentDone = true;
+      state.addCommentError = action.payload;
     },
   },
 });

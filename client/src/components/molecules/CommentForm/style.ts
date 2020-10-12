@@ -5,6 +5,9 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  & > button {
+    margin: 0;
+  }
 `;
 
 export const Textarea = styled.textarea`

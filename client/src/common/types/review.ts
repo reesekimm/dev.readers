@@ -5,10 +5,17 @@ export type ReviewId = number | string; // TODO: DB 연동후 number로 고정
 export type CreatedAt = string;
 
 export interface Comment {
+  id: number | string; // TODO: DB 연동후 number로 고정
   ReviewId: ReviewId;
   User: IUser.User;
   content: string;
   createdAt: CreatedAt;
+}
+
+export interface CommentInfo {
+  ReviewId: ReviewId;
+  content: string;
+  UserId: number | string; // TODO: DB 연동후 number로 고정
 }
 
 export interface Liker {
@@ -52,4 +59,6 @@ export interface ReviewState {
   Review: Review | null;
   getReviewDone: boolean;
   getReviewError: string | null;
+  addCommentDone: boolean;
+  addCommentError: string | null;
 }
