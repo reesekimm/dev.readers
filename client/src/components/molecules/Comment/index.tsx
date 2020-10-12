@@ -1,11 +1,11 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 
 import { RootState } from '@features';
-import { Text, Button, Modal, FeedbackTemplate } from '@components';
+import { Text, Button, Modal, FeedbackTemplate, CommentEditor } from '@components';
 import { IReview } from '@types';
 import { useModal } from '@hooks';
 import * as S from './style';
@@ -20,6 +20,15 @@ function Comment({ id, ReviewId, User, content, createdAt }: IReview.Comment): R
   const { deleteComment } = useSelector((state: RootState) => state.loading);
 
   const { modalIsOpened: feedbackModalIsOpened, toggleModal: toggleFeedbackModal } = useModal();
+  const [editMode, setEditMode] = useState(false);
+
+  const onClickEditComment = useCallback(() => {
+    setEditMode(true);
+  }, []);
+
+  const onCloseCommentEditor = useCallback(() => {
+    setEditMode(false);
+  }, []);
 
   const onClickDeleteComment = useCallback(() => {
     toggleFeedbackModal();
@@ -29,6 +38,9 @@ function Comment({ id, ReviewId, User, content, createdAt }: IReview.Comment): R
     dispatch(actions.deleteComment({ ReviewId, CommentId: id }));
     toggleFeedbackModal();
   }, []);
+
+  const showActionButtons =
+    me && me.Comments.find((comment) => comment.CommentId === id) && !editMode;
 
   return (
     <S.Container>
@@ -41,9 +53,9 @@ function Comment({ id, ReviewId, User, content, createdAt }: IReview.Comment): R
             {dayjs(createdAt).fromNow()}
           </Text>
         </div>
-        {me && me.Comments.find((comment) => comment.CommentId === id) && (
+        {showActionButtons && (
           <div>
-            <Button styleType="plain">
+            <Button styleType="plain" onClick={onClickEditComment}>
               <Text color="primary" fontSize="xsm">
                 수정
               </Text>
@@ -56,7 +68,16 @@ function Comment({ id, ReviewId, User, content, createdAt }: IReview.Comment): R
           </div>
         )}
       </S.CommentHeader>
-      {content}
+      {editMode ? (
+        <CommentEditor
+          ReviewId={ReviewId}
+          CommentId={id}
+          content={content}
+          onCloseCommentEditor={onCloseCommentEditor}
+        />
+      ) : (
+        content
+      )}
       <Modal
         modalFor="feedback"
         modalSize="sm"
@@ -64,7 +85,7 @@ function Comment({ id, ReviewId, User, content, createdAt }: IReview.Comment): R
           feedbackPhrase: '댓글을 삭제하시겠어요?',
           onConfirm: onConfirmDelete,
           cancelable: true,
-          isLoading: deleteComment
+          isLoading: deleteComment,
         }}
         Template={FeedbackTemplate}
         modalIsOpened={feedbackModalIsOpened}

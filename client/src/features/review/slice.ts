@@ -22,6 +22,8 @@ export const initialState: IReview.ReviewState = {
   getReviewError: null,
   addCommentDone: false,
   addCommentError: null,
+  editCommentDone: false,
+  editCommentError: null,
   deleteCommentDone: false,
   deleteCommentError: null,
 };
@@ -163,6 +165,25 @@ const reviewSlice = createSlice({
     addCommentFailure: (state, action) => {
       state.addCommentDone = true;
       state.addCommentError = action.payload;
+    },
+    editComment: (state, action) => {
+      state.editCommentDone = false;
+      state.editCommentError = null;
+    },
+    editCommentSuccess: (state, action) => {
+      const reviewToUpdateComment = state.mainReviews.find(
+        (review) => review.id === action.payload.ReviewId
+      );
+      const commentToUpdate = reviewToUpdateComment.Comments.find(
+        (comment) => comment.id === action.payload.CommentId
+      );
+      commentToUpdate.content = action.payload.content;
+      state.editCommentDone = true;
+      state.editCommentError = null;
+    },
+    editCommentFailure: (state, action) => {
+      state.editCommentDone = true;
+      state.editCommentError = action.payload;
     },
     deleteComment: (state, action: PayloadActions<IUser.Comment>) => {
       state.deleteCommentDone = false;

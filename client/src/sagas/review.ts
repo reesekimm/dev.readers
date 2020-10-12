@@ -201,6 +201,14 @@ function* watchAddComment() {
   yield takeLatest(actions.addComment, addComment);
 }
 
+/** 댓글 수정 */
+
+const editComment = createRequestSaga(actions.editComment, `api.editComment`);
+
+function* watchEditComment() {
+  yield takeLatest(actions.editComment, editComment);
+}
+
 /** 댓글 삭제 */
 
 function* deleteComment({ type, payload }) {
@@ -242,6 +250,7 @@ export default function* reviewSaga(): Generator {
     fork(watchGetReview),
     fork(watchClearReview),
     fork(watchAddComment),
+    fork(watchEditComment),
     fork(watchDeleteComment),
   ]);
 }

@@ -9,6 +9,7 @@ export { default as Text } from './atoms/Text';
 export { default as BookInfo } from './molecules/BookInfo';
 export { default as BookListItem } from './molecules/BookListItem';
 export { default as Comment } from './molecules/Comment';
+export { default as CommentEditor } from './molecules/CommentEditor';
 export { default as CommentForm } from './molecules/CommentForm';
 export { default as ReviewActionBar } from './molecules/ReviewActionBar';
 export { default as ReviewForm } from './molecules/ReviewForm';
