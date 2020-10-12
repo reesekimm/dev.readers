@@ -20,6 +20,7 @@ export const Content = styled.p`
   flex: 1;
   margin: 1rem 0;
   text-align: justify;
+  white-space: pre-wrap;
 `;
 
 export const Actions = styled.div`
