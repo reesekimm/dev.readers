@@ -56,6 +56,7 @@ function ReviewActionBar({
   const [numOfLikers, setNumOfLikers] = useState(Likers.length);
 
   useEffect(() => {
+    if (!mainReviews.length) return;
     const latesNumberOfLikers = mainReviews.find((review) => review.id === id).Likers.length;
     setNumOfLikers(latesNumberOfLikers);
   }, [mainReviews]);
