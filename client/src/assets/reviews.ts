@@ -38,7 +38,7 @@ export default [
     },
     UserId: 1,
     Comments: [],
-    Likers: [2, 4, 5],
+    Likers: [{ id: 2 }, { id: 4 }, { id: 5 }],
   },
   {
     id: 6,
@@ -90,7 +90,7 @@ export default [
         createdAt: '2020-09-20T08:52:15.000Z',
       },
     ],
-    Likers: [1, 11],
+    Likers: [{ id: 1 }, { id: 11 }],
   },
   {
     id: 4,
@@ -144,7 +144,7 @@ export default [
         createdAt: '2020-08-30T08:52:15.000Z',
       },
     ],
-    Likers: [2, 49, 9, 8, 22, 1],
+    Likers: [{ id: 2 }, { id: 49 }, { id: 9 }, { id: 8 }, { id: 22 }, { id: 1 }],
   },
   {
     id: 11,
@@ -202,6 +202,6 @@ export default [
         createdAt: '2020-09-11T08:52:15.000Z',
       },
     ],
-    Likers: [2, 49, 9, 8, 22, 1, 33, 55],
+    Likers: [],
   },
 ];
