@@ -24,6 +24,8 @@ export const initialState: IUser.UserState = {
   me: null,
   logInDone: false,
   logInError: null,
+  logOutDone: false,
+  logOutError: null,
 };
 
 const userSlice = createSlice({
@@ -41,6 +43,18 @@ const userSlice = createSlice({
     loginFailure: (state, action: PayloadAction<string>) => {
       state.logInDone = true;
       state.logInError = action.payload;
+    },
+    logout: (state) => {
+      state.logOutDone = false;
+      state.logOutError = null;
+    },
+    logoutSuccess: (state) => {
+      state.logOutDone = true;
+      state.me = null;
+    },
+    logoutFailure: (state, action: PayloadAction<string>) => {
+      state.logOutDone = true;
+      state.logOutError = action.payload;
     },
     addReview: (state, action: PayloadAction<IUser.Review>) => {
       state.me?.Reviews.unshift(action.payload);

@@ -4,6 +4,8 @@ export interface UserState {
   me: Me | null;
   logInDone: boolean;
   logInError: string | null;
+  logOutDone: boolean;
+  logOutError: string | null;
 }
 
 export interface User {

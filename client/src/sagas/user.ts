@@ -10,6 +10,12 @@ function* watchLogIn() {
   yield takeLatest(actions.login, logIn);
 }
 
+const logOut = createRequestSaga(actions.logout, `api.logout`);
+
+function* watchLogOut() {
+  yield takeLatest(actions.logout, logOut);
+}
+
 export default function* userSaga(): Generator {
-  yield all([fork(watchLogIn)]);
+  yield all([fork(watchLogIn), fork(watchLogOut)]);
 }
