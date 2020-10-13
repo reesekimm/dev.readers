@@ -25,6 +25,7 @@ export { default as ReviewList } from './organisms/ReviewList';
 
 export { default as BaseTemplate } from './templates/BaseTemplate';
 export { default as FeedbackTemplate } from './templates/FeedbackTemplate';
+export { default as LoginTemplate } from './templates/LoginTemplate';
 export { default as MainTemplate } from './templates/MainTemplate';
 export { default as MyPageTemplate } from './templates/MyPageTemplate';
 export { default as ReviewDetailTemplate } from './templates/ReviewDetailTemplate';

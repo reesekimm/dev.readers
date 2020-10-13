@@ -6,7 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 
 import { Text, Button } from '@components';
 import { RootState } from '@features';
-import { actions } from '../../../features/user';
+import { actions as modalActions } from '../../../features/modal';
 import * as S from './style';
 
 function Header(): React.ReactElement {
@@ -15,7 +15,7 @@ function Header(): React.ReactElement {
   const { login } = useSelector((state: RootState) => state.loading);
 
   const onClickLogin = useCallback(() => {
-    dispatch(actions.login());
+    dispatch(modalActions.openLoginModal());
   }, []);
 
   return (
