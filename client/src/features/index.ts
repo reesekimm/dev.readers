@@ -3,11 +3,11 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 
 import { IUser, IReview, ISearch, ILoading, IModal } from '@types';
-import { initialState as userInitialState, reducer as userReducer } from './user';
-import { initialState as reviewInitialState, reducer as reviewReducer } from './review';
-import { initialState as searchInitialState, reducer as searchReducer } from './search';
-import { initialState as loadingInitialState, reducer as loadingReducer } from './loading';
-import { initialState as modalInitialState, reducer as modalReducer } from './modal';
+import { reducer as userReducer } from './user';
+import { reducer as reviewReducer } from './review';
+import { reducer as searchReducer } from './search';
+import { reducer as loadingReducer } from './loading';
+import { reducer as modalReducer } from './modal';
 
 export interface RootState {
   user: IUser.UserState;
@@ -18,33 +18,21 @@ export interface RootState {
 }
 
 export default function createReducer() {
-  const rootReducer = combineReducers({
-    index: (
-      state: RootState = {
-        user: userInitialState,
-        review: reviewInitialState,
-        search: searchInitialState,
-        loading: loadingInitialState,
-        modal: modalInitialState,
-      },
-      action: AnyAction
-    ) => {
-      switch (action.type) {
-        case HYDRATE:
-          return {
-            ...state,
-            ...action.payload,
-          };
-        default:
-          return state;
+  const rootReducer = (state: RootState, action: AnyAction) => {
+    switch (action.type) {
+      case HYDRATE:
+        return action.payload;
+      default: {
+        const combinedReducer = combineReducers({
+          user: userReducer,
+          review: reviewReducer,
+          search: searchReducer,
+          loading: loadingReducer,
+          modal: modalReducer,
+        });
+        return combinedReducer(state, action);
       }
-    },
-    user: userReducer,
-    review: reviewReducer,
-    search: searchReducer,
-    loading: loadingReducer,
-    modal: modalReducer,
-  });
-
+    }
+  };
   return rootReducer;
 }

@@ -20,7 +20,7 @@ const app = express();
 
 db.sequelize
   .sync()
-  .then(() => console.log('DB connected!'))
+  .then(() => console.log('✅ DB connected!'))
   .catch(console.error);
 
 app.use(morgan('dev'));

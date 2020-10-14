@@ -6,12 +6,26 @@ export const initialState: IUser.UserState = {
   me: null,
   logOutDone: false,
   logOutError: null,
+  loadMyInfoDone: false,
+  loadMyInfoError: null,
 };
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    loadMyInfo: (state) => {
+      state.loadMyInfoDone = false;
+      state.loadMyInfoError = null;
+    },
+    loadMyInfoSuccess: (state, action) => {
+      state.loadMyInfoDone = true;
+      state.me = action.payload;
+    },
+    loadMyInfoFailure: (state, action) => {
+      state.loadMyInfoDone = true;
+      state.loadMyInfoError = action.payload;
+    },
     logout: (state) => {
       state.logOutDone = false;
       state.logOutError = null;
