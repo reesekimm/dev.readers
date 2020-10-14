@@ -4,9 +4,7 @@ import { IReview } from '@types';
 
 const BASE_URL = process.env.NEXT_PUBLIC_DEV_API;
 
-export const login = (data) => axios.post(`${BASE_URL}/user/login`, data);
-
-export const logout = () => axios.post(`${BASE_URL}/user/logout`);
+export const logout = () => axios.get(`${BASE_URL}/user/logout`);
 
 export const addReview = (review) => axios.post(`${BASE_URL}/review`, review);
 

@@ -2,8 +2,6 @@ import { IReview } from '@types';
 
 export interface UserState {
   me: Me | null;
-  logInDone: boolean;
-  logInError: string | null;
   logOutDone: boolean;
   logOutError: string | null;
 }
@@ -28,7 +26,6 @@ export interface Me {
   // TODO: DB 연동 후 id type number로 고정
   id: number | string;
   nickname: string;
-  email: string;
   avatarUrl: string;
   Reviews: Review[];
   Likes: { id: IReview.ReviewId }[];

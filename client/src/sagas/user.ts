@@ -4,12 +4,6 @@ import * as api from '../lib/api';
 import createRequestSaga from '../lib/createRequestSaga';
 import { actions } from '../features/user';
 
-const logIn = createRequestSaga(actions.login, `api.login`);
-
-function* watchLogIn() {
-  yield takeLatest(actions.login, logIn);
-}
-
 const logOut = createRequestSaga(actions.logout, `api.logout`);
 
 function* watchLogOut() {
@@ -17,5 +11,5 @@ function* watchLogOut() {
 }
 
 export default function* userSaga(): Generator {
-  yield all([fork(watchLogIn), fork(watchLogOut)]);
+  yield all([fork(watchLogOut)]);
 }
