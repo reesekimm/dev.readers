@@ -10,7 +10,7 @@ function* watchLoadMyInfo() {
   yield takeLatest(actions.loadMyInfo, loadMyInfo);
 }
 
-const logOut = createRequestSaga(actions.logout, `api.logout`);
+const logOut = createRequestSaga(actions.logout, api.logout);
 
 function* watchLogOut() {
   yield takeLatest(actions.logout, logOut);

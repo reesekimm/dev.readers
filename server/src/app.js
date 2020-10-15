@@ -23,6 +23,8 @@ db.sequelize
   .then(() => console.log('✅ DB connected!'))
   .catch(console.error);
 
+passportConfig();
+
 app.use(morgan('dev'));
 app.use(cors({ origin: true, credentials: true }));
 
@@ -38,7 +40,6 @@ app.use(
 );
 app.use(flash());
 
-passportConfig();
 app.use(passport.initialize());
 app.use(passport.session());
 

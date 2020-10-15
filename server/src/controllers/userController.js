@@ -5,7 +5,6 @@ const { User, Review, Comment } = require('../../models');
 exports.loadMyInfo = async (req, res, next) => {
   try {
     if (req.user) {
-      console.log('user exist!');
       const fullUser = await User.findOne({
         where: { id: req.user.id },
         include: [
@@ -70,6 +69,7 @@ exports.postGithubLogin = (req, res, next) => {
 
 exports.logout = (req, res, next) => {
   try {
+    console.log('===== logout called =====');
     req.logout();
     req.session.destroy();
     res.status(200).send('Bye bye~');

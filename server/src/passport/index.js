@@ -11,6 +11,7 @@ module.exports = () => {
   passport.deserializeUser(async (id, done) => {
     try {
       console.log('======= deserializeUser called =======');
+      console.log('id : ', id);
       const user = await User.findOne({ where: { id } });
       done(null, user);
     } catch (error) {
