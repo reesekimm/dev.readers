@@ -1,6 +1,9 @@
 import { IBook, IReview } from '@types';
 
 export interface ModalState {
+  loginModal: {
+    isOpened: boolean;
+  };
   writeReviewModal: {
     isOpened: boolean;
     data: IBook.Book | IReview.ReviewInfo | null;

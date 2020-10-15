@@ -5,17 +5,17 @@ module.exports = class User extends Model {
   static init(sequelize) {
     return super.init(
       {
-        name: {
-          type: DataTypes.STRING(),
+        nickname: {
+          type: DataTypes.STRING,
           allowNull: false,
         },
-        email: {
-          type: DataTypes.STRING(),
+        githubId: {
+          type: DataTypes.INTEGER,
           allowNull: false,
           unique: true,
         },
         avatarUrl: {
-          type: DataTypes.STRING(),
+          type: DataTypes.STRING,
           allowNull: true,
         },
       },
@@ -31,6 +31,6 @@ module.exports = class User extends Model {
   static associate(db) {
     db.User.hasMany(db.Review);
     db.User.hasMany(db.Comment);
-    db.User.belongsToMany(db.Review, { through: 'Like', as: 'Liked' });
+    db.User.belongsToMany(db.Review, { through: 'Like', as: 'Likes' });
   }
 };

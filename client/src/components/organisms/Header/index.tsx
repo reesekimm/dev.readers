@@ -6,16 +6,16 @@ import { SearchOutlined } from '@ant-design/icons';
 
 import { Text, Button } from '@components';
 import { RootState } from '@features';
-import { actions } from '../../../features/user';
+import { actions as modalActions } from '../../../features/modal';
 import * as S from './style';
 
 function Header(): React.ReactElement {
   const dispatch = useDispatch();
   const { me } = useSelector((state: RootState) => state.user);
-  const { login } = useSelector((state: RootState) => state.loading);
+  const { githubAuth } = useSelector((state: RootState) => state.loading);
 
   const onClickLogin = useCallback(() => {
-    dispatch(actions.login());
+    dispatch(modalActions.openLoginModal());
   }, []);
 
   return (
@@ -42,7 +42,7 @@ function Header(): React.ReactElement {
             type={me ? 'inLink' : null}
             href={me ? '/me' : null}
             onClick={me ? null : onClickLogin}
-            isLoading={login}
+            isLoading={githubAuth}
           >
             {me ? (
               <Avatar src={me.avatarUrl} style={{ backgroundColor: '#1e3799' }}>

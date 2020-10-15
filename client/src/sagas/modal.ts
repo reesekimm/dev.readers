@@ -3,6 +3,20 @@ import { all, fork, take, call, put } from 'redux-saga/effects';
 import { actions } from '../features/modal';
 import { actions as reviewActions } from '../features/review';
 
+function* watchOpenLoginModal() {
+  while (true) {
+    const action = yield take(actions.openLoginModal.toString());
+    if (action) yield call(actions.openLoginModal);
+  }
+}
+
+function* watchCloseLoginModal() {
+  while (true) {
+    const action = yield take(actions.closeLoginModal.toString());
+    if (action) yield call(actions.closeLoginModal);
+  }
+}
+
 function* watchOpenWriteReviewModal() {
   while (true) {
     const action = yield take(actions.openWriteReviewModal.toString());
@@ -39,6 +53,8 @@ function* watchCloseReviewDetailModal() {
 
 export default function* searchSaga(): Generator {
   yield all([
+    fork(watchOpenLoginModal),
+    fork(watchCloseLoginModal),
     fork(watchOpenWriteReviewModal),
     fork(watchCloseWriteReviewModal),
     fork(watchOpenReviewDetailModal),
