@@ -10,7 +10,7 @@ export const loadMyInfo = () => axios.get(`${BASE_URL}/user`);
 
 export const logout = () => axios.get(`${BASE_URL}/user/logout`);
 
-export const addReview = (review) => axios.post(`${BASE_URL}/review`, review);
+export const addReview = (review) => axios.post(`${BASE_URL}/review/review`, review);
 
 export const editReview = ({ id, rating, content }) =>
   axios.patch(`${BASE_URL}/review/${id}`, { rating, content });

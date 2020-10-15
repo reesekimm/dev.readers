@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-exports.searchBook = async (req, res) => {
+exports.searchBook = async (req, res, next) => {
   const { query, page } = req.query;
   const url = `${process.env.ALADIN_API}Query=${encodeURIComponent(query)}&Start=${page}`;
 

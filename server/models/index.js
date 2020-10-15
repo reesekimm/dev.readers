@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const user = require('./user');
 const review = require('./review');
+const book = require('./book');
 const comment = require('./comment');
 
 const env = process.env.NODE_ENV || 'development';
@@ -11,6 +12,7 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 
 db.User = user;
 db.Review = review;
+db.Book = book;
 db.Comment = comment;
 
 Object.keys(db).forEach((modelName) => {

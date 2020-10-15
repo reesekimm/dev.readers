@@ -3,7 +3,7 @@ import shortId from 'shortid';
 
 import * as api from '../lib/api';
 import createRequestSaga from '../lib/createRequestSaga';
-import { actions } from '../features/review';
+import { actions as reviewActions } from '../features/review';
 import { actions as userActions } from '../features/user';
 import { actions as loadingActions } from '../features/loading';
 
@@ -13,14 +13,13 @@ function* addReview({ type, payload }) {
   const success = `${type}Success`;
   const failure = `${type}Failure`;
   yield put(loadingActions.start(type.toString()));
-  console.log('[payload]', payload);
   try {
-    yield delay(1000);
+    const { data } = yield call(api.addReview, payload);
     yield put({
       type: success,
-      payload,
+      payload: data,
     });
-    yield put(userActions.addReview({ id: 'test', isbn13: payload.Book.isbn13 }));
+    yield put(userActions.addReview({ id: data.id, isbn13: data.Book.isbn13 }));
   } catch (e) {
     console.log(e);
     yield put({
@@ -32,15 +31,15 @@ function* addReview({ type, payload }) {
 }
 
 function* watchAddReview() {
-  yield takeLatest(actions.addReview, addReview);
+  yield takeLatest(reviewActions.addReview, addReview);
 }
 
 /** 리뷰 수정 */
 
-const editReview = createRequestSaga(actions.editReview, `api.editReview`);
+const editReview = createRequestSaga(reviewActions.editReview, `api.editReview`);
 
 function* watchEditReview() {
-  yield takeLatest(actions.editReview, editReview);
+  yield takeLatest(reviewActions.editReview, editReview);
 }
 
 /** 리뷰 삭제 */
@@ -69,7 +68,7 @@ function* deleteReview({ type, payload }) {
 }
 
 function* watchDeleteReview() {
-  yield takeLatest(actions.deleteReview, deleteReview);
+  yield takeLatest(reviewActions.deleteReview, deleteReview);
 }
 
 /** 좋아요 */
@@ -97,7 +96,7 @@ function* addLike({ type, payload }) {
 }
 
 function* watchAddLike() {
-  yield takeLatest(actions.addLike, addLike);
+  yield takeLatest(reviewActions.addLike, addLike);
 }
 
 /** 좋아요 취소  */
@@ -125,44 +124,44 @@ function* cancelLike({ type, payload }) {
 }
 
 function* watchCancelLike() {
-  yield takeLatest(actions.cancelLike, cancelLike);
+  yield takeLatest(reviewActions.cancelLike, cancelLike);
 }
 
 /** 내가 작성한 리뷰 가져오기 */
 
-const getReview = createRequestSaga(actions.getReview, `api.getReview`);
+const getReview = createRequestSaga(reviewActions.getReview, `api.getReview`);
 
 function* watchGetReview() {
-  yield takeLatest(actions.getReview, getReview);
+  yield takeLatest(reviewActions.getReview, getReview);
 }
 
 /** 내가 작성한 리뷰 삭제 */
 
 function* watchClearReview() {
   while (true) {
-    const action = yield take(actions.clearReview.toString());
-    if (action) yield call(actions.clearReview);
+    const action = yield take(reviewActions.clearReview.toString());
+    if (action) yield call(reviewActions.clearReview);
   }
 }
 
 function* watchResetAddReviewState() {
   while (true) {
-    const action = yield take(actions.resetAddReviewState.toString());
-    if (action) yield call(actions.resetAddReviewState);
+    const action = yield take(reviewActions.resetAddReviewState.toString());
+    if (action) yield call(reviewActions.resetAddReviewState);
   }
 }
 
 function* watchResetEditReviewState() {
   while (true) {
-    const action = yield take(actions.resetEditReviewState.toString());
-    if (action) yield call(actions.resetEditReviewState);
+    const action = yield take(reviewActions.resetEditReviewState.toString());
+    if (action) yield call(reviewActions.resetEditReviewState);
   }
 }
 
 function* watchResetDeleteReviewState() {
   while (true) {
-    const action = yield take(actions.resetDeleteReviewState.toString());
-    if (action) yield call(actions.resetDeleteReviewState);
+    const action = yield take(reviewActions.resetDeleteReviewState.toString());
+    if (action) yield call(reviewActions.resetDeleteReviewState);
   }
 }
 
@@ -198,15 +197,15 @@ function* addComment({ type, payload }) {
 }
 
 function* watchAddComment() {
-  yield takeLatest(actions.addComment, addComment);
+  yield takeLatest(reviewActions.addComment, addComment);
 }
 
 /** 댓글 수정 */
 
-const editComment = createRequestSaga(actions.editComment, `api.editComment`);
+const editComment = createRequestSaga(reviewActions.editComment, `api.editComment`);
 
 function* watchEditComment() {
-  yield takeLatest(actions.editComment, editComment);
+  yield takeLatest(reviewActions.editComment, editComment);
 }
 
 /** 댓글 삭제 */
@@ -234,7 +233,7 @@ function* deleteComment({ type, payload }) {
 }
 
 function* watchDeleteComment() {
-  yield takeLatest(actions.deleteComment, deleteComment);
+  yield takeLatest(reviewActions.deleteComment, deleteComment);
 }
 
 export default function* reviewSaga(): Generator {

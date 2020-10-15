@@ -5,6 +5,10 @@ module.exports = class Review extends Model {
   static init(sequelize) {
     return super.init(
       {
+        rating: {
+          type: DataTypes.FLOAT,
+          allowNull: false,
+        },
         content: {
           type: DataTypes.TEXT,
           allowNull: false,
@@ -20,6 +24,7 @@ module.exports = class Review extends Model {
     );
   }
   static associate(db) {
+    db.Review.belongsTo(db.Book);
     db.Review.belongsTo(db.User);
     db.Review.hasMany(db.Comment);
     db.Review.belongsToMany(db.User, { through: 'Like', as: 'Likers' });
