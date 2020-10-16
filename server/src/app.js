@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const passport = require('passport');
 const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 
@@ -18,10 +19,13 @@ dotenv.config();
 
 const app = express();
 
+/** Sync all defined models to the DB. */
 db.sequelize
   .sync()
   .then(() => console.log('✅ DB connected!'))
   .catch(console.error);
+
+const sessionStore = new SequelizeStore({ db: db.sequelize });
 
 passportConfig();
 
@@ -36,12 +40,19 @@ app.use(
     resave: false,
     saveUninitialized: false,
     secret: process.env.COOKIE_SECRET,
+    store: sessionStore,
   })
 );
 app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('*', (req, res, next) => {
+  console.log('===== app.js =====');
+  console.log('session info : ', req.session);
+  next();
+});
 
 app.use(routes.user, userRouter);
 app.use(routes.search, searchRouter);
