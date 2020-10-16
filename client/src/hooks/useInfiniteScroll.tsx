@@ -3,7 +3,8 @@ import { useRef, useCallback } from 'react';
 interface Props {
   hasMore: boolean;
   loading: boolean;
-  page: number;
+  page?: number;
+  lastId?: number | string;
   callback: () => void;
 }
 
@@ -13,6 +14,7 @@ export default function useInfiniteScroll({
   hasMore,
   loading,
   page,
+  lastId,
   callback,
 }: Props): ResultOfInfiniteScrollHook {
   const observer = useRef<IntersectionObserver | null>(null);
@@ -24,13 +26,20 @@ export default function useInfiniteScroll({
 
       observer.current = new IntersectionObserver((entries) => {
         const isIntersecting = entries[0].isIntersecting;
-        const endOfList = entries[0].target.dataset.page === page.toString();
+        let endOfList;
+        if (page) {
+          endOfList = entries[0].target.dataset.page === page.toString();
+        } else if (lastId) {
+          endOfList = entries[0].target.dataset.reviewid === lastId.toString();
+        } else {
+          console.info('page 또는 lastId 인자를 입력해 주세요.');
+        }
         if (isIntersecting && endOfList && hasMore) callback();
       });
 
       if (node) observer.current.observe(node);
     },
-    [hasMore, loading, page, callback]
+    [hasMore, loading, page, lastId, callback]
   );
 
   return callbackRef;

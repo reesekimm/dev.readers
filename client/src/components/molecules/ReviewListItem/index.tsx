@@ -6,7 +6,13 @@ import { IReview } from '@types';
 import * as S from './style';
 import { actions } from '../../../features/modal';
 
-function ReviewListItem(review: IReview.Review): React.ReactElement {
+interface Props {
+  [key: string]: unknown;
+  review: IReview.Review;
+  lastReviewElementRef: unknown;
+}
+
+function ReviewListItem({ review, lastReviewElementRef, ...props }: Props): React.ReactElement {
   const { id, User, Book, rating, content, createdAt, Comments, Likers } = review;
 
   const bookInfo = { ...Book, rating } as const;
@@ -17,7 +23,7 @@ function ReviewListItem(review: IReview.Review): React.ReactElement {
   }, [review]);
 
   return (
-    <S.Container>
+    <S.Container ref={lastReviewElementRef} {...props}>
       <S.ContentWrapper onClick={openReviewDetailModal}>
         <BookInfo {...bookInfo} />
         <S.Content>
