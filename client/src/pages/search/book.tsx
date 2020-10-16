@@ -81,7 +81,7 @@ function Search(): React.ReactElement {
       bookList={
         <BookList books={searchBookResult} page={page} lastBookElementRef={lastBookElementRef} />
       }
-      isLoading={searchBook}
+      loading={searchBook}
     />
   );
 }
