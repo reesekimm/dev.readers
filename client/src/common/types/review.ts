@@ -44,6 +44,9 @@ export type Reviews = Review[];
 
 export interface ReviewState {
   mainReviews: Reviews;
+  getReviewsDone: boolean;
+  getReviewsError: string | null;
+  hasMoreReviews: boolean;
   addReviewDone: boolean;
   addReviewError: string | null;
   editReviewDone: boolean;

@@ -5,6 +5,9 @@ import reviews from '../../assets/reviews';
 
 export const initialState: IReview.ReviewState = {
   mainReviews: [],
+  getReviewsDone: false,
+  getReviewsError: null,
+  hasMoreReviews: true,
   addReviewDone: false,
   addReviewError: null,
   editReviewDone: false,
@@ -31,6 +34,19 @@ const reviewSlice = createSlice({
   name: 'review',
   initialState,
   reducers: {
+    getReviews: (state, action) => {
+      state.getReviewsDone = false;
+      state.getReviewsError = null;
+    },
+    getReviewsSuccess: (state, action) => {
+      state.mainReviews = [...state.mainReviews, ...action.payload];
+      state.getReviewsDone = true;
+      state.hasMoreReviews = action.payload.length === 10;
+    },
+    getReviewsFailure: (state, action) => {
+      state.getReviewsDone = true;
+      state.getReviewsError = action.payload;
+    },
     addReview: (
       state,
       actions: PayloadAction<{ Book: IBook.Book; rating: number; content: string }>
