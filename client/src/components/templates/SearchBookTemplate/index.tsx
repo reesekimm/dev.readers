@@ -5,19 +5,19 @@ import { Loading, BaseTemplate } from '@components';
 interface Props {
   searchBar: React.ReactNode;
   bookList: React.ReactNode;
-  loading?: boolean;
+  isLoading?: boolean;
 }
 
 function SearchBookTemplate({
   searchBar,
   bookList = null,
-  loading = false,
+  isLoading = false,
 }: Props): React.ReactElement {
   return (
     <BaseTemplate>
       {searchBar}
       {bookList}
-      {loading && <Loading />}
+      {isLoading && <Loading />}
     </BaseTemplate>
   );
 }
