@@ -15,7 +15,7 @@ function Main(): React.ReactElement {
 
   useEffect(() => {
     dispatch(userActions.loadMyInfo());
-    dispatch(reviewActions.getReviews(0));
+    dispatch(reviewActions.getReviews(null));
   }, []);
 
   const [lastId, setLastId] = useState<string | number>(mainReviews[mainReviews.length - 1]?.id);

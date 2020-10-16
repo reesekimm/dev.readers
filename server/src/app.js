@@ -12,6 +12,7 @@ const db = require('../models');
 const routes = require('./routes');
 const userRouter = require('./routers/userRouter');
 const reviewRouter = require('./routers/reviewRouter');
+const reviewsRouter = require('./routers/reviewsRouter');
 const searchRouter = require('./routers/searchRouter');
 
 const passportConfig = require('./passport');
@@ -57,6 +58,7 @@ app.use('*', (req, res, next) => {
 
 app.use(routes.user, userRouter);
 app.use(routes.review, reviewRouter);
+app.use(routes.reviews, reviewsRouter);
 app.use(routes.search, searchRouter);
 
 app.listen(3020, () => {
