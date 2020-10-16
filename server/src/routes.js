@@ -6,6 +6,7 @@ const LOG_OUT = '/logout';
 
 const REVIEW = '/review';
 const ADD_REVIEW = '/review';
+const DELETE_REVIEW = '/:reviewId';
 
 const SEARCH = '/search';
 const SEARCH_BOOK = '/book';
@@ -18,6 +19,7 @@ const routes = {
   logout: LOG_OUT,
   review: REVIEW,
   addReview: ADD_REVIEW,
+  deleteReview: DELETE_REVIEW,
   search: SEARCH,
   searchBook: SEARCH_BOOK,
 };

@@ -53,3 +53,20 @@ exports.addReview = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.deleteReview = async (req, res, next) => {
+  const {
+    params: { reviewId },
+    user: { id: UserId },
+  } = req;
+  try {
+    await Review.destroy({
+      where: { id: reviewId },
+      UserId,
+    });
+    res.json({ ReviewId: parseInt(reviewId, 10) });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};

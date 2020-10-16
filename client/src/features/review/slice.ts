@@ -72,12 +72,14 @@ const reviewSlice = createSlice({
       state.deleteReviewDone = false;
       state.deleteReviewError = null;
     },
-    deleteReviewSuccess: (state, action) => {
-      const reviewIndex = state.mainReviews.findIndex((review) => review.id === action.payload);
+    deleteReviewSuccess: (state, action: PayloadAction<{ ReviewId: number }>) => {
+      const reviewIndex = state.mainReviews.findIndex(
+        (review) => review.id === action.payload.ReviewId
+      );
       state.mainReviews.splice(reviewIndex, 1);
       state.deleteReviewDone = true;
     },
-    deleteReviewFailure: (state, action) => {
+    deleteReviewFailure: (state, action: PayloadAction<string>) => {
       state.deleteReviewError = action.payload;
     },
     resetDeleteReviewState: (state) => {
@@ -143,7 +145,7 @@ const reviewSlice = createSlice({
       state.addCommentDone = false;
       state.addCommentError = null;
     },
-    addCommentSuccess: (state, action: PayloadActions<IReview.Comment>) => {
+    addCommentSuccess: (state, action: PayloadAction<IReview.Comment>) => {
       const reviewToAddComment = state.mainReviews.find(
         (review) => review.id === action.payload.ReviewId
       );

@@ -50,10 +50,10 @@ function* deleteReview({ type, payload }) {
   yield put(loadingActions.start(type.toString()));
   console.log('[payload]', payload);
   try {
-    yield delay(1000);
+    const { data } = yield call(api.deleteReview, payload);
     yield put({
       type: success,
-      payload,
+      payload: data,
     });
     yield put(userActions.deleteReview(payload));
     yield put(userActions.cancelLike(payload));

@@ -41,8 +41,10 @@ const userSlice = createSlice({
     addReview: (state, action: PayloadAction<IUser.Review>) => {
       state.me?.Reviews.unshift(action.payload);
     },
-    deleteReview: (state, action: PayloadActions<IReview.ReviewId>) => {
-      const reviewIndex = state.me?.Reviews.findIndex((review) => review.id === action.payload);
+    deleteReview: (state, action: PayloadAction<{ ReviewId: number }>) => {
+      const reviewIndex = state.me?.Reviews.findIndex(
+        (review) => review.id === action.payload.ReviewId
+      );
       state?.me.Reviews.splice(reviewIndex, 1);
     },
     addLike: (state, action) => {
@@ -54,7 +56,7 @@ const userSlice = createSlice({
       );
       state.me?.Likes.splice(reviewIndex, 1);
     },
-    addComment: (state, action: PayloadActions<IUser.Comment>) => {
+    addComment: (state, action: PayloadAction<IUser.Comment>) => {
       state.me?.Comments.unshift(action.payload);
     },
     deleteComment: (state, action) => {
