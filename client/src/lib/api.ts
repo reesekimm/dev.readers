@@ -23,8 +23,7 @@ export const addLike = (id: IReview.ReviewId) => axios.patch(`${BASE_URL}/review
 
 export const cancelLike = (id: IReview.ReviewId) => axios.delete(`${BASE_URL}/review/${id}/like`);
 
-export const getReview = ({ id, isbn13 }) =>
-  axios.get(`${BASE_URL}/review?id=${id}&isbn13=${isbn13}`);
+export const getReview = (id: IReview.ReviewId) => axios.get(`${BASE_URL}/review?id=${id}`);
 
 export const addComment = ({ ReviewId, content, UserId }) =>
   axios.post(`${BASE_URL}/reivew/${ReviewId}/comment`, { content, UserId });

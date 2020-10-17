@@ -87,3 +87,37 @@ exports.deleteReview = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getReview = async (req, res, next) => {
+  const { id } = req.query;
+
+  console.log('[ReviewId] ', id);
+
+  try {
+    const fullReview = await Review.findOne({
+      where: { id },
+      include: [
+        {
+          model: Book,
+        },
+        {
+          model: User,
+          attributes: ['id', 'nickname'],
+        },
+        {
+          model: Comment,
+          include: [{ model: User, attributes: ['id', 'nickname'] }],
+        },
+        {
+          model: User,
+          as: 'Likers',
+          attributes: ['id'],
+        },
+      ],
+    });
+    res.status(200).json(fullReview);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};

@@ -135,15 +135,15 @@ function* watchCancelLike() {
   yield takeLatest(reviewActions.cancelLike, cancelLike);
 }
 
-/** 내가 작성한 리뷰 가져오기 */
+/** 내가 작성한 리뷰 로드하여 review/Review에 할당 */
 
-const getReview = createRequestSaga(reviewActions.getReview, `api.getReview`);
+const getReview = createRequestSaga(reviewActions.getReview, api.getReview);
 
 function* watchGetReview() {
   yield takeLatest(reviewActions.getReview, getReview);
 }
 
-/** 내가 작성한 리뷰 삭제 */
+/** review/Review 상태 리셋 */
 
 function* watchClearReview() {
   while (true) {
@@ -151,6 +151,8 @@ function* watchClearReview() {
     if (action) yield call(reviewActions.clearReview);
   }
 }
+
+/** toast popup 상태관리용 saga - BaseTemplate 참조 */
 
 function* watchResetAddReviewState() {
   while (true) {

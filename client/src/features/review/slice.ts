@@ -141,14 +141,14 @@ const reviewSlice = createSlice({
       state.cancelLikeError = action.payload;
       state.selectedReviewId = null;
     },
-    getReview: (state, action: PayloadAction<IBook.ISBN>) => {
+    getReview: (state, action: PayloadAction<IReview.ReviewId>) => {
       state.Review = null;
       state.getReviewDone = false;
       state.getReviewError = null;
     },
-    getReviewSuccess: (state, action: PayloadAction<IBook.ISBN>) => {
+    getReviewSuccess: (state, action: PayloadAction<IReview.Review>) => {
       state.getReviewDone = true;
-      state.Review = reviews.find((review) => review.Book.isbn13 === '9788966262595');
+      state.Review = action.payload;
     },
     getReviewFailure: (state, action: PayloadAction<string>) => {
       state.getReviewDone = true;
