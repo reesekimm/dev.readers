@@ -15,7 +15,7 @@ export const getReviews = (lastId) => axios.get(`${BASE_URL}/reviews?lastId=${la
 export const addReview = (review) => axios.post(`${BASE_URL}/review/review`, review);
 
 export const editReview = ({ id, rating, content }) =>
-  axios.patch(`${BASE_URL}/review/${id}`, { rating, content });
+  axios.patch(`${BASE_URL}/review/${id}`, { id, rating, content });
 
 export const deleteReview = (id: IReview.ReviewId) => axios.delete(`${BASE_URL}/review/${id}`);
 

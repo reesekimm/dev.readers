@@ -6,6 +6,7 @@ const LOG_OUT = '/logout';
 
 const REVIEW = '/review';
 const ADD_REVIEW = '/review';
+const EDIT_REVIEW = '/:reviewId';
 const DELETE_REVIEW = '/:reviewId';
 
 const REVIEWS = '/reviews';
@@ -22,6 +23,7 @@ const routes = {
   logout: LOG_OUT,
   review: REVIEW,
   addReview: ADD_REVIEW,
+  editReview: EDIT_REVIEW,
   deleteReview: DELETE_REVIEW,
   reviews: REVIEWS,
   getReviews: GET_REVIEWS,

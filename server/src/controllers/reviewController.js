@@ -54,6 +54,23 @@ exports.addReview = async (req, res, next) => {
   }
 };
 
+exports.editReview = async (req, res, next) => {
+  const {
+    body: { id, rating, content },
+  } = req;
+  try {
+    await Review.update({ rating, content }, { where: { id } });
+    const updatedReview = await Review.findOne({
+      where: { id },
+      attributes: ['id', 'rating', 'content'],
+    });
+    res.status(200).json(updatedReview);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
 exports.deleteReview = async (req, res, next) => {
   const {
     params: { reviewId },
@@ -64,7 +81,7 @@ exports.deleteReview = async (req, res, next) => {
       where: { id: reviewId },
       UserId,
     });
-    res.json({ ReviewId: parseInt(reviewId, 10) });
+    res.status(200).json({ ReviewId: parseInt(reviewId, 10) });
   } catch (error) {
     console.error(error);
     next(error);

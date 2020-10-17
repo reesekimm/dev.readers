@@ -44,7 +44,7 @@ function* watchAddReview() {
 
 /** 리뷰 수정 */
 
-const editReview = createRequestSaga(reviewActions.editReview, `api.editReview`);
+const editReview = createRequestSaga(reviewActions.editReview, api.editReview);
 
 function* watchEditReview() {
   yield takeLatest(reviewActions.editReview, editReview);
