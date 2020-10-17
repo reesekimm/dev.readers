@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IUser } from '@types';
+import { IUser, IReview } from '@types';
 
 export const initialState: IUser.UserState = {
   me: null,
@@ -47,13 +47,11 @@ const userSlice = createSlice({
       );
       state?.me.Reviews.splice(reviewIndex, 1);
     },
-    addLike: (state, action) => {
+    addLike: (state, action: PayloadAction<{ id: IReview.ReviewId }>) => {
       state.me?.Likes.push(action.payload);
     },
-    cancelLike: (state, action) => {
-      const reviewIndex = state.me?.Likes.findIndex(
-        (review) => review.id === action.payload.ReviewId
-      );
+    cancelLike: (state, action: PayloadAction<{ id: IReview.ReviewId }>) => {
+      const reviewIndex = state.me?.Likes.findIndex((review) => review.id === action.payload.id);
       state.me?.Likes.splice(reviewIndex, 1);
     },
     addComment: (state, action: PayloadAction<IUser.Comment>) => {
