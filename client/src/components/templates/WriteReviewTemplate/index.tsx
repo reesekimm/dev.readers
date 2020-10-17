@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Rate } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
@@ -27,11 +27,12 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
   const dispatch = useDispatch();
   const { me } = useSelector((state: RootState) => state.user);
   const { addReview, editReview } = useSelector((state: RootState) => state.loading);
+  const myReview = useRef<IUser.Review | null | undefined>(null);
 
   /** 작성된 리뷰가 있는지 확인 후 피드백 */
   useEffect(() => {
-    const myReview = me?.Reviews.find((review: IUser.Review) => review.isbn13 === content.isbn13);
-    if (myReview) toggleFeedbackModal();
+    myReview.current = me?.Reviews.find((review: IUser.Review) => review.isbn13 === content.isbn13);
+    if (myReview.current) toggleFeedbackModal();
   }, []);
 
   /** 작성된 리뷰가 있을 경우 */
@@ -39,7 +40,7 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
   /** [feedback modal] '확인' 버튼 콜백 */
   const onConfirm = useCallback(() => {
     dispatch(modalActions.closeWriteReviewModal());
-    dispatch(modalActions.openReviewDetailModal({ isbn: content.isbn13 }));
+    dispatch(modalActions.openReviewDetailModal(myReview.current?.id));
   }, []);
 
   /** 작성된 리뷰가 없을 경우 (리뷰 작성 OR 수정) */

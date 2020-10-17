@@ -36,7 +36,7 @@ function* watchOpenReviewDetailModal() {
     const action = yield take(actions.openReviewDetailModal.toString());
     if (action) {
       yield call(actions.openReviewDetailModal, action.payload);
-      if (action.payload.isbn) yield put(reviewActions.getReview(action.payload));
+      if (action.payload) yield put(reviewActions.getReview(action.payload));
     }
   }
 }

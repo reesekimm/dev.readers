@@ -1,13 +1,19 @@
 import React from 'react';
 
-import { BaseTemplate } from '@components';
+import { BaseTemplate, Loading } from '@components';
 
 interface Props {
   reviewList: React.ReactNode;
+  isLoading?: boolean;
 }
 
-function MainTemplate({ reviewList }: Props): React.ReactElement {
-  return <BaseTemplate>{reviewList}</BaseTemplate>;
+function MainTemplate({ reviewList, isLoading = false }: Props): React.ReactElement {
+  return (
+    <BaseTemplate>
+      {reviewList}
+      {isLoading && <Loading />}
+    </BaseTemplate>
+  );
 }
 
 export default MainTemplate;

@@ -1,5 +1,7 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
+import { RootState } from '@features';
 import { IReview } from '@types';
 import { ReviewListItem } from '@components';
 import * as S from './style';
@@ -7,13 +9,23 @@ import * as S from './style';
 interface Props {
   [key: string]: unknown;
   reviews: React.ReactNode;
+  lastReviewElementRef: unknown;
 }
 
-function ReviewList({ reviews, ...props }: Props): React.ReactElement {
+function ReviewList({ reviews, lastReviewElementRef, ...props }: Props): React.ReactElement {
+  const { mainReviews } = useSelector((state: RootState) => state.review);
+
   return (
     <S.Container {...props}>
       {reviews.map((review: IReview.Review) => (
-        <ReviewListItem key={review.id} {...review} />
+        <ReviewListItem
+          key={review.id}
+          review={review}
+          lastReviewElementRef={
+            review.id === mainReviews[mainReviews.length - 1]?.id ? lastReviewElementRef : null
+          }
+          data-reviewid={review.id === mainReviews[mainReviews.length - 1]?.id ? review.id : null}
+        />
       ))}
     </S.Container>
   );

@@ -14,6 +14,7 @@ export default function createRequestSaga(type, request) {
         yield delay(1000);
       } else {
         result = yield call(request, action.payload);
+        console.log('response : ', result.data);
       }
       yield put({
         type: success,
