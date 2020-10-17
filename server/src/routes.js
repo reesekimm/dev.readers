@@ -28,7 +28,7 @@ const routes = {
   editReview: EDIT_REVIEW,
   deleteReview: DELETE_REVIEW,
   getReview: GET_REVIEW,
-  addLike: LIKE,
+  likeReview: LIKE,
   reviews: REVIEWS,
   getReviews: GET_REVIEWS,
   search: SEARCH,

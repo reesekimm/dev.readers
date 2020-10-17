@@ -117,11 +117,13 @@ function* cancelLike({ type, payload }) {
   yield put(loadingActions.start(type.toString()));
   console.log('[payload]', payload);
   try {
-    yield delay(1000);
-    yield put(userActions.cancelLike({ id: payload }));
+    const {
+      data: { ReviewId, UserId },
+    } = yield call(api.cancelLike, payload);
+    yield put(userActions.cancelLike({ id: ReviewId }));
     yield put({
       type: success,
-      payload: { ReviewId: payload, UserId: 1 },
+      payload: { ReviewId, UserId },
     });
   } catch (e) {
     console.log(e);

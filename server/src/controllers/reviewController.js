@@ -141,3 +141,23 @@ exports.addLike = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.cancelLike = async (req, res, next) => {
+  const {
+    params: { reviewId },
+    user: { id: UserId },
+  } = req;
+  try {
+    const review = await Review.findOne({
+      where: {
+        id: reviewId,
+      },
+    });
+    if (!review) return res.status(403).send('존재하지 않는 리뷰입니다.');
+    await review.removeLikers(req.user.id);
+    res.status(200).json({ ReviewId: parseInt(reviewId, 10), UserId });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
