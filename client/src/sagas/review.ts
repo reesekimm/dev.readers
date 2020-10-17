@@ -87,11 +87,13 @@ function* addLike({ type, payload }) {
   yield put(loadingActions.start(type.toString()));
   console.log('[payload]', payload);
   try {
-    yield delay(1000);
-    yield put(userActions.addLike({ id: payload }));
+    const {
+      data: { ReviewId, UserId },
+    } = yield call(api.addLike, payload);
+    yield put(userActions.addLike({ id: ReviewId }));
     yield put({
       type: success,
-      payload: { ReviewId: payload, UserId: 1 },
+      payload: { ReviewId, UserId },
     });
   } catch (e) {
     console.log(e);
