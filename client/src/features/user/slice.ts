@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IUser, IReview } from '@types';
+import { IUser } from '@types';
 
 export const initialState: IUser.UserState = {
   me: null,

@@ -1,6 +1,6 @@
 const passport = require('passport');
 
-const { User, Review, Comment } = require('../../models');
+const { User, Review, Comment, Book } = require('../../models');
 
 exports.loadMyInfo = async (req, res, next) => {
   try {
@@ -8,7 +8,7 @@ exports.loadMyInfo = async (req, res, next) => {
       const fullUser = await User.findOne({
         where: { id: req.user.id },
         include: [
-          { model: Review, attributes: ['id'] },
+          { model: Review, attributes: ['id'], include: [{ model: Book, attributes: ['isbn13'] }] },
           { model: Review, as: 'Likes', attributes: ['id'] },
           { model: Comment, attributes: ['id'] },
         ],
