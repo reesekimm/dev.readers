@@ -17,16 +17,15 @@ function CommentForm({ ReviewId, ...props }: Props): React.ReactElement {
   const [comment, onChangeComment, setComment] = useInput<string>('');
 
   const dispatch = useDispatch();
-  const myId = useSelector((state: RootState) => state.user.me?.id);
   const { addCommentDone } = useSelector((state: RootState) => state.review);
   const { addComment } = useSelector((state: RootState) => state.loading);
 
   const onSubmitComment = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      dispatch(actions.addComment({ ReviewId, content: comment, UserId: myId }));
+      dispatch(actions.addComment({ ReviewId, content: comment }));
     },
-    [comment, myId]
+    [comment]
   );
 
   useEffect(() => {

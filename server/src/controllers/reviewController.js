@@ -161,3 +161,39 @@ exports.cancelLike = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.addComment = async (req, res, next) => {
+  const {
+    params: { reviewId },
+    body: { content },
+    user: { id: UserId },
+  } = req;
+  try {
+    const review = await Review.findOne({
+      where: {
+        id: reviewId,
+      },
+    });
+    if (!review) return res.status(403).send('존재하지 않는 리뷰입니다.');
+
+    const comment = await Comment.create({
+      content,
+      ReviewId: parseInt(reviewId, 10),
+      UserId,
+    });
+
+    const fullComment = await Comment.findOne({
+      where: { id: comment.id },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'nickname'],
+        },
+      ],
+    });
+    res.status(201).json(fullComment);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};

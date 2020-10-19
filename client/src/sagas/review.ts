@@ -186,19 +186,12 @@ function* addComment({ type, payload }) {
   const failure = `${type}Failure`;
   yield put(loadingActions.start(type.toString()));
   console.log('[payload]', payload);
-  const commentId = shortId.generate();
   try {
-    yield delay(1000);
-    yield put(userActions.addComment({ ReviewId: payload.ReviewId, CommentId: commentId }));
+    const { data } = yield call(api.addComment, payload);
+    yield put(userActions.addComment({ id: data.id }));
     yield put({
       type: success,
-      payload: {
-        id: commentId,
-        ReviewId: payload.ReviewId,
-        User: { id: 1, nickname: 'Reese' },
-        content: payload.content,
-        createdAt: '2020-09-06T07:47:13.000Z',
-      },
+      payload: data,
     });
   } catch (e) {
     console.log(e);

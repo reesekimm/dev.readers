@@ -10,6 +10,7 @@ const EDIT_REVIEW = '/:reviewId';
 const DELETE_REVIEW = '/:reviewId';
 const GET_REVIEW = '/';
 const LIKE = '/:reviewId/like';
+const ADD_COMMENT = '/:reviewId/comment';
 
 const REVIEWS = '/reviews';
 const GET_REVIEWS = '/';
@@ -29,6 +30,7 @@ const routes = {
   deleteReview: DELETE_REVIEW,
   getReview: GET_REVIEW,
   likeReview: LIKE,
+  addComment: ADD_COMMENT,
   reviews: REVIEWS,
   getReviews: GET_REVIEWS,
   search: SEARCH,
