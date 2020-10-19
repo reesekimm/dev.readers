@@ -199,6 +199,26 @@ exports.addComment = async (req, res, next) => {
   }
 };
 
+exports.editComment = async (req, res, next) => {
+  const {
+    params: { commentId },
+    body: { content },
+    user: { id: UserId },
+  } = req;
+
+  try {
+    await Comment.update({ content }, { where: { id: commentId }, UserId });
+    const updatedComment = await Comment.findOne({
+      where: { id: commentId },
+      attributes: ['id', 'ReviewId', 'content'],
+    });
+    res.status(200).json(updatedComment);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
 exports.deleteComment = async (req, res, next) => {
   const {
     params: { commentId },

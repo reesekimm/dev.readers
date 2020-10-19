@@ -209,7 +209,7 @@ function* watchAddComment() {
 
 /** 댓글 수정 */
 
-const editComment = createRequestSaga(reviewActions.editComment, `api.editComment`);
+const editComment = createRequestSaga(reviewActions.editComment, api.editComment);
 
 function* watchEditComment() {
   yield takeLatest(reviewActions.editComment, editComment);

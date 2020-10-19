@@ -181,11 +181,10 @@ const reviewSlice = createSlice({
         (review) => review.id === action.payload.ReviewId
       );
       const commentToUpdate = reviewToUpdateComment.Comments.find(
-        (comment) => comment.id === action.payload.CommentId
+        (comment) => comment.id === action.payload.id
       );
       commentToUpdate.content = action.payload.content;
       state.editCommentDone = true;
-      state.editCommentError = null;
     },
     editCommentFailure: (state, action) => {
       state.editCommentDone = true;

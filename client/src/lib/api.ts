@@ -28,8 +28,8 @@ export const getReview = (id: IReview.ReviewId) => axios.get(`${BASE_URL}/review
 export const addComment = ({ ReviewId, content }) =>
   axios.post(`${BASE_URL}/review/${ReviewId}/comment`, { content });
 
-export const editComment = ({ ReviewId, CommentId, content }) =>
-  axios.patch(`${BASE_URL}/review/${ReviewId}/comment/${CommentId}`, content);
+export const editComment = ({ CommentId, content }) =>
+  axios.patch(`${BASE_URL}/review/comment/${CommentId}`, { content });
 
 export const deleteComment = (CommentId) => axios.delete(`${BASE_URL}/review/comment/${CommentId}`);
 
