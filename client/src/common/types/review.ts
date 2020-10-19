@@ -15,7 +15,6 @@ export interface Comment {
 export interface CommentInfo {
   ReviewId: ReviewId;
   content: string;
-  UserId: number | string; // TODO: DB 연동후 number로 고정
 }
 
 export interface Liker {

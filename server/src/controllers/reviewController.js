@@ -57,9 +57,10 @@ exports.addReview = async (req, res, next) => {
 exports.editReview = async (req, res, next) => {
   const {
     body: { id, rating, content },
+    user: { id: UserId },
   } = req;
   try {
-    await Review.update({ rating, content }, { where: { id } });
+    await Review.update({ rating, content }, { where: { id }, UserId });
     const updatedReview = await Review.findOne({
       where: { id },
       attributes: ['id', 'rating', 'content'],
@@ -156,6 +157,81 @@ exports.cancelLike = async (req, res, next) => {
     if (!review) return res.status(403).send('존재하지 않는 리뷰입니다.');
     await review.removeLikers(req.user.id);
     res.status(200).json({ ReviewId: parseInt(reviewId, 10), UserId });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+exports.addComment = async (req, res, next) => {
+  const {
+    params: { reviewId },
+    body: { content },
+    user: { id: UserId },
+  } = req;
+  try {
+    const review = await Review.findOne({
+      where: {
+        id: reviewId,
+      },
+    });
+    if (!review) return res.status(403).send('존재하지 않는 리뷰입니다.');
+
+    const comment = await Comment.create({
+      content,
+      ReviewId: parseInt(reviewId, 10),
+      UserId,
+    });
+
+    const fullComment = await Comment.findOne({
+      where: { id: comment.id },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'nickname'],
+        },
+      ],
+    });
+    res.status(201).json(fullComment);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+exports.editComment = async (req, res, next) => {
+  const {
+    params: { commentId },
+    body: { content },
+    user: { id: UserId },
+  } = req;
+
+  try {
+    await Comment.update({ content }, { where: { id: commentId }, UserId });
+    const updatedComment = await Comment.findOne({
+      where: { id: commentId },
+      attributes: ['id', 'ReviewId', 'content'],
+    });
+    res.status(200).json(updatedComment);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+exports.deleteComment = async (req, res, next) => {
+  const {
+    params: { commentId },
+    user: { id: UserId },
+  } = req;
+  try {
+    await Comment.destroy({
+      where: {
+        id: commentId,
+      },
+      UserId,
+    });
+    res.status(200).json({ CommentId: parseInt(commentId, 10) });
   } catch (error) {
     console.error(error);
     next(error);

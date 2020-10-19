@@ -54,14 +54,12 @@ const userSlice = createSlice({
       const reviewIndex = state.me?.Likes.findIndex((review) => review.id === action.payload.id);
       state.me?.Likes.splice(reviewIndex, 1);
     },
-    addComment: (state, action: PayloadAction<IUser.Comment>) => {
+    addComment: (state, action: PayloadAction<{ id: number }>) => {
       state.me?.Comments.unshift(action.payload);
     },
     deleteComment: (state, action) => {
       const indexOfComment = state.me?.Comments.findIndex(
-        (comment) =>
-          comment.ReviewId === action.payload.ReviewId &&
-          comment.CommentId === action.payload.CommentId
+        (comment) => comment.id === action.payload
       );
       state.me?.Comments.splice(indexOfComment, 1);
     },

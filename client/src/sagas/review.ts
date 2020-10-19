@@ -186,19 +186,12 @@ function* addComment({ type, payload }) {
   const failure = `${type}Failure`;
   yield put(loadingActions.start(type.toString()));
   console.log('[payload]', payload);
-  const commentId = shortId.generate();
   try {
-    yield delay(1000);
-    yield put(userActions.addComment({ ReviewId: payload.ReviewId, CommentId: commentId }));
+    const { data } = yield call(api.addComment, payload);
+    yield put(userActions.addComment({ id: data.id }));
     yield put({
       type: success,
-      payload: {
-        id: commentId,
-        ReviewId: payload.ReviewId,
-        User: { id: 1, nickname: 'Reese' },
-        content: payload.content,
-        createdAt: '2020-09-06T07:47:13.000Z',
-      },
+      payload: data,
     });
   } catch (e) {
     console.log(e);
@@ -216,7 +209,7 @@ function* watchAddComment() {
 
 /** 댓글 수정 */
 
-const editComment = createRequestSaga(reviewActions.editComment, `api.editComment`);
+const editComment = createRequestSaga(reviewActions.editComment, api.editComment);
 
 function* watchEditComment() {
   yield takeLatest(reviewActions.editComment, editComment);
@@ -230,11 +223,13 @@ function* deleteComment({ type, payload }) {
   yield put(loadingActions.start(type.toString()));
   console.log('[payload]', payload);
   try {
-    yield delay(1000);
-    yield put(userActions.deleteComment(payload));
+    const {
+      data: { CommentId },
+    } = yield call(api.deleteComment, payload.CommentId);
+    yield put(userActions.deleteComment(CommentId));
     yield put({
       type: success,
-      payload,
+      payload: { ReviewId: payload.ReviewId, CommentId },
     });
   } catch (e) {
     console.log(e);

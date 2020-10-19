@@ -25,14 +25,13 @@ export const cancelLike = (id: IReview.ReviewId) => axios.delete(`${BASE_URL}/re
 
 export const getReview = (id: IReview.ReviewId) => axios.get(`${BASE_URL}/review?id=${id}`);
 
-export const addComment = ({ ReviewId, content, UserId }) =>
-  axios.post(`${BASE_URL}/reivew/${ReviewId}/comment`, { content, UserId });
+export const addComment = ({ ReviewId, content }) =>
+  axios.post(`${BASE_URL}/review/${ReviewId}/comment`, { content });
 
-export const editComment = ({ ReviewId, CommentId, content }) =>
-  axios.patch(`${BASE_URL}/review/${ReviewId}/comment/${CommentId}`, content);
+export const editComment = ({ CommentId, content }) =>
+  axios.patch(`${BASE_URL}/review/comment/${CommentId}`, { content });
 
-export const deleteComment = (data) =>
-  axios.delete(`${BASE_URL}/reivew/${data.ReviewId}/comment/${data.CommentId}`);
+export const deleteComment = (CommentId) => axios.delete(`${BASE_URL}/review/comment/${CommentId}`);
 
 export const searchBook = ({ query, page }) =>
   axios.get(`${BASE_URL}/search/book?query=${query}&page=${page}`);
