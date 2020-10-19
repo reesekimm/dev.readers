@@ -40,7 +40,7 @@ function Header(): React.ReactElement {
           <Button
             styleType="plain"
             type={me ? 'inLink' : null}
-            href={me ? '/me' : null}
+            href={me ? `/${me.nickname}` : null}
             onClick={me ? null : onClickLogin}
             isLoading={githubAuth}
           >

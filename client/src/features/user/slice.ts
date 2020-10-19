@@ -8,6 +8,7 @@ export const initialState: IUser.UserState = {
   logOutError: null,
   loadMyInfoDone: false,
   loadMyInfoError: null,
+  // hasMoreReviews: true
 };
 
 const userSlice = createSlice({

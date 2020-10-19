@@ -1,24 +1,26 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 
 import { RootState } from '@features';
 import { MyPageTemplate, Profile, Tabs, ReviewList } from '@components';
 import reviews from '../../assets/reviews';
 
-const menus = [
-  { title: '리뷰', path: '/me' },
-  { title: '좋아요', path: '/me/likes' },
-];
+function Likes(): React.ReactElement | null {
+  const router = useRouter();
+  const { nickname } = router.query;
 
-function Me(): React.ReactElement | null {
   const { me } = useSelector((state: RootState) => state.user);
 
-  const isLoggedIn = me && me.id;
+  const menus = [
+    { title: '리뷰', path: `/${me?.nickname}` },
+    { title: '좋아요', path: `/${me?.nickname}/likes` },
+  ];
+
+  const isLoggedIn = me && me.nickname === nickname;
 
   useEffect(() => {
     if (!isLoggedIn) {
-      console.log(me); // 새로고침시 null
       console.log('replace triggered');
       Router.replace('/');
     }
@@ -29,11 +31,11 @@ function Me(): React.ReactElement | null {
   return (
     <MyPageTemplate
       profile={<Profile userInfo={me} />}
-      tabs={<Tabs menus={menus} />}
-      reviewList={<ReviewList reviews={reviews} />}
+      tabs={<Tabs menus={menus} selectedMenuIndex={1} />}
+      // reviewList={<ReviewList reviews={reviews} />}
       isLoading={false}
     />
   );
 }
 
-export default Me;
+export default Likes;
