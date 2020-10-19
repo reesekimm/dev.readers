@@ -59,9 +59,7 @@ const userSlice = createSlice({
     },
     deleteComment: (state, action) => {
       const indexOfComment = state.me?.Comments.findIndex(
-        (comment) =>
-          comment.ReviewId === action.payload.ReviewId &&
-          comment.CommentId === action.payload.CommentId
+        (comment) => comment.id === action.payload
       );
       state.me?.Comments.splice(indexOfComment, 1);
     },

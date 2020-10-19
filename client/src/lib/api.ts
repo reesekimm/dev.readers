@@ -31,8 +31,7 @@ export const addComment = ({ ReviewId, content }) =>
 export const editComment = ({ ReviewId, CommentId, content }) =>
   axios.patch(`${BASE_URL}/review/${ReviewId}/comment/${CommentId}`, content);
 
-export const deleteComment = (data) =>
-  axios.delete(`${BASE_URL}/review/${data.ReviewId}/comment/${data.CommentId}`);
+export const deleteComment = (CommentId) => axios.delete(`${BASE_URL}/review/comment/${CommentId}`);
 
 export const searchBook = ({ query, page }) =>
   axios.get(`${BASE_URL}/search/book?query=${query}&page=${page}`);

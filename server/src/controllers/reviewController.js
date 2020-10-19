@@ -57,9 +57,10 @@ exports.addReview = async (req, res, next) => {
 exports.editReview = async (req, res, next) => {
   const {
     body: { id, rating, content },
+    user: { id: UserId },
   } = req;
   try {
-    await Review.update({ rating, content }, { where: { id } });
+    await Review.update({ rating, content }, { where: { id }, UserId });
     const updatedReview = await Review.findOne({
       where: { id },
       attributes: ['id', 'rating', 'content'],
@@ -192,6 +193,25 @@ exports.addComment = async (req, res, next) => {
       ],
     });
     res.status(201).json(fullComment);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+exports.deleteComment = async (req, res, next) => {
+  const {
+    params: { commentId },
+    user: { id: UserId },
+  } = req;
+  try {
+    await Comment.destroy({
+      where: {
+        id: commentId,
+      },
+      UserId,
+    });
+    res.status(200).json({ CommentId: parseInt(commentId, 10) });
   } catch (error) {
     console.error(error);
     next(error);

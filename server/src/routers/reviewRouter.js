@@ -10,6 +10,7 @@ const {
   addLike,
   cancelLike,
   addComment,
+  deleteComment,
 } = require('../controllers/reviewController');
 
 const reviewRouter = express.Router();
@@ -21,5 +22,6 @@ reviewRouter.get(routes.getReview, isLoggedIn, getReview);
 reviewRouter.patch(routes.likeReview, isLoggedIn, addLike);
 reviewRouter.delete(routes.likeReview, isLoggedIn, cancelLike);
 reviewRouter.post(routes.addComment, isLoggedIn, addComment);
+reviewRouter.delete(routes.deleteComment, isLoggedIn, deleteComment);
 
 module.exports = reviewRouter;

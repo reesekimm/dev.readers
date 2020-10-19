@@ -223,11 +223,13 @@ function* deleteComment({ type, payload }) {
   yield put(loadingActions.start(type.toString()));
   console.log('[payload]', payload);
   try {
-    yield delay(1000);
-    yield put(userActions.deleteComment(payload));
+    const {
+      data: { CommentId },
+    } = yield call(api.deleteComment, payload.CommentId);
+    yield put(userActions.deleteComment(CommentId));
     yield put({
       type: success,
-      payload,
+      payload: { ReviewId: payload.ReviewId, CommentId },
     });
   } catch (e) {
     console.log(e);

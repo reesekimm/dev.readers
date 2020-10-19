@@ -20,8 +20,8 @@ export interface Review {
 }
 
 export interface Comment {
-  ReviewId: number | string;
-  CommentId: number | string;
+  ReviewId: number;
+  CommentId: number;
 }
 
 export interface Me {
@@ -31,7 +31,7 @@ export interface Me {
   avatarUrl: string;
   Reviews: Review[];
   Likes: { id: IReview.ReviewId }[];
-  Comments: Comment[];
+  Comments: { id: number }[];
   Followings: User[];
   Followers: User[];
 }
