@@ -18,7 +18,7 @@ export interface RootState {
 }
 
 export default function createReducer() {
-  const rootReducer = (state: RootState, action: AnyAction) => {
+  const rootReducer = (state: RootState | undefined, action: AnyAction) => {
     switch (action.type) {
       case HYDRATE:
         return action.payload;
