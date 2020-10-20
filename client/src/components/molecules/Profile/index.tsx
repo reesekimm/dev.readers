@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Dropdown, Menu } from 'antd';
@@ -32,10 +32,12 @@ function Profile({ userInfo, ...props }: Props): React.ReactElement | null {
   }, []);
 
   const onConfirm = useCallback(() => {
-    console.log('탈퇴');
-    // dispatch(actions.deleteAccount());
-    // if (deleteAccountDone) Router.replace('/');
+    dispatch(actions.deleteAccount());
   }, []);
+
+  useEffect(() => {
+    if (deleteAccountDone) Router.replace('/');
+  }, [deleteAccountDone]);
 
   const menu = (
     <Menu>

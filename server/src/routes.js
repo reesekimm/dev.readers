@@ -3,6 +3,7 @@ const LOAD_MY_INFO = '/';
 const GITHUB = '/auth/github';
 const GITHUB_CALLBACK = '/auth/github/callback';
 const LOG_OUT = '/logout';
+const DELETE_ACCOUNT = '/';
 const GET_USER_REVIEWS = '/:nickname/reviews';
 const GET_USER_LIKES = '/:nickname/likes';
 const LOAD_USER_INFO = '/:nickname';
@@ -29,6 +30,7 @@ const routes = {
   github: GITHUB,
   githubCallback: GITHUB_CALLBACK,
   logout: LOG_OUT,
+  deleteAccount: DELETE_ACCOUNT,
   getUserReviews: GET_USER_REVIEWS,
   getUserLikes: GET_USER_LIKES,
   loadUserInfo: LOAD_USER_INFO,

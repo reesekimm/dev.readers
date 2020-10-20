@@ -80,6 +80,31 @@ exports.logout = (req, res, next) => {
   }
 };
 
+exports.deleteAccount = async (req, res, next) => {
+  const {
+    user: { id: UserId },
+  } = req;
+  try {
+    // 작성한 리뷰에 달린 댓글 삭제
+    const reviews = await Review.findAll({ where: { UserId }, attributes: ['id'] });
+    reviews.forEach(async ({ id }) => {
+      await Comment.destroy({ where: { ReviewId: id } });
+    });
+    // 작성한 리뷰 삭제
+    await Review.destroy({ where: { UserId } });
+    // 작성한 댓글 삭제
+    await Comment.destroy({ where: { UserId } });
+    // 사용자 정보 삭제
+    await User.destroy({ where: { id: UserId } });
+    req.logout();
+    req.session.destroy();
+    res.status(200).send('See you again!');
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
 exports.getUserReviews = async (req, res, next) => {
   const {
     params: { nickname },
@@ -144,12 +169,10 @@ exports.getUserLikes = async (req, res, next) => {
   try {
     const user = await User.findOne({ where: { nickname } });
     if (user) {
-      const where = { UserId: user.id };
       if (parseInt(lastId, 10)) {
         where.id = { [Op.lt]: parseInt(lastId, 10) };
       }
       const likes = await user.getLikes({
-        where,
         limit: 10,
         order: [
           ['createdAt', 'DESC'],

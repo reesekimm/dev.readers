@@ -7,6 +7,7 @@ interface Props {
   tabs: React.ReactNode;
   reviewList: React.ReactNode;
   isLoading?: boolean;
+  errorMessage: string;
 }
 
 function MyPageTemplate({
@@ -14,13 +15,18 @@ function MyPageTemplate({
   tabs,
   reviewList,
   isLoading = false,
+  errorMessage,
 }: Props): React.ReactElement {
   return (
     <BaseTemplate>
-      {profile}
-      {tabs}
-      {reviewList}
-      {isLoading && <Loading />}
+      {errorMessage || (
+        <>
+          {profile}
+          {tabs}
+          {reviewList}
+          {isLoading && <Loading />}
+        </>
+      )}
     </BaseTemplate>
   );
 }

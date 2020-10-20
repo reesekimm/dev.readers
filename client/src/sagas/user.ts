@@ -48,6 +48,17 @@ function* watchLogOut() {
   yield takeLatest(actions.logout, logOut);
 }
 
+const deleteAccount = createRequestSaga(actions.deleteAccount, api.deleteAccount);
+
+function* watchDeleteAccount() {
+  yield takeLatest(actions.deleteAccount, deleteAccount);
+}
+
 export default function* userSaga(): Generator {
-  yield all([fork(watchLoadMyInfo), fork(watchLoadUserInfo), fork(watchLogOut)]);
+  yield all([
+    fork(watchLoadMyInfo),
+    fork(watchLoadUserInfo),
+    fork(watchLogOut),
+    fork(watchDeleteAccount),
+  ]);
 }

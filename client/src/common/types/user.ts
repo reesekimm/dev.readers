@@ -9,6 +9,8 @@ export interface UserState {
   loadMyInfoError: string | null;
   loadUserInfoDone: boolean;
   loadUserInfoError: string | null;
+  deleteAccountDone: boolean;
+  deleteAccountError: string | null;
 }
 
 export interface User {

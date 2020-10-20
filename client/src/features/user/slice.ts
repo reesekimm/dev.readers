@@ -11,6 +11,8 @@ export const initialState: IUser.UserState = {
   loadMyInfoError: null,
   loadUserInfoDone: false,
   loadUserInfoError: null,
+  deleteAccountDone: false,
+  deleteAccountError: null,
 };
 
 const userSlice = createSlice({
@@ -26,7 +28,6 @@ const userSlice = createSlice({
       state.me = action.payload;
     },
     loadMyInfoFailure: (state, action) => {
-      state.loadMyInfoDone = true;
       state.loadMyInfoError = action.payload;
     },
     loadUserInfo: (state, action) => {
@@ -38,7 +39,6 @@ const userSlice = createSlice({
       state.userInfo = action.payload;
     },
     loadUserInfoFailure: (state, action) => {
-      state.loadUserInfoDone = true;
       state.loadUserInfoError = action.payload;
     },
     logout: (state) => {
@@ -50,7 +50,6 @@ const userSlice = createSlice({
       state.me = null;
     },
     logoutFailure: (state, action: PayloadAction<string>) => {
-      state.logOutDone = true;
       state.logOutError = action.payload;
     },
     addReview: (state, action: PayloadAction<IUser.Review>) => {
@@ -77,6 +76,17 @@ const userSlice = createSlice({
         (comment) => comment.id === action.payload
       );
       state.me?.Comments.splice(indexOfComment, 1);
+    },
+    deleteAccount: (state) => {
+      state.deleteAccountDone = false;
+      state.deleteAccountError = null;
+    },
+    deleteAccountSuccess: (state) => {
+      state.deleteAccountDone = true;
+      state.me = null;
+    },
+    deleteAccountFailure: (state, action) => {
+      state.deleteAccountError = action.payload;
     },
   },
 });

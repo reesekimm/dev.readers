@@ -17,7 +17,7 @@ function Me(): React.ReactElement | null {
   const { nickname } = router.query;
 
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state: RootState) => state.user);
+  const { userInfo, loadUserInfoError } = useSelector((state: RootState) => state.user);
   const { mainReviews, hasMoreReviews } = useSelector((state: RootState) => state.review);
   const { getUserReviews } = useSelector((state: RootState) => state.loading);
 
@@ -47,6 +47,7 @@ function Me(): React.ReactElement | null {
       tabs={<Tabs menus={menus} />}
       reviewList={<ReviewList reviews={mainReviews} lastReviewElementRef={lastReviewElementRef} />}
       isLoading={getUserReviews}
+      errorMessage={loadUserInfoError}
     />
   );
 }

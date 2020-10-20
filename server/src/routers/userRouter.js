@@ -7,6 +7,7 @@ const {
   githubLogin,
   postGithubLogin,
   logout,
+  deleteAccount,
   getUserReviews,
   getUserLikes,
   loadUserInfo,
@@ -18,6 +19,8 @@ userRouter.get(routes.loadMyInfo, isLoggedIn, loadMyInfo);
 userRouter.get(routes.github, githubLogin);
 userRouter.get(routes.githubCallback, postGithubLogin);
 userRouter.get(routes.logout, isLoggedIn, logout);
+userRouter.delete(routes.deleteAccount, isLoggedIn, deleteAccount);
+
 userRouter.get(routes.getUserReviews, getUserReviews);
 userRouter.get(routes.getUserLikes, getUserLikes);
 userRouter.get(routes.loadUserInfo, loadUserInfo);
