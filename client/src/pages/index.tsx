@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
+import { END } from 'redux-saga';
+import axios from 'axios';
 
 import { RootState } from '@features';
 import { useInfiniteScroll } from '@hooks';
 import { MainTemplate, ReviewList } from '@components';
 import { actions as reviewActions } from '../features/review';
 import { actions as userActions } from '../features/user';
+import { wrapper, SagaStore } from '../store/configureStore';
 
 function Main(): React.ReactElement {
   const dispatch = useDispatch();
   const { mainReviews, hasMoreReviews } = useSelector((state: RootState) => state.review);
   const { getReviews } = useSelector((state: RootState) => state.loading);
-
-  useEffect(() => {
-    dispatch(userActions.loadMyInfo());
-    if (!mainReviews.length) dispatch(reviewActions.getReviews(null));
-  }, []);
 
   const [lastId, setLastId] = useState<string | number>(mainReviews[mainReviews.length - 1]?.id);
 
@@ -47,5 +46,24 @@ function Main(): React.ReactElement {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    console.log('===== getServerSideProps start =====');
+    const cookie = context.req ? context.req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
+
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+
+    context.store.dispatch(userActions.loadMyInfo());
+    context.store.dispatch(reviewActions.getReviews(null));
+
+    context.store.dispatch(END);
+
+    await (context.store as SagaStore).sagaTask.toPromise();
+  }
+);
 
 export default Main;

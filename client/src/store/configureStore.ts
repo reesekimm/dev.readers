@@ -8,13 +8,12 @@ import createReducer from '@features';
 import rootSaga from '../sagas';
 
 export interface SagaStore extends Store {
-  sagaTask?: Task;
+  sagaTask: Task;
 }
 
 export const configureAppStore = (initialState = {}) => {
   const sagaMiddleware = createSagaMiddleware();
   const { run: runSaga } = sagaMiddleware;
-
   const middlewares = [...getDefaultMiddleware(), sagaMiddleware];
 
   const store = configureStore({
