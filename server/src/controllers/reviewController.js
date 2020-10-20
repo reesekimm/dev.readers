@@ -78,6 +78,7 @@ exports.deleteReview = async (req, res, next) => {
     user: { id: UserId },
   } = req;
   try {
+    await Comment.destroy({ where: { ReviewId: reviewId } });
     await Review.destroy({
       where: { id: reviewId },
       UserId,

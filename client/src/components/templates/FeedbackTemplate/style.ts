@@ -16,6 +16,8 @@ export const TextContainer = styled.div`
   ${CommonStyle}
   flex: 1;
   justify-content: center;
+  white-space: pre-wrap;
+  text-align: center;
 `;
 
 export const ButtonContainer = styled.div`

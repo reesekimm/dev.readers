@@ -12,6 +12,8 @@ export const loadUserInfo = (nickname) => axios.get(`${BASE_URL}/user/${nickname
 
 export const logout = () => axios.get(`${BASE_URL}/user/logout`);
 
+export const deleteAccount = () => axios.delete(`${BASE_URL}/user`);
+
 export const getReviews = (lastId) => axios.get(`${BASE_URL}/reviews?lastId=${lastId}`);
 
 export const getUserReviews = ({ nickname, lastId }) =>
