@@ -15,6 +15,9 @@ function* loadMyInfo({ type, payload }) {
       review.isbn13 = review.Book.isbn13;
       delete review.Book;
     });
+    data.Likes.forEach((like) => {
+      delete like.Like;
+    });
     yield put({
       type: success,
       payload: data,
@@ -33,6 +36,12 @@ function* watchLoadMyInfo() {
   yield takeLatest(actions.loadMyInfo, loadMyInfo);
 }
 
+const loadUserInfo = createRequestSaga(actions.loadUserInfo, api.loadUserInfo);
+
+function* watchLoadUserInfo() {
+  yield takeLatest(actions.loadUserInfo, loadUserInfo);
+}
+
 const logOut = createRequestSaga(actions.logout, api.logout);
 
 function* watchLogOut() {
@@ -40,5 +49,5 @@ function* watchLogOut() {
 }
 
 export default function* userSaga(): Generator {
-  yield all([fork(watchLoadMyInfo), fork(watchLogOut)]);
+  yield all([fork(watchLoadMyInfo), fork(watchLoadUserInfo), fork(watchLogOut)]);
 }

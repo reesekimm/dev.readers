@@ -11,16 +11,21 @@ import { actions } from '../../../features/user';
 
 interface Props {
   [key: string]: unknown;
-  userInfo: IUser.Me;
+  userInfo: IUser.UserInfo;
 }
 
-function Profile({ userInfo, ...props }: Props): React.ReactElement {
+function Profile({ userInfo, ...props }: Props): React.ReactElement | null {
   const dispatch = useDispatch();
+  const { me } = useSelector((state: RootState) => state.user);
   const { logout } = useSelector((state: RootState) => state.loading);
 
   const onClickLogout = useCallback(() => {
     dispatch(actions.logout());
   }, []);
+
+  const isLoggedIn = me && me.id;
+
+  if (!userInfo) return null;
 
   return (
     <S.Container {...props}>
@@ -30,14 +35,16 @@ function Profile({ userInfo, ...props }: Props): React.ReactElement {
         </Avatar>
         <Text tag="h3">{userInfo.nickname || 'No one'}</Text>
       </div>
-      <div>
-        <Button styleType="plain" onClick={onClickLogout} isLoading={logout}>
-          <Text>로그아웃</Text>
-        </Button>
-        <Button styleType="plain">
-          <MoreOutlined style={{ color: '#616161' }} />
-        </Button>
-      </div>
+      {isLoggedIn && (
+        <div>
+          <Button styleType="plain" onClick={onClickLogout} isLoading={logout}>
+            <Text>로그아웃</Text>
+          </Button>
+          <Button styleType="plain">
+            <MoreOutlined style={{ color: '#616161' }} />
+          </Button>
+        </div>
+      )}
     </S.Container>
   );
 }

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useRouter } from 'next/router';
 
 import { Button } from '@components';
 import * as S from './style';
@@ -13,19 +14,20 @@ interface Menu {
 interface Props {
   [key: string]: unknown;
   menus: Menu[];
-  selectedMenuIndex?: number;
 }
 
-function Tabs({ menus, selectedMenuIndex = 0, ...props }: Props): React.ReactElement {
+function Tabs({ menus, ...props }: Props): React.ReactElement {
+  const router = useRouter();
+  const currentPath = router.asPath;
   return (
     <S.Container {...props}>
-      {menus.map((menu, i) => (
-        <S.Tab key={menu.title} selected={selectedMenuIndex === i} numOfMenus={menus.length}>
+      {menus.map((menu) => (
+        <S.Tab key={menu.title} selected={currentPath === menu.path} numOfMenus={menus.length}>
           <Button
             styleType="plain"
             type="inLink"
             href={menu.path}
-            style={{ color: selectedMenuIndex === i ? '#1e3799' : '#414141', width: '100%' }}
+            style={{ color: currentPath === menu.path ? '#1e3799' : '#414141', width: '100%' }}
           >
             {menu.title}
           </Button>

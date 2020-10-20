@@ -8,6 +8,7 @@ module.exports = class User extends Model {
         nickname: {
           type: DataTypes.STRING,
           allowNull: false,
+          unique: true,
         },
         githubId: {
           type: DataTypes.INTEGER,

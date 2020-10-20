@@ -1,5 +1,4 @@
-import { all, fork, takeLatest, take, call, put, delay, throttle } from 'redux-saga/effects';
-import shortId from 'shortid';
+import { all, fork, takeLatest, take, call, put, throttle } from 'redux-saga/effects';
 
 import * as api from '../lib/api';
 import createRequestSaga from '../lib/createRequestSaga';
@@ -13,6 +12,22 @@ const getReviews = createRequestSaga(reviewActions.getReviews, api.getReviews);
 
 function* watchGetReviews() {
   yield throttle(3000, reviewActions.getReviews, getReviews);
+}
+
+/** 특정 사용자 리뷰 목록 로드 */
+
+const getUserReviews = createRequestSaga(reviewActions.getUserReviews, api.getUserReviews);
+
+function* watchGetUserReviews() {
+  yield throttle(3000, reviewActions.getUserReviews, getUserReviews);
+}
+
+/** 특정 사용자 좋아요 목록 로드 */
+
+const getUserLikes = createRequestSaga(reviewActions.getUserLikes, api.getUserLikes);
+
+function* watchGetUserLikes() {
+  yield throttle(3000, reviewActions.getUserLikes, getUserLikes);
 }
 
 /** 리뷰 작성 */
@@ -139,7 +154,7 @@ function* watchCancelLike() {
   yield takeLatest(reviewActions.cancelLike, cancelLike);
 }
 
-/** 내가 작성한 리뷰 로드하여 review/Review에 할당 */
+/** 특정 리뷰(1개) 로드하여 review/Review에 할당 */
 
 const getReview = createRequestSaga(reviewActions.getReview, api.getReview);
 
@@ -248,6 +263,8 @@ function* watchDeleteComment() {
 export default function* reviewSaga(): Generator {
   yield all([
     fork(watchGetReviews),
+    fork(watchGetUserReviews),
+    fork(watchGetUserLikes),
     fork(watchAddReview),
     fork(watchResetAddReviewState),
     fork(watchEditReview),

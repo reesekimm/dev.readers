@@ -1,4 +1,5 @@
 const passport = require('passport');
+const { Op } = require('sequelize');
 
 const { User, Review, Comment, Book } = require('../../models');
 
@@ -73,6 +74,132 @@ exports.logout = (req, res, next) => {
     req.logout();
     req.session.destroy();
     res.status(200).send('Bye bye~');
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+exports.getUserReviews = async (req, res, next) => {
+  const {
+    params: { nickname },
+    query: { lastId },
+  } = req;
+
+  try {
+    const user = await User.findOne({ where: { nickname } });
+    if (user) {
+      const where = { UserId: user.id };
+      if (parseInt(lastId, 10)) {
+        where.id = { [Op.lt]: parseInt(lastId, 10) };
+      }
+      const reviews = await user.getReviews({
+        where,
+        limit: 10,
+        order: [
+          ['createdAt', 'DESC'],
+          [Comment, 'createdAt', 'DESC'],
+        ],
+        include: [
+          {
+            model: Book,
+          },
+          {
+            model: User,
+            attributes: ['id', 'nickname'],
+          },
+          {
+            model: Comment,
+            include: [
+              {
+                model: User,
+                attributes: ['id', 'nickname'],
+                order: [['createdAt', 'DESC']],
+              },
+            ],
+          },
+          {
+            model: User,
+            as: 'Likers',
+            attributes: ['id'],
+          },
+        ],
+      });
+      res.status(200).json(reviews);
+    } else {
+      res.status(404).send('존재하지 않는 사용자입니다.');
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+exports.getUserLikes = async (req, res, next) => {
+  const {
+    params: { nickname },
+    query: { lastId },
+  } = req;
+
+  try {
+    const user = await User.findOne({ where: { nickname } });
+    if (user) {
+      const where = { UserId: user.id };
+      if (parseInt(lastId, 10)) {
+        where.id = { [Op.lt]: parseInt(lastId, 10) };
+      }
+      const likes = await user.getLikes({
+        where,
+        limit: 10,
+        order: [
+          ['createdAt', 'DESC'],
+          [Comment, 'createdAt', 'DESC'],
+        ],
+        include: [
+          {
+            model: Book,
+          },
+          {
+            model: User,
+            attributes: ['id', 'nickname'],
+          },
+          {
+            model: Comment,
+            include: [
+              {
+                model: User,
+                attributes: ['id', 'nickname'],
+                order: [['createdAt', 'DESC']],
+              },
+            ],
+          },
+          {
+            model: User,
+            as: 'Likers',
+            attributes: ['id'],
+          },
+        ],
+      });
+      res.status(200).json(likes);
+    } else {
+      res.status(404).send('존재하지 않는 사용자입니다.');
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+exports.loadUserInfo = async (req, res, next) => {
+  const {
+    params: { nickname },
+  } = req;
+  try {
+    const user = await User.findOne({
+      where: { nickname },
+      attributes: ['id', 'nickname', 'avatarUrl'],
+    });
+    user ? res.status(200).json(user) : res.status(404).json('존재하지 않는 사용자입니다.');
   } catch (error) {
     console.error(error);
     next(error);
