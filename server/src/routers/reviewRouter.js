@@ -20,7 +20,7 @@ reviewRouter.post(routes.addReview, isLoggedIn, addReview);
 reviewRouter.patch(routes.editReview, isLoggedIn, editReview);
 reviewRouter.delete(routes.deleteReview, isLoggedIn, deleteReview);
 
-reviewRouter.get(routes.getReview, isLoggedIn, getReview);
+reviewRouter.get(routes.getReview, getReview);
 
 reviewRouter.patch(routes.likeReview, isLoggedIn, addLike);
 reviewRouter.delete(routes.likeReview, isLoggedIn, cancelLike);

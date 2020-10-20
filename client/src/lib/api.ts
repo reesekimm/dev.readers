@@ -8,9 +8,17 @@ axios.defaults.withCredentials = true;
 
 export const loadMyInfo = () => axios.get(`${BASE_URL}/user`);
 
+export const loadUserInfo = (nickname) => axios.get(`${BASE_URL}/user/${nickname}`);
+
 export const logout = () => axios.get(`${BASE_URL}/user/logout`);
 
 export const getReviews = (lastId) => axios.get(`${BASE_URL}/reviews?lastId=${lastId}`);
+
+export const getUserReviews = ({ nickname, lastId }) =>
+  axios.get(`${BASE_URL}/user/${nickname}/reviews?lastId=${lastId}`);
+
+export const getUserLikes = ({ nickname, lastId }) =>
+  axios.get(`${BASE_URL}/user/${nickname}/likes?lastId=${lastId}`);
 
 export const addReview = (review) => axios.post(`${BASE_URL}/review/review`, review);
 

@@ -1,13 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { IReview, IBook, IUser } from '@types';
-import reviews from '../../assets/reviews';
 
 export const initialState: IReview.ReviewState = {
   mainReviews: [],
   getReviewsDone: false,
   getReviewsError: null,
   hasMoreReviews: true,
+  getUserReviewsDone: false,
+  getUserReviewsError: null,
+  getUserLikesDone: false,
+  getUserLikesError: null,
   addReviewDone: false,
   addReviewError: null,
   editReviewDone: false,
@@ -46,6 +49,32 @@ const reviewSlice = createSlice({
     getReviewsFailure: (state, action) => {
       state.getReviewsDone = true;
       state.getReviewsError = action.payload;
+    },
+    getUserReviews: (state, action) => {
+      state.getUserReviewsDone = false;
+      state.getUserReviewsError = null;
+    },
+    getUserReviewsSuccess: (state, action) => {
+      state.mainReviews = [...state.mainReviews, ...action.payload];
+      state.getUserReviewsDone = true;
+      state.hasMoreReviews = action.payload.length === 10;
+    },
+    getUserReviewsFailure: (state, action) => {
+      state.getUserReviewsDone = true;
+      state.getUserReviewsError = action.payload;
+    },
+    getUserLikes: (state, action) => {
+      state.getUserLikesDone = false;
+      state.getUserLikesError = null;
+    },
+    getUserLikesSuccess: (state, action) => {
+      state.mainReviews = [...state.mainReviews, ...action.payload];
+      state.getUserLikesDone = true;
+      state.hasMoreReviews = action.payload.length === 10;
+    },
+    getUserLikesFailure: (state, action) => {
+      state.getUserLikesDone = true;
+      state.getUserLikesError = action.payload;
     },
     addReview: (
       state,

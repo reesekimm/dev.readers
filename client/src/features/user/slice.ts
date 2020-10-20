@@ -4,11 +4,13 @@ import { IUser, IReview } from '@types';
 
 export const initialState: IUser.UserState = {
   me: null,
+  userInfo: null,
   logOutDone: false,
   logOutError: null,
   loadMyInfoDone: false,
   loadMyInfoError: null,
-  // hasMoreReviews: true
+  loadUserInfoDone: false,
+  loadUserInfoError: null,
 };
 
 const userSlice = createSlice({
@@ -26,6 +28,18 @@ const userSlice = createSlice({
     loadMyInfoFailure: (state, action) => {
       state.loadMyInfoDone = true;
       state.loadMyInfoError = action.payload;
+    },
+    loadUserInfo: (state, action) => {
+      state.loadUserInfoDone = false;
+      state.loadUserInfoError = null;
+    },
+    loadUserInfoSuccess: (state, action) => {
+      state.loadUserInfoDone = true;
+      state.userInfo = action.payload;
+    },
+    loadUserInfoFailure: (state, action) => {
+      state.loadUserInfoDone = true;
+      state.loadUserInfoError = action.payload;
     },
     logout: (state) => {
       state.logOutDone = false;

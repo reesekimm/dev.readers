@@ -46,6 +46,10 @@ export interface ReviewState {
   getReviewsDone: boolean;
   getReviewsError: string | null;
   hasMoreReviews: boolean;
+  getUserReviewsDone: boolean;
+  getUserReviewsError: string | null;
+  getUserLikesDone: boolean;
+  getUserLikesError: string | null;
   addReviewDone: boolean;
   addReviewError: string | null;
   editReviewDone: boolean;

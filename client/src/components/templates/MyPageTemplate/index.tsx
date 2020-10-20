@@ -19,7 +19,8 @@ function MyPageTemplate({
     <BaseTemplate>
       {profile}
       {tabs}
-      {isLoading ? <Loading /> : reviewList}
+      {reviewList}
+      {isLoading && <Loading />}
     </BaseTemplate>
   );
 }
