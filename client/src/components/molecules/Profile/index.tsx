@@ -49,7 +49,7 @@ function Profile({ userInfo, ...props }: Props): React.ReactElement | null {
     </Menu>
   );
 
-  const isLoggedIn = me && me.id;
+  const isMyPage = me && me.nickname === userInfo.nickname;
 
   if (!userInfo) return null;
 
@@ -61,7 +61,7 @@ function Profile({ userInfo, ...props }: Props): React.ReactElement | null {
         </Avatar>
         <Text tag="h3">{userInfo.nickname || 'No one'}</Text>
       </div>
-      {isLoggedIn && (
+      {isMyPage && (
         <div>
           <Button styleType="plain" onClick={onClickLogout} isLoading={logout}>
             <Text>로그아웃</Text>
