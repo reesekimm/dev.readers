@@ -31,12 +31,17 @@ export const Wrapper = styled.div`
 
 const ModalStyle = css<ModalStyleProps>`
   background: #fff;
-  padding: 2rem;
+  padding: 1.5rem 2rem;
   border-radius: 0.5rem;
   box-shadow: ${({ theme }) => theme.shadows.xl};
   display: flex;
   flex-direction: column;
   overflow: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
 `;
 
 export const Content = styled.div`
