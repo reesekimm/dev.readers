@@ -19,8 +19,8 @@ function ReviewListItem({ review, lastReviewElementRef, ...props }: Props): Reac
 
   const dispatch = useDispatch();
   const openReviewDetailModal = useCallback(() => {
-    dispatch(actions.openReviewDetailModal(review));
-  }, [review]);
+    dispatch(actions.openReviewDetailModal(id));
+  }, []);
 
   return (
     <S.Container ref={lastReviewElementRef} {...props}>

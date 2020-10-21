@@ -10,6 +10,5 @@ export interface ModalState {
   };
   reviewDetailModal: {
     isOpened: boolean;
-    data: IReview.Review | IBook.ISBN | null;
   };
 }

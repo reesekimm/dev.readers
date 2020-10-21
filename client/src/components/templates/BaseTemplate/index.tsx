@@ -35,7 +35,7 @@ function BeseTemplate({ children }: Props): React.ReactElement {
   const {
     loginModal: { isOpened: loginModalIsOpened },
     writeReviewModal: { isOpened: writeReviewModalIsOpened, data: writeReviewData },
-    reviewDetailModal: { isOpened: reviewDetailModalIsOpened, data: reviewDetailData },
+    reviewDetailModal: { isOpened: reviewDetailModalIsOpened },
   } = useSelector((state: RootState) => state.modal);
 
   const { getReview } = useSelector((state: RootState) => state.loading);
@@ -110,7 +110,7 @@ function BeseTemplate({ children }: Props): React.ReactElement {
       <Modal
         modalFor="review_detail"
         modalSize="lg"
-        content={Review || reviewDetailData}
+        content={Review}
         Template={ReviewDetailTemplate}
         modalIsOpened={reviewDetailModalIsOpened}
         closeModal={closeReviewDetailModal}
