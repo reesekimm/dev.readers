@@ -131,7 +131,7 @@ exports.getUserReviews = async (req, res, next) => {
           },
           {
             model: User,
-            attributes: ['id', 'nickname'],
+            attributes: ['id', 'nickname', 'avatarUrl'],
           },
           {
             model: Comment,
@@ -184,7 +184,7 @@ exports.getUserLikes = async (req, res, next) => {
           },
           {
             model: User,
-            attributes: ['id', 'nickname'],
+            attributes: ['id', 'nickname', 'avatarUrl'],
           },
           {
             model: Comment,

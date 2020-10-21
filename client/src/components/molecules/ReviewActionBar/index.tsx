@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Avatar } from 'antd';
 import {
   HeartOutlined,
   HeartFilled,
@@ -85,6 +86,7 @@ function ReviewActionBar({
   return (
     <S.Container {...props}>
       <div>
+        <Avatar src={User.avatarUrl} />
         <Text color="gray5" fontSize="xsm" fontWeight="medium">
           {User.nickname}
         </Text>

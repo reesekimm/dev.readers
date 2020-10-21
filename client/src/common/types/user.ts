@@ -16,11 +16,6 @@ export interface UserState {
 export interface User {
   id: number;
   nickname: string;
-}
-
-export interface UserInfo {
-  id: number;
-  nickname: string;
   avatarUrl: string;
 }
 
