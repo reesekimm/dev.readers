@@ -5,6 +5,7 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  padding-right: 5px;
 `;
 
 export const Textarea = styled.textarea`
