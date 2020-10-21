@@ -49,7 +49,7 @@ function ReviewDetailTemplate({ content, closeModal }: Props): React.ReactElemen
           <S.NoComment>첫 번째 댓글을 남겨보세요!</S.NoComment>
         )}
         <Divider />
-        {me && <CommentForm ReviewId={id} />}
+        <CommentForm ReviewId={id} />
       </S.CommentContainer>
     </S.Container>
   );

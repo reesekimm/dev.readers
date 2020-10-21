@@ -7,6 +7,7 @@ import { IReview } from '@types';
 import { useInput, useModal } from '@hooks';
 import * as S from './style';
 import { actions } from '../../../features/review';
+import { actions as modalActions } from '../../../features/modal';
 
 interface Props {
   [key: string]: unknown;
@@ -18,12 +19,17 @@ function CommentForm({ ReviewId, ...props }: Props): React.ReactElement {
   const { modalIsOpened: feedbackModalIsOpened, toggleModal: toggleFeedbackModal } = useModal();
 
   const dispatch = useDispatch();
+  const { me } = useSelector((state: RootState) => state.user);
   const { addCommentDone } = useSelector((state: RootState) => state.review);
   const { addComment } = useSelector((state: RootState) => state.loading);
 
   const onSubmitComment = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      if (!me) {
+        dispatch(modalActions.openLoginModal());
+        return;
+      }
       comment
         ? dispatch(actions.addComment({ ReviewId, content: comment }))
         : toggleFeedbackModal();

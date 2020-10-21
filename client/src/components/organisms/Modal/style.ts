@@ -9,9 +9,9 @@ const ModalWrapperStyle = css<ModalStyleProps>`
       case 'sm':
         return 9999;
       case 'md':
-        return 900;
-      default:
         return 9000;
+      default:
+        return 900;
     }
   }};
 `;
