@@ -187,7 +187,7 @@ exports.addComment = async (req, res, next) => {
       include: [
         {
           model: User,
-          attributes: ['id', 'nickname'],
+          attributes: ['id', 'nickname', 'avatarUrl'],
         },
       ],
     });
