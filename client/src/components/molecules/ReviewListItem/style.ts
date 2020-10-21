@@ -14,10 +14,10 @@ export const Container = styled.div`
 
 export const ContentWrapper = styled.div`
   cursor: pointer;
+  flex: 1;
 `;
 
-export const Content = styled.span`
-  flex: 1;
+export const Content = styled.div`
   margin: 1rem 0;
   text-align: justify;
   white-space: pre-wrap;

@@ -29,6 +29,7 @@ export const Content = styled.p`
   overflow: auto;
   margin: 1rem 0;
   white-space: pre-wrap;
+  width: 100%;
 `;
 
 export const CommentContainer = styled.div`
@@ -36,7 +37,6 @@ export const CommentContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  padding-bottom: 1rem;
 `;
 
 export const CommentList = styled.ul`
