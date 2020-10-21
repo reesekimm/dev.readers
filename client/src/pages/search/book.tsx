@@ -13,7 +13,9 @@ function Search(): React.ReactElement {
   const router = useRouter();
 
   const dispatch = useDispatch();
-  const { searchBookResult, hasMoreResults } = useSelector((state: RootState) => state.search);
+  const { totalResults, searchBookResult, hasMoreResults } = useSelector(
+    (state: RootState) => state.search
+  );
   const { searchBook } = useSelector((state: RootState) => state.loading);
 
   const [inputValue, setInputValue] = useState<string>('');
@@ -83,6 +85,7 @@ function Search(): React.ReactElement {
         <BookList books={searchBookResult} page={page} lastBookElementRef={lastBookElementRef} />
       }
       loading={searchBook}
+      noResult={totalResults === 0}
     />
   );
 }

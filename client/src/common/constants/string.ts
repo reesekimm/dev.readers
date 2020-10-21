@@ -26,6 +26,7 @@ export const LOGIN = {
 
 export const EMPTY = {
   NO_COMMENT: '첫 번째 댓글을 남겨보세요!',
+  NO_RESULT: '검색 결과가 없어요.\n다른 검색어를 입력하시거나 철자와 띄어쓰기를 확인해보세요.',
 };
 
 export const PLACEHOLDERS = {
