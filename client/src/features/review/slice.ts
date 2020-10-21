@@ -194,7 +194,7 @@ const reviewSlice = createSlice({
       const reviewToAddComment = state.mainReviews.find(
         (review) => review.id === action.payload.ReviewId
       );
-      reviewToAddComment?.Comments.push(action.payload);
+      reviewToAddComment?.Comments.unshift(action.payload);
       state.addCommentDone = true;
     },
     addCommentFailure: (state, action) => {
