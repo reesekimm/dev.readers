@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Avatar } from 'antd';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 
+import { FEEDBACK_PHRASES } from '@constants';
 import { RootState } from '@features';
 import { Text, Button, Modal, FeedbackTemplate, CommentEditor } from '@components';
 import { IReview } from '@types';
@@ -43,18 +45,33 @@ function Comment({ id, ReviewId, User, content, createdAt }: IReview.Comment): R
 
   return (
     <S.Container>
-      <S.CommentHeader>
+      <Button type="inLink" href={`/${User.nickname}`} styleType="plain">
+        <Avatar src={User.avatarUrl} />
+      </Button>
+      <S.Content>
         <div>
-          <Text color="gray5" fontSize="xsm" fontWeight="medium">
-            {User.nickname}
-          </Text>
+          <Button type="inLink" href={`/${User.nickname}`} styleType="plain">
+            <Text color="gray5" fontSize="xsm" fontWeight="medium">
+              {User.nickname}
+            </Text>
+          </Button>
           <Text color="gray4" fontSize="xsm" style={{ marginLeft: '1rem' }}>
             {dayjs(createdAt).fromNow()}
           </Text>
         </div>
+        {editMode ? (
+          <CommentEditor
+            ReviewId={ReviewId}
+            CommentId={id}
+            content={content}
+            onCloseCommentEditor={onCloseCommentEditor}
+          />
+        ) : (
+          content
+        )}
         {showActionButtons && (
           <div>
-            <Button styleType="plain" onClick={onClickEditComment}>
+            <Button styleType="plain" onClick={onClickEditComment} className="no-margin">
               <Text color="primary" fontSize="xsm">
                 수정
               </Text>
@@ -66,22 +83,12 @@ function Comment({ id, ReviewId, User, content, createdAt }: IReview.Comment): R
             </Button>
           </div>
         )}
-      </S.CommentHeader>
-      {editMode ? (
-        <CommentEditor
-          ReviewId={ReviewId}
-          CommentId={id}
-          content={content}
-          onCloseCommentEditor={onCloseCommentEditor}
-        />
-      ) : (
-        content
-      )}
+      </S.Content>
       <Modal
         modalFor="feedback"
         modalSize="sm"
         content={{
-          feedbackPhrase: '댓글을 삭제하시겠어요?',
+          feedbackPhrase: FEEDBACK_PHRASES.DELETE_COMMENT,
           onConfirm: onConfirmDelete,
           cancelable: true,
           isLoading: deleteComment,

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Dropdown, Menu } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
 
+import { FEEDBACK_PHRASES } from '@constants';
 import { RootState } from '@features';
 import { Text, Button, Modal, FeedbackTemplate } from '@components';
 import { useModal } from '@hooks';
@@ -13,7 +14,7 @@ import { actions } from '../../../features/user';
 
 interface Props {
   [key: string]: unknown;
-  userInfo: IUser.UserInfo;
+  userInfo: IUser.User;
 }
 
 function Profile({ userInfo, ...props }: Props): React.ReactElement | null {
@@ -49,7 +50,7 @@ function Profile({ userInfo, ...props }: Props): React.ReactElement | null {
     </Menu>
   );
 
-  const isLoggedIn = me && me.id;
+  const isMyPage = me && userInfo && me.nickname === userInfo.nickname;
 
   if (!userInfo) return null;
 
@@ -61,7 +62,7 @@ function Profile({ userInfo, ...props }: Props): React.ReactElement | null {
         </Avatar>
         <Text tag="h3">{userInfo.nickname || 'No one'}</Text>
       </div>
-      {isLoggedIn && (
+      {isMyPage && (
         <div>
           <Button styleType="plain" onClick={onClickLogout} isLoading={logout}>
             <Text>로그아웃</Text>
@@ -75,7 +76,7 @@ function Profile({ userInfo, ...props }: Props): React.ReactElement | null {
             modalFor="feedback"
             modalSize="sm"
             content={{
-              feedbackPhrase: '작성하신 리뷰와 댓글이 모두 삭제돼요.\n정말 탈퇴하시겠어요?',
+              feedbackPhrase: FEEDBACK_PHRASES.DELETE_ACCOUNT,
               onConfirm,
               cancelable: true,
             }}

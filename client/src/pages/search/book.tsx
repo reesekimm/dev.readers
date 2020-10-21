@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { PLACEHOLDERS } from '@constants';
 import { useDebounce, useInfiniteScroll } from '@hooks';
 import { SearchBookTemplate, BookList, Input } from '@components';
 import { RootState } from '@features';
@@ -12,7 +13,9 @@ function Search(): React.ReactElement {
   const router = useRouter();
 
   const dispatch = useDispatch();
-  const { searchBookResult, hasMoreResults } = useSelector((state: RootState) => state.search);
+  const { totalResults, searchBookResult, hasMoreResults } = useSelector(
+    (state: RootState) => state.search
+  );
   const { searchBook } = useSelector((state: RootState) => state.loading);
 
   const [inputValue, setInputValue] = useState<string>('');
@@ -71,7 +74,7 @@ function Search(): React.ReactElement {
         <Input
           inputName="search"
           type="search"
-          placeholder="도서명을 검색해 보세요"
+          placeholder={PLACEHOLDERS.SEARCH_BOOK}
           value={inputValue}
           onChange={onChangeInput}
           ref={inputRef}
@@ -82,6 +85,7 @@ function Search(): React.ReactElement {
         <BookList books={searchBookResult} page={page} lastBookElementRef={lastBookElementRef} />
       }
       loading={searchBook}
+      noResult={totalResults === 0}
     />
   );
 }

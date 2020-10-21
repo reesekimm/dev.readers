@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { EMPTY } from '@constants';
 import { RootState } from '@features';
 import { Text, BookInfo, Divider, ReviewActionBar, CommentForm, Comment } from '@components';
 import { IReview } from '@types';
@@ -12,10 +13,9 @@ interface Props {
 }
 
 function ReviewDetailTemplate({ content, closeModal }: Props): React.ReactElement {
-  const { id, User, Book, rating, content: data, createdAt, Comments, Likers } = content;
+  const { id, Book, rating, content: data, Comments } = content;
   const bookInfo = { ...Book, type: 'detailed', rating } as const;
 
-  const { me } = useSelector((state: RootState) => state.user);
   const { mainReviews } = useSelector((state: RootState) => state.review);
 
   const [comments, setComments] = useState(Comments);
@@ -46,10 +46,10 @@ function ReviewDetailTemplate({ content, closeModal }: Props): React.ReactElemen
             ))}
           </S.CommentList>
         ) : (
-          <S.NoComment>첫 번째 댓글을 남겨보세요!</S.NoComment>
+          <S.NoComment>{EMPTY.NO_COMMENT}</S.NoComment>
         )}
         <Divider />
-        {me && <CommentForm ReviewId={id} />}
+        <CommentForm ReviewId={id} />
       </S.CommentContainer>
     </S.Container>
   );

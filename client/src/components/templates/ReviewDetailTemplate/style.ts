@@ -4,7 +4,6 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
   grid-gap: 2rem;
-  padding-top: 1rem;
   width: 100%;
   height: 100%;
 
@@ -30,6 +29,7 @@ export const Content = styled.p`
   overflow: auto;
   margin: 1rem 0;
   white-space: pre-wrap;
+  width: 100%;
 `;
 
 export const CommentContainer = styled.div`
@@ -37,12 +37,13 @@ export const CommentContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  padding-bottom: 1rem;
 `;
 
 export const CommentList = styled.ul`
   flex: 1;
   width: 100%;
+  max-height: 300px;
+  overflow: auto;
 `;
 
 export const NoComment = styled.div`

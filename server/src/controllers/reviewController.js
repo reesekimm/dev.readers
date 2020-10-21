@@ -93,8 +93,6 @@ exports.deleteReview = async (req, res, next) => {
 exports.getReview = async (req, res, next) => {
   const { id } = req.query;
 
-  console.log('[ReviewId] ', id);
-
   try {
     const fullReview = await Review.findOne({
       where: { id },
@@ -104,11 +102,11 @@ exports.getReview = async (req, res, next) => {
         },
         {
           model: User,
-          attributes: ['id', 'nickname'],
+          attributes: ['id', 'nickname', 'avatarUrl'],
         },
         {
           model: Comment,
-          include: [{ model: User, attributes: ['id', 'nickname'] }],
+          include: [{ model: User, attributes: ['id', 'nickname', 'avatarUrl'] }],
         },
         {
           model: User,

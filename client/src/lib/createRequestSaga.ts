@@ -7,14 +7,12 @@ export default function createRequestSaga(type, request) {
 
   return function* (action): Generator {
     yield put(actions.start(type.toString()));
-    console.log('[payload]', action.payload);
     try {
       let result;
       if (typeof request === 'string') {
         yield delay(1000);
       } else {
         result = yield call(request, action.payload);
-        console.log('response : ', result.data);
       }
       yield put({
         type: success,

@@ -2,10 +2,9 @@ import React from 'react';
 import { Tag } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
 
+import { BRAND, LOGIN, GITHUB_AUTH_LINK } from '@constants';
 import { Text, Button } from '@components';
 import * as S from './style';
-
-const githubAuthLink = `${process.env.NEXT_PUBLIC_DEV_API}/user/auth/github`;
 
 function LoginTemplate(): React.ReactElement {
   return (
@@ -14,17 +13,17 @@ function LoginTemplate(): React.ReactElement {
         dev.readers
       </Text>
       <Text fontSize="xsm" style={{ color: '#616161' }}>
-        개발자를 위한 도서 리뷰 플랫폼
+        {BRAND.INTRO}
       </Text>
       <S.TagContainer>
-        <Tag color="#f8c291">#개발도서리뷰</Tag>
-        <Tag color="#f8c291">#독서기록SNS</Tag>
+        <Tag color="#f8c291">{BRAND.TAG_1}</Tag>
+        <Tag color="#f8c291">{BRAND.TAG_2}</Tag>
       </S.TagContainer>
-      <a href={githubAuthLink}>
+      <a href={GITHUB_AUTH_LINK}>
         <Button>
           <S.ButtonContent>
             <GithubOutlined />
-            Github으로 로그인 하기
+            {LOGIN.GITHUB}
           </S.ButtonContent>
         </Button>
       </a>

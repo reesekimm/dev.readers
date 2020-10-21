@@ -23,14 +23,14 @@ exports.getReviews = async (req, res, next) => {
         },
         {
           model: User,
-          attributes: ['id', 'nickname'],
+          attributes: ['id', 'nickname', 'avatarUrl'],
         },
         {
           model: Comment,
           include: [
             {
               model: User,
-              attributes: ['id', 'nickname'],
+              attributes: ['id', 'nickname', 'avatarUrl'],
             },
           ],
         },

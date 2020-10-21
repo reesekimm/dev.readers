@@ -6,6 +6,10 @@ export const Container = styled.div`
   align-items: center;
   width: 100%;
 
+  a {
+    padding-left: 0;
+  }
+
   button {
     color: #616161;
   }

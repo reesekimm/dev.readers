@@ -71,7 +71,6 @@ function* deleteReview({ type, payload }) {
   const success = `${type}Success`;
   const failure = `${type}Failure`;
   yield put(loadingActions.start(type.toString()));
-  console.log('[payload]', payload);
   try {
     const { data } = yield call(api.deleteReview, payload);
     yield put({
@@ -100,7 +99,6 @@ function* addLike({ type, payload }) {
   const success = `${type}Success`;
   const failure = `${type}Failure`;
   yield put(loadingActions.start(type.toString()));
-  console.log('[payload]', payload);
   try {
     const {
       data: { ReviewId, UserId },
@@ -130,7 +128,6 @@ function* cancelLike({ type, payload }) {
   const success = `${type}Success`;
   const failure = `${type}Failure`;
   yield put(loadingActions.start(type.toString()));
-  console.log('[payload]', payload);
   try {
     const {
       data: { ReviewId, UserId },
@@ -200,7 +197,6 @@ function* addComment({ type, payload }) {
   const success = `${type}Success`;
   const failure = `${type}Failure`;
   yield put(loadingActions.start(type.toString()));
-  console.log('[payload]', payload);
   try {
     const { data } = yield call(api.addComment, payload);
     yield put(userActions.addComment({ id: data.id }));
@@ -236,7 +232,6 @@ function* deleteComment({ type, payload }) {
   const success = `${type}Success`;
   const failure = `${type}Failure`;
   yield put(loadingActions.start(type.toString()));
-  console.log('[payload]', payload);
   try {
     const {
       data: { CommentId },

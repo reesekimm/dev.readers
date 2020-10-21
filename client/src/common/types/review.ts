@@ -1,11 +1,11 @@
 import { IBook, IUser } from '@types';
 
-export type ReviewId = number | string; // TODO: DB 연동후 number로 고정
+export type ReviewId = number;
 
 export type CreatedAt = string;
 
 export interface Comment {
-  id: number | string; // TODO: DB 연동후 number로 고정
+  id: number;
   ReviewId: ReviewId;
   User: IUser.User;
   content: string;
@@ -18,7 +18,7 @@ export interface CommentInfo {
 }
 
 export interface Liker {
-  id: number | string; // TODO: DB 연동후 number로 고정
+  id: number;
 }
 
 export interface ReviewInfo {

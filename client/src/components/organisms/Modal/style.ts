@@ -9,9 +9,9 @@ const ModalWrapperStyle = css<ModalStyleProps>`
       case 'sm':
         return 9999;
       case 'md':
-        return 900;
-      default:
         return 9000;
+      default:
+        return 900;
     }
   }};
 `;
@@ -31,12 +31,17 @@ export const Wrapper = styled.div`
 
 const ModalStyle = css<ModalStyleProps>`
   background: #fff;
-  padding: 2rem;
+  padding: 1.5rem 2rem;
   border-radius: 0.5rem;
   box-shadow: ${({ theme }) => theme.shadows.xl};
   display: flex;
   flex-direction: column;
   overflow: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
 `;
 
 export const Content = styled.div`
@@ -60,7 +65,7 @@ export const LargeModal = styled.div`
 export const MediumModal = styled.div`
   ${ModalStyle}
   width: 500px;
-  height: 600px;
+  height: 500px;
   margin: 0 2rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {

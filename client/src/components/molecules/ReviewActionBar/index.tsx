@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Avatar } from 'antd';
 import {
   HeartOutlined,
   HeartFilled,
@@ -12,6 +13,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 
+import { FEEDBACK_PHRASES } from '@constants';
 import { RootState } from '@features';
 import { Text, Button, Modal, FeedbackTemplate } from '@components';
 import { useModal } from '@hooks';
@@ -46,6 +48,10 @@ function ReviewActionBar({
 
   const liked = me?.Likes.find((review) => review.id === id);
   const onLike = useCallback(() => {
+    if (!me) {
+      dispatch(modalActions.openLoginModal());
+      return;
+    }
     dispatch(actions.addLike(id));
   }, []);
 
@@ -81,9 +87,12 @@ function ReviewActionBar({
   return (
     <S.Container {...props}>
       <div>
-        <Text color="gray5" fontSize="xsm" fontWeight="medium">
-          {User.nickname}
-        </Text>
+        <Button type="inLink" href={`/${User.nickname}`} styleType="plain">
+          <Avatar src={User.avatarUrl} />
+          <Text color="gray5" fontSize="xsm" fontWeight="medium">
+            {User.nickname}
+          </Text>
+        </Button>
         <Text color="gray4" fontSize="xsm">
           {dayjs(createdAt).fromNow()}
         </Text>
@@ -121,7 +130,7 @@ function ReviewActionBar({
               modalFor="feedback"
               modalSize="sm"
               content={{
-                feedbackPhrase: '리뷰를 삭제하시겠어요?',
+                feedbackPhrase: FEEDBACK_PHRASES.DELETE_REVIEW,
                 onConfirm: onConfirmDelete,
                 cancelable: true,
               }}
