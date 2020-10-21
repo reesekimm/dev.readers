@@ -16,11 +16,13 @@ export const ContentWrapper = styled.div`
   cursor: pointer;
 `;
 
-export const Content = styled.p`
+export const Content = styled.span`
   flex: 1;
   margin: 1rem 0;
   text-align: justify;
   white-space: pre-wrap;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Actions = styled.div`

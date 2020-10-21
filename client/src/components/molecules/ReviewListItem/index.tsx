@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { Text, BookInfo, ReviewActionBar } from '@components';
 import { IReview } from '@types';
+import { utils } from '@common';
 import * as S from './style';
 import { actions } from '../../../features/modal';
 
@@ -27,15 +28,11 @@ function ReviewListItem({ review, lastReviewElementRef, ...props }: Props): Reac
       <S.ContentWrapper onClick={openReviewDetailModal}>
         <BookInfo {...bookInfo} />
         <S.Content>
-          {content.length > 200 ? (
-            <Text color="gray5">
-              {`${content.slice(0, 200)}...`}{' '}
-              <Text color="gray3" fontSize="xsm" fontWeight="medium">
-                더보기
-              </Text>
+          <Text color="gray5">{utils.truncateText(content).result}</Text>
+          {utils.truncateText(content).more && (
+            <Text color="gray3" fontSize="xsm" fontWeight="medium">
+              더보기
             </Text>
-          ) : (
-            <Text color="gray5">{content}</Text>
           )}
         </S.Content>
       </S.ContentWrapper>
