@@ -44,13 +44,7 @@ function Header(): React.ReactElement {
             onClick={me ? null : onClickLogin}
             isLoading={githubAuth}
           >
-            {me ? (
-              <Avatar src={me.avatarUrl} style={{ backgroundColor: '#1e3799' }}>
-                {me.nickname[0]}
-              </Avatar>
-            ) : (
-              '로그인'
-            )}
+            {me ? <Avatar src={me.avatarUrl}>{me.nickname[0]}</Avatar> : '로그인'}
           </Button>
         </S.ButtonContainer>
       </S.NavItemContainer>
