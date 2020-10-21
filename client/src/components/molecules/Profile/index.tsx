@@ -49,7 +49,7 @@ function Profile({ userInfo, ...props }: Props): React.ReactElement | null {
     </Menu>
   );
 
-  const isMyPage = me && me.nickname === userInfo.nickname;
+  const isMyPage = me && userInfo && me.nickname === userInfo.nickname;
 
   if (!userInfo) return null;
 
