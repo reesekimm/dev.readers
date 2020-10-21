@@ -46,6 +46,10 @@ function ReviewActionBar({
 
   const liked = me?.Likes.find((review) => review.id === id);
   const onLike = useCallback(() => {
+    if (!me) {
+      dispatch(modalActions.openLoginModal());
+      return;
+    }
     dispatch(actions.addLike(id));
   }, []);
 
