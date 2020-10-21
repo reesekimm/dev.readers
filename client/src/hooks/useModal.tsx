@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 
-export default function useModal(onClose?: () => void) {
+export default function useModal(modalSize?: string, onClose?: () => void) {
   const [modalIsOpened, setModalIsOpened] = useState<boolean>(false);
-  const ref = useRef(null);
+  const modalRef = useRef(null);
 
   const toggleModal = () => setModalIsOpened(!modalIsOpened);
 
   useEffect(() => {
-    const modalWrapper = ref.current;
+    const modalWrapper = modalRef.current;
     if (!modalWrapper) return;
 
     function clickListener(e: MouseEvent) {
-      if (modalWrapper && e.target.classList.contains('close_modal')) {
+      if (modalWrapper && e.target.classList.contains(modalSize)) {
         onClose?.();
       }
     }
@@ -24,6 +24,6 @@ export default function useModal(onClose?: () => void) {
   return {
     modalIsOpened,
     toggleModal,
-    ref,
+    modalRef,
   };
 }

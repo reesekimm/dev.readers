@@ -39,13 +39,13 @@ function Modal({
   modalFor,
   content,
   Template,
-  modalSize = 'lg',
+  modalSize,
   modalIsOpened,
   closeModal,
   isLoading,
 }: Props): React.ReactPortal | null {
   const modalRoot = useRef<Element | null>(null);
-  const { ref } = useModal(closeModal);
+  const { modalRef } = useModal(modalSize, closeModal);
 
   useEffect(() => {
     const wrapper = document.getElementById('modal-root');
@@ -55,7 +55,7 @@ function Modal({
   const ModalWithCustomizedSize = modals[modalSize];
 
   const modal = (
-    <S.Wrapper modalSize={modalSize} className="close_modal" ref={modalSize !== 'sm' ? ref : null}>
+    <S.Wrapper modalSize={modalSize} className={modalSize} ref={modalRef}>
       <ModalWithCustomizedSize>
         {modalSize !== 'sm' && (
           <>
