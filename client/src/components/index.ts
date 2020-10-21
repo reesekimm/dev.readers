@@ -3,7 +3,6 @@ export { default as Divider } from './atoms/Divider';
 export { default as Img } from './atoms/Img';
 export { default as Input } from './atoms/Input';
 export { default as Loading } from './atoms/Loading';
-export { default as RatingTag } from './atoms/RatingTag';
 export { default as Text } from './atoms/Text';
 
 export { default as BookInfo } from './molecules/BookInfo';

@@ -93,8 +93,6 @@ exports.deleteReview = async (req, res, next) => {
 exports.getReview = async (req, res, next) => {
   const { id } = req.query;
 
-  console.log('[ReviewId] ', id);
-
   try {
     const fullReview = await Review.findOne({
       where: { id },
