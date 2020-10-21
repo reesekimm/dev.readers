@@ -17,6 +17,8 @@ interface Props {
   closeModal: () => void;
 }
 
+const githubAuthLink = `${process.env.NEXT_PUBLIC_DEV_API}/user/auth/github`;
+
 function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement {
   const bookInfo = content.isbn
     ? { ...content, type: 'write' }
@@ -81,12 +83,14 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
           <Text fontSize="sm" fontWeight="medium">
             리뷰를 남기시려면 로그인이 필요해요!
           </Text>
-          <Button>
-            <S.ButtonContent>
-              <GithubOutlined />
-              Github으로 로그인 하기
-            </S.ButtonContent>
-          </Button>
+          <a href={githubAuthLink}>
+            <Button>
+              <S.ButtonContent>
+                <GithubOutlined />
+                Github으로 로그인 하기
+              </S.ButtonContent>
+            </Button>
+          </a>
         </S.Login>
       )}
       <Modal
