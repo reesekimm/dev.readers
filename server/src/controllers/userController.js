@@ -138,7 +138,7 @@ exports.getUserReviews = async (req, res, next) => {
             include: [
               {
                 model: User,
-                attributes: ['id', 'nickname'],
+                attributes: ['id', 'nickname', 'avatarUrl'],
                 order: [['createdAt', 'DESC']],
               },
             ],
@@ -191,7 +191,7 @@ exports.getUserLikes = async (req, res, next) => {
             include: [
               {
                 model: User,
-                attributes: ['id', 'nickname'],
+                attributes: ['id', 'nickname', 'avatarUrl'],
                 order: [['createdAt', 'DESC']],
               },
             ],

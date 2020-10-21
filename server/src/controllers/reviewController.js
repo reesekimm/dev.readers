@@ -108,7 +108,7 @@ exports.getReview = async (req, res, next) => {
         },
         {
           model: Comment,
-          include: [{ model: User, attributes: ['id', 'nickname'] }],
+          include: [{ model: User, attributes: ['id', 'nickname', 'avatarUrl'] }],
         },
         {
           model: User,
