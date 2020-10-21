@@ -11,7 +11,7 @@ import { actions } from '../../../features/review';
 interface Props {
   [key: string]: unknown;
   ReviewId: IReview.ReviewId;
-  CommentId: string | number; // TODO: DB 연동후 number로 고정
+  CommentId: number;
   content: string;
   onCloseCommentEditor: () => void;
 }

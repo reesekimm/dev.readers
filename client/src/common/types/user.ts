@@ -14,8 +14,7 @@ export interface UserState {
 }
 
 export interface User {
-  // TODO: DB 연동후 number로 고정
-  id: number | string;
+  id: number;
   nickname: string;
 }
 
@@ -36,8 +35,7 @@ export interface Comment {
 }
 
 export interface Me {
-  // TODO: DB 연동 후 id type number로 고정
-  id: number | string;
+  id: number;
   nickname: string;
   avatarUrl: string;
   Reviews: Review[];
