@@ -4,7 +4,6 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
   grid-gap: 2rem;
-  padding-top: 1rem;
   width: 100%;
   height: 100%;
 
@@ -43,6 +42,8 @@ export const CommentContainer = styled.div`
 export const CommentList = styled.ul`
   flex: 1;
   width: 100%;
+  max-height: 300px;
+  overflow: auto;
 `;
 
 export const NoComment = styled.div`
