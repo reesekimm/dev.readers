@@ -12,7 +12,6 @@ export const initialState: IModal.ModalState = {
   },
   reviewDetailModal: {
     isOpened: false,
-    data: null,
   },
 };
 
@@ -34,13 +33,11 @@ const modalSlice = createSlice({
       state.writeReviewModal.isOpened = false;
       state.writeReviewModal.data = null;
     },
-    openReviewDetailModal: (state, action: PayloadAction<IReview.Review | IBook.ISBN>) => {
+    openReviewDetailModal: (state, action: PayloadAction<IReview.ReviewId>) => {
       state.reviewDetailModal.isOpened = true;
-      state.reviewDetailModal.data = action.payload;
     },
     closeReviewDetailModal: (state) => {
       state.reviewDetailModal.isOpened = false;
-      state.reviewDetailModal.data = null;
     },
   },
 });
