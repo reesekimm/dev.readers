@@ -60,7 +60,7 @@ export const LargeModal = styled.div`
 export const MediumModal = styled.div`
   ${ModalStyle}
   width: 500px;
-  height: 600px;
+  height: 500px;
   margin: 0 2rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
