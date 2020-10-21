@@ -86,10 +86,12 @@ function ReviewActionBar({
   return (
     <S.Container {...props}>
       <div>
-        <Avatar src={User.avatarUrl} />
-        <Text color="gray5" fontSize="xsm" fontWeight="medium">
-          {User.nickname}
-        </Text>
+        <Button type="inLink" href={`/${User.nickname}`} styleType="plain">
+          <Avatar src={User.avatarUrl} />
+          <Text color="gray5" fontSize="xsm" fontWeight="medium">
+            {User.nickname}
+          </Text>
+        </Button>
         <Text color="gray4" fontSize="xsm">
           {dayjs(createdAt).fromNow()}
         </Text>
