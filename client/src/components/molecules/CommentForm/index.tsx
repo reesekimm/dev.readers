@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { FEEDBACK_PHRASES } from '@constants';
 import { RootState } from '@features';
 import { Button, Modal, FeedbackTemplate } from '@components';
 import { IReview } from '@types';
@@ -50,7 +51,10 @@ function CommentForm({ ReviewId, ...props }: Props): React.ReactElement {
       <Modal
         modalFor="feedback"
         modalSize="sm"
-        content={{ feedbackPhrase: '댓글을 작성해 주세요.', onConfirm: toggleFeedbackModal }}
+        content={{
+          feedbackPhrase: FEEDBACK_PHRASES.REQUEST_COMMENT,
+          onConfirm: toggleFeedbackModal,
+        }}
         Template={FeedbackTemplate}
         modalIsOpened={feedbackModalIsOpened}
         closeModal={toggleFeedbackModal}

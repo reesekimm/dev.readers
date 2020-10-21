@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { PLACEHOLDERS } from '@constants';
 import { useDebounce, useInfiniteScroll } from '@hooks';
 import { SearchBookTemplate, BookList, Input } from '@components';
 import { RootState } from '@features';
@@ -71,7 +72,7 @@ function Write(): React.ReactElement {
         <Input
           inputName="search"
           type="search"
-          placeholder="리뷰를 작성할 도서명을 검색하세요"
+          placeholder={PLACEHOLDERS.WRITE_REVIEW}
           value={inputValue}
           onChange={onChangeInput}
           ref={inputRef}

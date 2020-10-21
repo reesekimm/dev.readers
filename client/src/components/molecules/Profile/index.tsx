@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Dropdown, Menu } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
 
+import { FEEDBACK_PHRASES } from '@constants';
 import { RootState } from '@features';
 import { Text, Button, Modal, FeedbackTemplate } from '@components';
 import { useModal } from '@hooks';
@@ -75,7 +76,7 @@ function Profile({ userInfo, ...props }: Props): React.ReactElement | null {
             modalFor="feedback"
             modalSize="sm"
             content={{
-              feedbackPhrase: '작성하신 리뷰와 댓글이 모두 삭제돼요.\n정말 탈퇴하시겠어요?',
+              feedbackPhrase: FEEDBACK_PHRASES.DELETE_ACCOUNT,
               onConfirm,
               cancelable: true,
             }}

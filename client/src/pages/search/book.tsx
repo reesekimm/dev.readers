@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { PLACEHOLDERS } from '@constants';
 import { useDebounce, useInfiniteScroll } from '@hooks';
 import { SearchBookTemplate, BookList, Input } from '@components';
 import { RootState } from '@features';
@@ -71,7 +72,7 @@ function Search(): React.ReactElement {
         <Input
           inputName="search"
           type="search"
-          placeholder="도서명을 검색해 보세요"
+          placeholder={PLACEHOLDERS.SEARCH_BOOK}
           value={inputValue}
           onChange={onChangeInput}
           ref={inputRef}

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { message } from 'antd';
 
+import { MESSAGES } from '@constants';
 import { RootState } from '@features';
 import {
   Header,
@@ -54,27 +55,27 @@ function BeseTemplate({ children }: Props): React.ReactElement {
 
   useEffect(() => {
     if (addReviewDone)
-      message.success('리뷰 작성 완료!', 1).then(() => {
+      message.success(MESSAGES.ADD_REVIEW_SUCCESS, 1).then(() => {
         dispatch(reviewActions.resetAddReviewState());
       });
     if (addReviewError)
-      message.error('리뷰 작성 실패', 1).then(() => {
+      message.error(MESSAGES.ERROR, 1).then(() => {
         dispatch(reviewActions.resetAddReviewState());
       });
     if (editReviewDone)
-      message.success('리뷰 수정 완료!', 1).then(() => {
+      message.success(MESSAGES.EDIT_REVIEW_SUCCESS, 1).then(() => {
         dispatch(reviewActions.resetEditReviewState());
       });
     if (editReviewError)
-      message.error('리뷰 수정 실패', 1).then(() => {
+      message.error(MESSAGES.ERROR, 1).then(() => {
         dispatch(reviewActions.resetEditReviewState());
       });
     if (deleteReviewDone)
-      message.success('리뷰 삭제 완료!', 1).then(() => {
+      message.success(MESSAGES.DELETE_REVIEW_SUCCESS, 1).then(() => {
         dispatch(reviewActions.resetDeleteReviewState());
       });
     if (deleteReviewError)
-      message.error('리뷰 삭제 실패', 1).then(() => {
+      message.error(MESSAGES.ERROR, 1).then(() => {
         dispatch(reviewActions.resetDeleteReviewState());
       });
   }, [

@@ -13,6 +13,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 
+import { FEEDBACK_PHRASES } from '@constants';
 import { RootState } from '@features';
 import { Text, Button, Modal, FeedbackTemplate } from '@components';
 import { useModal } from '@hooks';
@@ -129,7 +130,7 @@ function ReviewActionBar({
               modalFor="feedback"
               modalSize="sm"
               content={{
-                feedbackPhrase: '리뷰를 삭제하시겠어요?',
+                feedbackPhrase: FEEDBACK_PHRASES.DELETE_REVIEW,
                 onConfirm: onConfirmDelete,
                 cancelable: true,
               }}

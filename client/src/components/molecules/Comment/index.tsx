@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 
+import { FEEDBACK_PHRASES } from '@constants';
 import { RootState } from '@features';
 import { Text, Button, Modal, FeedbackTemplate, CommentEditor } from '@components';
 import { IReview } from '@types';
@@ -87,7 +88,7 @@ function Comment({ id, ReviewId, User, content, createdAt }: IReview.Comment): R
         modalFor="feedback"
         modalSize="sm"
         content={{
-          feedbackPhrase: '댓글을 삭제하시겠어요?',
+          feedbackPhrase: FEEDBACK_PHRASES.DELETE_COMMENT,
           onConfirm: onConfirmDelete,
           cancelable: true,
           isLoading: deleteComment,

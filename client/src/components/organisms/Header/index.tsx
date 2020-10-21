@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
+import { ROUTES } from '@constants';
 import { Text, Button } from '@components';
 import { RootState } from '@features';
 import { actions as modalActions } from '../../../features/modal';
@@ -21,7 +22,7 @@ function Header(): React.ReactElement {
   return (
     <S.Container>
       <S.NavItemContainer>
-        <Link href="/">
+        <Link href={ROUTES.HOME}>
           <a>
             <Text tag="h1" color="primary" fontFamily="logo" fontSize="lg">
               dev.readers
@@ -29,11 +30,11 @@ function Header(): React.ReactElement {
           </a>
         </Link>
         <S.ButtonContainer>
-          <Button type="inLink" href="/search/book" styleType="plain">
+          <Button type="inLink" href={ROUTES.SEARCH_BOOK} styleType="plain">
             <SearchOutlined />
           </Button>
           {me && (
-            <Button type="inLink" href="/write" styleType="plain">
+            <Button type="inLink" href={ROUTES.WRITE_REVIEW} styleType="plain">
               리뷰쓰기
             </Button>
           )}

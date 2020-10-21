@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Rate } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
 
+import { FEEDBACK_PHRASES, LOGIN, GITHUB_AUTH_LINK } from '@constants';
 import { RootState } from '@features';
 import { Button, Text, BookInfo, ReviewForm, Modal, FeedbackTemplate } from '@components';
 import { useModal, useInput } from '@hooks';
@@ -16,8 +17,6 @@ interface Props {
   /** template을 감싸고 있는 Modal을 닫는 callback */
   closeModal: () => void;
 }
-
-const githubAuthLink = `${process.env.NEXT_PUBLIC_DEV_API}/user/auth/github`;
 
 function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement {
   const bookInfo = content.isbn
@@ -81,13 +80,13 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
       ) : (
         <S.Login>
           <Text fontSize="sm" fontWeight="medium">
-            리뷰를 남기시려면 로그인이 필요해요!
+            {LOGIN.REQUEST_LOGIN}
           </Text>
-          <a href={githubAuthLink}>
+          <a href={GITHUB_AUTH_LINK}>
             <Button>
               <S.ButtonContent>
                 <GithubOutlined />
-                Github으로 로그인 하기
+                {LOGIN.GITHUB}
               </S.ButtonContent>
             </Button>
           </a>
@@ -96,7 +95,7 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
       <Modal
         modalFor="feedback"
         modalSize="sm"
-        content={{ feedbackPhrase: '이미 작성하신 리뷰가 있어요!', onConfirm }}
+        content={{ feedbackPhrase: FEEDBACK_PHRASES.REVIEW_EXISTS, onConfirm }}
         Template={FeedbackTemplate}
         modalIsOpened={feedbackModalIsOpened}
         closeModal={toggleFeedbackModal}
