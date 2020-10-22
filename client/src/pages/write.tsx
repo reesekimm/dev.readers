@@ -1,15 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
+import { END } from 'redux-saga';
+import axios from 'axios';
 
 import { PLACEHOLDERS } from '@constants';
-import { useDebounce, useInfiniteScroll } from '@hooks';
-import { SearchBookTemplate, BookList, Input } from '@components';
 import { RootState } from '@features';
-import { actions } from '../features/search';
+import { SearchBookTemplate, BookList, Input } from '@components';
+import { useDebounce, useInfiniteScroll } from '@hooks';
 import { InputRef } from '../components/atoms/Input';
+import { actions as searchActions } from '../features/search';
+import { actions as userActions } from '../features/user';
+import { wrapper, SagaStore } from '../store/configureStore';
 
-function Write(): React.ReactElement {
+function Write(): React.ReactElement | null {
   const router = useRouter();
 
   const dispatch = useDispatch();
@@ -38,11 +43,11 @@ function Write(): React.ReactElement {
   );
 
   useEffect(() => {
-    dispatch(actions.clearResult());
+    dispatch(searchActions.clearResult());
     setPage(1);
     if (query) {
       try {
-        dispatch(actions.searchBook({ query, page }));
+        dispatch(searchActions.searchBook({ query, page }));
       } catch (error) {
         console.log(error);
       }
@@ -52,7 +57,7 @@ function Write(): React.ReactElement {
   useEffect(() => {
     if (query) {
       try {
-        dispatch(actions.searchBook({ query, page }));
+        dispatch(searchActions.searchBook({ query, page }));
       } catch (error) {
         console.log(error);
       }
@@ -89,5 +94,23 @@ function Write(): React.ReactElement {
     />
   );
 }
+
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    console.log('===== getServerSideProps start =====');
+    const cookie = context.req ? context.req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
+
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+
+    context.store.dispatch(userActions.loadMyInfo());
+
+    context.store.dispatch(END);
+
+    await (context.store as SagaStore).sagaTask.toPromise();
+  }
+);
 
 export default Write;
