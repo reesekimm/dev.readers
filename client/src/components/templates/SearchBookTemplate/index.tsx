@@ -13,9 +13,8 @@ function SearchBookTemplate({
   searchBar,
   bookList = null,
   loading = false,
-  noResult,
+  noResult = false,
 }: Props): React.ReactElement {
-  console.log('noResult', noResult);
   return (
     <BaseTemplate>
       {searchBar}

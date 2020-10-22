@@ -25,10 +25,10 @@ const searchSlice = createSlice({
       state.searchBookResult = [...state.searchBookResult, ...action.payload.item];
     },
     searchBookFailure: (state, action) => {
-      state.searchDone = true;
       state.searchError = action.payload;
     },
     clearResult: (state) => {
+      state.searchDone = false;
       state.totalResults = 0;
       state.searchBookResult = [];
     },
