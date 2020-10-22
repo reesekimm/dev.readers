@@ -16,7 +16,7 @@ function BookList({ books, page, lastBookElementRef, ...props }: Props): React.R
     <S.Container {...props}>
       {books.map((book: IBook.Book, index) => (
         <BookListItem
-          key={book.isbn13}
+          key={book.isbn13 || book.title}
           book={book}
           lastBookElementRef={index + 1 === books.length ? lastBookElementRef : null}
           data-page={index + 1 === books.length ? page : null}
