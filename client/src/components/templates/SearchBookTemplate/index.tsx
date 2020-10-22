@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 
 import { Loading, BaseTemplate, NoResult } from '@components';
 
@@ -13,16 +14,20 @@ function SearchBookTemplate({
   searchBar,
   bookList = null,
   loading = false,
-  noResult,
+  noResult = false,
 }: Props): React.ReactElement {
-  console.log('noResult', noResult);
   return (
-    <BaseTemplate>
-      {searchBar}
-      {bookList}
-      {loading && <Loading />}
-      {noResult && <NoResult />}
-    </BaseTemplate>
+    <>
+      <Head>
+        <title>dev.readers | 도서검색</title>
+      </Head>
+      <BaseTemplate>
+        {searchBar}
+        {bookList}
+        {loading && <Loading />}
+        {noResult && <NoResult />}
+      </BaseTemplate>
+    </>
   );
 }
 

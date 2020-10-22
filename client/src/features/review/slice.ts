@@ -87,7 +87,7 @@ const reviewSlice = createSlice({
       state.mainReviews.unshift(action.payload);
       state.addReviewDone = true;
     },
-    addReviewFailure: (state, action: PayloadAction<string>) => {
+    addReviewFailure: (state, action) => {
       state.addReviewDone = true;
       state.addReviewError = action.payload;
     },
@@ -124,7 +124,7 @@ const reviewSlice = createSlice({
       state.mainReviews.splice(reviewIndex, 1);
       state.deleteReviewDone = true;
     },
-    deleteReviewFailure: (state, action: PayloadAction<string>) => {
+    deleteReviewFailure: (state, action) => {
       state.deleteReviewError = action.payload;
     },
     resetDeleteReviewState: (state) => {
@@ -179,7 +179,7 @@ const reviewSlice = createSlice({
       state.getReviewDone = true;
       state.Review = action.payload;
     },
-    getReviewFailure: (state, action: PayloadAction<string>) => {
+    getReviewFailure: (state, action) => {
       state.getReviewDone = true;
       state.getReviewError = action.payload;
     },

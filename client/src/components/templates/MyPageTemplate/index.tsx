@@ -1,8 +1,10 @@
 import React from 'react';
+import Head from 'next/head';
 
 import { BaseTemplate, Loading } from '@components';
 
 interface Props {
+  nickname: string;
   profile: React.ReactNode;
   tabs: React.ReactNode;
   reviewList: React.ReactNode;
@@ -11,6 +13,7 @@ interface Props {
 }
 
 function MyPageTemplate({
+  nickname,
   profile,
   tabs,
   reviewList,
@@ -18,16 +21,21 @@ function MyPageTemplate({
   errorMessage,
 }: Props): React.ReactElement {
   return (
-    <BaseTemplate>
-      {errorMessage || (
-        <>
-          {profile}
-          {tabs}
-          {reviewList}
-          {isLoading && <Loading />}
-        </>
-      )}
-    </BaseTemplate>
+    <>
+      <Head>
+        <title>dev.readers | {nickname}</title>
+      </Head>
+      <BaseTemplate>
+        {errorMessage || (
+          <>
+            {profile}
+            {tabs}
+            {reviewList}
+            {isLoading && <Loading />}
+          </>
+        )}
+      </BaseTemplate>
+    </>
   );
 }
 

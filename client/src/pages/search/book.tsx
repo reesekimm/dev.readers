@@ -18,7 +18,7 @@ function Search(): React.ReactElement {
   const router = useRouter();
 
   const dispatch = useDispatch();
-  const { totalResults, searchBookResult, hasMoreResults } = useSelector(
+  const { totalResults, searchBookResult, hasMoreResults, searchDone } = useSelector(
     (state: RootState) => state.search
   );
   const { searchBook } = useSelector((state: RootState) => state.loading);
@@ -90,7 +90,7 @@ function Search(): React.ReactElement {
         <BookList books={searchBookResult} page={page} lastBookElementRef={lastBookElementRef} />
       }
       loading={searchBook}
-      noResult={totalResults === 0}
+      noResult={query && searchDone && totalResults === 0}
     />
   );
 }

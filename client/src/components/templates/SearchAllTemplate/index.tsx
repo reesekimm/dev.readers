@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 
 import { BaseTemplate, Text, Button, Divider } from '@components';
 import * as S from './style';
@@ -15,24 +16,29 @@ function SearcAllTemplate({
   reviewList = null,
 }: Props): React.ReactElement {
   return (
-    <BaseTemplate>
-      {searchBar}
-      <S.SubtitleContainer>
-        <Text fontSize="md" fontWeight="bold">
-          도서
-        </Text>
-        <Button styleType="plain">더보기</Button>
-      </S.SubtitleContainer>
-      {bookList}
-      <Divider style={{ marginTop: '3rem' }} />
-      <S.SubtitleContainer>
-        <Text fontSize="md" fontWeight="bold">
-          리뷰
-        </Text>
-        <Button styleType="plain">더보기</Button>
-      </S.SubtitleContainer>
-      {reviewList}
-    </BaseTemplate>
+    <>
+      <Head>
+        <title>dev.readers | 검색</title>
+      </Head>
+      <BaseTemplate>
+        {searchBar}
+        <S.SubtitleContainer>
+          <Text fontSize="md" fontWeight="bold">
+            도서
+          </Text>
+          <Button styleType="plain">더보기</Button>
+        </S.SubtitleContainer>
+        {bookList}
+        <Divider style={{ marginTop: '3rem' }} />
+        <S.SubtitleContainer>
+          <Text fontSize="md" fontWeight="bold">
+            리뷰
+          </Text>
+          <Button styleType="plain">더보기</Button>
+        </S.SubtitleContainer>
+        {reviewList}
+      </BaseTemplate>
+    </>
   );
 }
 

@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import axios from 'axios';
 
-import { PLACEHOLDERS } from '@constants';
+import { ROUTES, PLACEHOLDERS } from '@constants';
 import { RootState } from '@features';
 import { SearchBookTemplate, BookList, Input } from '@components';
 import { useDebounce, useInfiniteScroll } from '@hooks';
@@ -18,7 +18,8 @@ function Write(): React.ReactElement | null {
   const router = useRouter();
 
   const dispatch = useDispatch();
-  const { totalResults, searchBookResult, hasMoreResults } = useSelector(
+  const { me } = useSelector((state: RootState) => state.user);
+  const { totalResults, searchBookResult, hasMoreResults, searchDone } = useSelector(
     (state: RootState) => state.search
   );
   const { searchBook } = useSelector((state: RootState) => state.loading);
@@ -26,6 +27,10 @@ function Write(): React.ReactElement | null {
   const [inputValue, setInputValue] = useState<string>('');
   const [page, setPage] = useState<number>(1);
   const query = useDebounce(inputValue, 500);
+
+  useEffect(() => {
+    if (!me) Router.replace(ROUTES.HOME);
+  }, [me && me.id]);
 
   const inputRef = useRef<InputRef>(null);
   useEffect(() => {
@@ -73,6 +78,8 @@ function Write(): React.ReactElement | null {
     },
   });
 
+  if (!me) return null;
+
   return (
     <SearchBookTemplate
       searchBar={
@@ -90,7 +97,7 @@ function Write(): React.ReactElement | null {
         <BookList books={searchBookResult} page={page} lastBookElementRef={lastBookElementRef} />
       }
       loading={searchBook}
-      noResult={totalResults === 0}
+      noResult={query && searchDone && totalResults === 0}
     />
   );
 }

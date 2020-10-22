@@ -49,7 +49,7 @@ const userSlice = createSlice({
       state.logOutDone = true;
       state.me = null;
     },
-    logoutFailure: (state, action: PayloadAction<string>) => {
+    logoutFailure: (state, action) => {
       state.logOutError = action.payload;
     },
     addReview: (state, action: PayloadAction<IUser.Review>) => {
