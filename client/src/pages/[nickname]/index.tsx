@@ -43,6 +43,7 @@ function Me(): React.ReactElement | null {
 
   return (
     <MyPageTemplate
+      nickname={nickname}
       profile={<Profile userInfo={userInfo} />}
       tabs={<Tabs menus={menus} />}
       reviewList={<ReviewList reviews={mainReviews} lastReviewElementRef={lastReviewElementRef} />}
