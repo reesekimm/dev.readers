@@ -8,19 +8,13 @@ interface Props {
   [key: string]: unknown;
   books: IBook.Books;
   page: number;
-  lastBookElementRef: unknown;
 }
 
-function BookList({ books, page, lastBookElementRef, ...props }: Props): React.ReactElement {
+function BookList({ books, page, ...props }: Props): React.ReactElement {
   return (
     <S.Container {...props}>
       {books.map((book: IBook.Book, index) => (
-        <BookListItem
-          key={book.isbn13 || book.title}
-          book={book}
-          lastBookElementRef={index + 1 === books.length ? lastBookElementRef : null}
-          data-page={index + 1 === books.length ? page : null}
-        />
+        <BookListItem key={book.isbn13 + index} book={book} />
       ))}
     </S.Container>
   );

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { GetServerSideProps } from 'next';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import axios from 'axios';
@@ -8,7 +8,7 @@ import axios from 'axios';
 import { ROUTES, PLACEHOLDERS } from '@constants';
 import { RootState } from '@features';
 import { SearchBookTemplate, BookList, Input } from '@components';
-import { useDebounce, useInfiniteScroll } from '@hooks';
+import { useDebounce, useDidMountEffect } from '@hooks';
 import { InputRef } from '../components/atoms/Input';
 import { actions as searchActions } from '../features/search';
 import { actions as userActions } from '../features/user';
@@ -16,6 +16,7 @@ import { wrapper, SagaStore } from '../store/configureStore';
 
 function Write(): React.ReactElement | null {
   const router = useRouter();
+  const { query: initialQuery } = router.query;
 
   const dispatch = useDispatch();
   const { me } = useSelector((state: RootState) => state.user);
@@ -24,12 +25,12 @@ function Write(): React.ReactElement | null {
   );
   const { searchBook } = useSelector((state: RootState) => state.loading);
 
-  const [inputValue, setInputValue] = useState<string>('');
-  const [page, setPage] = useState<number>(1);
+  const [inputValue, setInputValue] = useState<string>(initialQuery);
+  const [page, setPage] = useState<number>(initialQuery ? 2 : 1);
   const query = useDebounce(inputValue, 500);
 
   useEffect(() => {
-    if (!me) Router.replace(ROUTES.HOME);
+    if (!me) router.replace(ROUTES.HOME);
   }, [me && me.id]);
 
   const inputRef = useRef<InputRef>(null);
@@ -40,43 +41,38 @@ function Write(): React.ReactElement | null {
   const onChangeInput = useCallback(
     (e) => {
       setInputValue(e.target.value);
-
-      /** 서버 재시작 없이 URL path 업데이트 */
       router.replace(`/write?query=${e.target.value}`, undefined, { shallow: true });
     },
     [router]
   );
 
   useEffect(() => {
+    function onScroll() {
+      const reachTheEnd =
+        window.scrollY + document.documentElement.clientHeight >
+        document.documentElement.scrollHeight - 500;
+      if (reachTheEnd && hasMoreResults && !searchBook) {
+        dispatch(searchActions.searchBook({ query, page }));
+        setPage((prev) => prev + 1);
+      }
+    }
+    window.addEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, [hasMoreResults, searchBook]);
+
+  useDidMountEffect(() => {
     dispatch(searchActions.clearResult());
-    setPage(1);
     if (query) {
       try {
-        dispatch(searchActions.searchBook({ query, page }));
+        dispatch(searchActions.searchBook({ query, page: 1 }));
+        setPage(2);
       } catch (error) {
         console.log(error);
       }
     }
-  }, [query, dispatch]);
-
-  useEffect(() => {
-    if (query) {
-      try {
-        dispatch(searchActions.searchBook({ query, page }));
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }, [page, dispatch]);
-
-  const lastBookElementRef = useInfiniteScroll({
-    hasMore: hasMoreResults,
-    loading: searchBook,
-    page,
-    callback: () => {
-      setPage((prev) => prev + 1);
-    },
-  });
+  }, [query]);
 
   if (!me) return null;
 
@@ -93,9 +89,7 @@ function Write(): React.ReactElement | null {
           style={{ margin: '1rem auto 4rem' }}
         />
       }
-      bookList={
-        <BookList books={searchBookResult} page={page} lastBookElementRef={lastBookElementRef} />
-      }
+      bookList={<BookList books={searchBookResult} page={page} />}
       loading={searchBook}
       noResult={query && searchDone && totalResults === 0}
     />
@@ -105,18 +99,23 @@ function Write(): React.ReactElement | null {
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
   async (context) => {
     console.log('===== getServerSideProps start =====');
-    const cookie = context.req ? context.req.headers.cookie : '';
+    const {
+      store,
+      req,
+      query: { query },
+    } = context;
+
+    const cookie = req ? req.headers.cookie : '';
     axios.defaults.headers.Cookie = '';
+    if (req && cookie) axios.defaults.headers.Cookie = cookie;
 
-    if (context.req && cookie) {
-      axios.defaults.headers.Cookie = cookie;
-    }
+    store.dispatch(userActions.loadMyInfo());
+    if (query)
+      store.dispatch(searchActions.searchBook({ query: encodeURIComponent(query), page: 1 }));
 
-    context.store.dispatch(userActions.loadMyInfo());
+    store.dispatch(END);
 
-    context.store.dispatch(END);
-
-    await (context.store as SagaStore).sagaTask.toPromise();
+    await (store as SagaStore).sagaTask.toPromise();
   }
 );
 
