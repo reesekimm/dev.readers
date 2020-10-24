@@ -16,8 +16,8 @@ function LoginTemplate(): React.ReactElement {
         {BRAND.INTRO}
       </Text>
       <S.TagContainer>
-        <Tag color="#f8c291">{BRAND.TAG_1}</Tag>
-        <Tag color="#f8c291">{BRAND.TAG_2}</Tag>
+        <Tag color="#a4b0be">{BRAND.TAG_1}</Tag>
+        <Tag color="#a4b0be">{BRAND.TAG_2}</Tag>
       </S.TagContainer>
       <a href={GITHUB_AUTH_LINK}>
         <Button>

@@ -2,8 +2,8 @@ import { DefaultTheme } from 'styled-components';
 
 const lightTheme: DefaultTheme = {
   palette: {
-    primary: '#1e3799',
-    secondary: '#f8c291',
+    primary: '#30336b',
+    secondary: '#a4b0be',
     danger: '#eb2f06',
     alert: '#f6b93b',
     success: '#079992',
@@ -27,7 +27,7 @@ const lightTheme: DefaultTheme = {
     xsm: '320px',
   },
   fontFamily: {
-    logo: `'Alegreya Sans', sans-serif;`,
+    logo: `'Pacifico', cursive;`,
     default: `'Noto Sans KR', sans-serif;`,
   },
   fontSizes: {
