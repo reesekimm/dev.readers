@@ -33,20 +33,20 @@ function Header(): React.ReactElement {
           <Button type="inLink" href={ROUTES.SEARCH_BOOK} styleType="plain">
             <SearchOutlined />
           </Button>
-          {me && (
-            <Button type="inLink" href={ROUTES.WRITE_REVIEW} styleType="plain">
-              리뷰쓰기
+          {me ? (
+            <>
+              <Button type="inLink" href={ROUTES.WRITE_REVIEW} styleType="plain">
+                리뷰쓰기
+              </Button>
+              <Button styleType="plain" type="inLink" href={`/${me.nickname}`}>
+                <Avatar src={me.avatarUrl}>{me.nickname[0]}</Avatar>
+              </Button>
+            </>
+          ) : (
+            <Button styleType="plain" onClick={onClickLogin} isLoading={githubAuth}>
+              로그인
             </Button>
           )}
-          <Button
-            styleType="plain"
-            type={me ? 'inLink' : null}
-            href={me ? `/${me.nickname}` : null}
-            onClick={me ? null : onClickLogin}
-            isLoading={githubAuth}
-          >
-            {me ? <Avatar src={me.avatarUrl}>{me.nickname[0]}</Avatar> : '로그인'}
-          </Button>
         </S.ButtonContainer>
       </S.NavItemContainer>
     </S.Container>
