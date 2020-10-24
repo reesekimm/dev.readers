@@ -24,7 +24,7 @@ function Search(): React.ReactElement {
   );
   const { searchBook } = useSelector((state: RootState) => state.loading);
 
-  const [inputValue, setInputValue] = useState<string>(initialQuery);
+  const [inputValue, setInputValue] = useState<string>(initialQuery || '');
   const [page, setPage] = useState<number>(initialQuery ? 2 : 1);
   const query = useDebounce(inputValue, 500);
 
