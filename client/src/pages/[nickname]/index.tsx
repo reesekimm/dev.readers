@@ -56,19 +56,24 @@ function Me(): React.ReactElement | null {
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
   async (context) => {
     console.log('===== getServerSideProps start =====');
-    console.log('params : ', context.params);
-    const cookie = context.req ? context.req.headers.cookie : '';
-    axios.defaults.headers.Cookie = '';
+    const {
+      req,
+      store,
+      params: { nickname },
+    } = context;
 
-    if (context.req && cookie) {
+    const cookie = req ? req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
+    if (req && cookie) {
       axios.defaults.headers.Cookie = cookie;
     }
 
-    context.store.dispatch(userActions.loadMyInfo());
-    context.store.dispatch(userActions.loadUserInfo(context.params.nickname));
-    context.store.dispatch(
-      reviewActions.getUserReviews({ nickname: context.params.nickname, lastId: null })
-    );
+    store.dispatch(userActions.loadMyInfo());
+
+    if (nickname !== 'favicon.ico') {
+      store.dispatch(userActions.loadUserInfo(nickname));
+      store.dispatch(reviewActions.getUserReviews({ nickname, lastId: null }));
+    }
 
     context.store.dispatch(END);
 
