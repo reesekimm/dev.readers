@@ -9,10 +9,9 @@ import { actions } from '../../../features/modal';
 interface Props {
   [key: string]: unknown;
   book: IBook.Book;
-  lastBookElementRef: unknown;
 }
 
-function BookListItem({ book, lastBookElementRef, ...props }: Props): React.ReactElement {
+function BookListItem({ book, ...props }: Props): React.ReactElement {
   const { title, author, pubDate, cover } = book;
 
   const dispatch = useDispatch();
@@ -21,7 +20,7 @@ function BookListItem({ book, lastBookElementRef, ...props }: Props): React.Reac
   }, []);
 
   return (
-    <S.Container onClick={openWriteReviewModal} ref={lastBookElementRef} {...props}>
+    <S.Container onClick={openWriteReviewModal} {...props}>
       <S.ImageContainer>
         <Img src={cover} alt={title} />
       </S.ImageContainer>
