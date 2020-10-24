@@ -49,10 +49,8 @@ function Button({
 
   if (type === 'inLink')
     return (
-      <Link href={href} passHref>
-        <S.Anchor styleType={styleType} {...props}>
-          {children}
-        </S.Anchor>
+      <Link href={href} passHref {...props}>
+        <S.Anchor styleType={styleType}>{children}</S.Anchor>
       </Link>
     );
 
