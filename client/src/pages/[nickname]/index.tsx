@@ -32,14 +32,13 @@ function Me(): React.ReactElement | null {
     setLastId(mainReviews[mainReviews.length - 1]?.id);
   }, [mainReviews]);
 
-  const lastReviewElementRef = useInfiniteScroll({
-    hasMore: hasMoreReviews,
-    loading: getUserReviews,
-    lastId,
-    callback: () => {
-      dispatch(reviewActions.getUserReviews({ nickname, lastId }));
-    },
-  });
+  const [lastReviewElementRef, entry, isVisible] = useInfiniteScroll();
+  const endOfList = entry?.target.dataset.reviewid === lastId?.toString();
+  const loadMoreReviewsAllowed = isVisible && !getUserReviews && endOfList && hasMoreReviews;
+
+  useEffect(() => {
+    if (loadMoreReviewsAllowed) dispatch(reviewActions.getUserReviews({ nickname, lastId }));
+  }, [loadMoreReviewsAllowed]);
 
   return (
     <MyPageTemplate

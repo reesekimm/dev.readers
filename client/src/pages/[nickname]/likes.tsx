@@ -32,14 +32,13 @@ function Likes(): React.ReactElement | null {
     setLastId(mainReviews[mainReviews.length - 1]?.id);
   }, [mainReviews]);
 
-  const lastReviewElementRef = useInfiniteScroll({
-    hasMore: hasMoreReviews,
-    loading: getUserLikes,
-    lastId,
-    callback: () => {
-      dispatch(reviewActions.getUserLikes({ nickname, lastId }));
-    },
-  });
+  const [lastReviewElementRef, entry, isVisible] = useInfiniteScroll();
+  const endOfList = entry?.target.dataset.reviewid === lastId?.toString();
+  const loadMoreReviewsAllowed = isVisible && !getUserLikes && endOfList && hasMoreReviews;
+
+  useEffect(() => {
+    if (loadMoreReviewsAllowed) dispatch(reviewActions.getUserLikes({ nickname, lastId }));
+  }, [loadMoreReviewsAllowed]);
 
   return (
     <MyPageTemplate
