@@ -24,7 +24,7 @@ function Main(): React.ReactElement {
   }, [mainReviews]);
 
   const [lastReviewElementRef, entry, isVisible] = useInfiniteScroll();
-  const endOfList = entry?.target.dataset.reviewid === lastId.toString();
+  const endOfList = entry?.target.dataset.reviewid === lastId?.toString();
   const loadMoreReviewsAllowed = isVisible && !getReviews && endOfList && hasMoreReviews;
 
   useEffect(() => {
