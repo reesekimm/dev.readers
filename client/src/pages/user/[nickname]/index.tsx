@@ -8,9 +8,9 @@ import axios from 'axios';
 import { RootState } from '@features';
 import { useInfiniteScroll } from '@hooks';
 import { MyPageTemplate, Profile, Tabs, ReviewList } from '@components';
-import { actions as reviewActions } from '../../features/review';
-import { actions as userActions } from '../../features/user';
-import { wrapper, SagaStore } from '../../store/configureStore';
+import { actions as reviewActions } from '../../../features/review';
+import { actions as userActions } from '../../../features/user';
+import { wrapper, SagaStore } from '../../../store/configureStore';
 
 function Me(): React.ReactElement | null {
   const router = useRouter();
@@ -69,10 +69,8 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
 
     store.dispatch(userActions.loadMyInfo());
 
-    if (nickname !== 'favicon.ico') {
-      store.dispatch(userActions.loadUserInfo(nickname));
-      store.dispatch(reviewActions.getUserReviews({ nickname, lastId: null }));
-    }
+    store.dispatch(userActions.loadUserInfo(nickname));
+    store.dispatch(reviewActions.getUserReviews({ nickname, lastId: null }));
 
     context.store.dispatch(END);
 
