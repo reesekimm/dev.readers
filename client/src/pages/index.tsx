@@ -23,14 +23,13 @@ function Main(): React.ReactElement {
     setLastId(mainReviews[mainReviews.length - 1]?.id);
   }, [mainReviews]);
 
-  const lastReviewElementRef = useInfiniteScroll({
-    hasMore: hasMoreReviews,
-    loading: getReviews,
-    lastId,
-    callback: () => {
-      dispatch(reviewActions.getReviews(lastId));
-    },
-  });
+  const [lastReviewElementRef, entry, isVisible] = useInfiniteScroll();
+  const endOfList = entry?.target.dataset.reviewid === lastId.toString();
+  const loadMoreReviewsAllowed = isVisible && !getReviews && endOfList && hasMoreReviews;
+
+  useEffect(() => {
+    if (loadMoreReviewsAllowed) dispatch(reviewActions.getReviews(lastId));
+  }, [loadMoreReviewsAllowed]);
 
   return (
     <>
@@ -50,19 +49,21 @@ function Main(): React.ReactElement {
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
   async (context) => {
     console.log('===== getServerSideProps start =====');
-    const cookie = context.req ? context.req.headers.cookie : '';
+    const { req, store } = context;
+
+    const cookie = req ? req.headers.cookie : '';
     axios.defaults.headers.Cookie = '';
 
-    if (context.req && cookie) {
+    if (req && cookie) {
       axios.defaults.headers.Cookie = cookie;
     }
 
-    context.store.dispatch(userActions.loadMyInfo());
-    context.store.dispatch(reviewActions.getReviews(null));
+    store.dispatch(userActions.loadMyInfo());
+    store.dispatch(reviewActions.getReviews(null));
 
-    context.store.dispatch(END);
+    store.dispatch(END);
 
-    await (context.store as SagaStore).sagaTask.toPromise();
+    await (store as SagaStore).sagaTask.toPromise();
   }
 );
 

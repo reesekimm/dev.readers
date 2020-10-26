@@ -1,46 +1,33 @@
-import { useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 
-interface Props {
-  hasMore: boolean;
-  loading: boolean;
-  page?: number;
-  lastId?: number | string;
-  callback: () => void;
-}
+type IntersectionObserverHookRefCallback = (node: HTMLDivElement | null) => void;
 
-type ResultOfInfiniteScrollHook = (node: HTMLDivElement | null) => void;
+type UseInfiniteScrollHookResult = [
+  callbackRef: IntersectionObserverHookRefCallback,
+  entry: IntersectionObserverEntry | undefined,
+  isVisible: boolean
+];
 
-export default function useInfiniteScroll({
-  hasMore,
-  loading,
-  page,
-  lastId,
-  callback,
-}: Props): ResultOfInfiniteScrollHook {
-  const observer = useRef<IntersectionObserver | null>(null);
+const options = {
+  root: null,
+  rootMargin: '0px',
+  threshold: 0,
+};
 
-  const callbackRef = useCallback(
-    (node) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
+export default function useInfiniteScroll(): UseInfiniteScrollHookResult {
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const [entry, setEntry] = useState<IntersectionObserverEntry>();
 
-      observer.current = new IntersectionObserver((entries) => {
-        const isIntersecting = entries[0].isIntersecting;
-        let endOfList;
-        if (page) {
-          endOfList = entries[0].target.dataset.page === page.toString();
-        } else if (lastId) {
-          endOfList = entries[0].target.dataset.reviewid === lastId.toString();
-        } else {
-          console.info('page 또는 lastId 인자를 입력해 주세요.');
-        }
-        if (isIntersecting && endOfList && hasMore) callback();
-      });
+  const callbackRef = useCallback((node) => {
+    if (!observerRef.current) {
+      observerRef.current = new IntersectionObserver(([entry]) => {
+        setEntry(entry);
+      }, options);
+    }
+    if (node) observerRef.current.observe(node);
+  }, []);
 
-      if (node) observer.current.observe(node);
-    },
-    [hasMore, loading, page, lastId, callback]
-  );
+  const isVisible = Boolean(entry && entry.isIntersecting);
 
-  return callbackRef;
+  return [callbackRef, entry, isVisible];
 }

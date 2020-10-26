@@ -53,7 +53,7 @@ function ReviewActionBar({
       return;
     }
     dispatch(actions.addLike(id));
-  }, []);
+  }, [me]);
 
   const onCancelLike = useCallback(() => {
     dispatch(actions.cancelLike(id));

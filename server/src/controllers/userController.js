@@ -169,10 +169,12 @@ exports.getUserLikes = async (req, res, next) => {
   try {
     const user = await User.findOne({ where: { nickname } });
     if (user) {
+      const where = { UserId: user.id };
       if (parseInt(lastId, 10)) {
         where.id = { [Op.lt]: parseInt(lastId, 10) };
       }
       const likes = await user.getLikes({
+        where,
         limit: 10,
         order: [
           ['createdAt', 'DESC'],

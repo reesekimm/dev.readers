@@ -23,12 +23,7 @@ function Tabs({ menus, ...props }: Props): React.ReactElement {
     <S.Container {...props}>
       {menus.map((menu) => (
         <S.Tab key={menu.title} selected={currentPath === menu.path} numOfMenus={menus.length}>
-          <Button
-            styleType="plain"
-            type="inLink"
-            href={menu.path}
-            style={{ color: currentPath === menu.path ? '#1e3799' : '#414141', width: '100%' }}
-          >
+          <Button styleType="plain" type="inLink" href={menu.path}>
             {menu.title}
           </Button>
         </S.Tab>

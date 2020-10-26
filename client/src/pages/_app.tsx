@@ -16,7 +16,7 @@ const App = ({ Component }) => (
         rel="stylesheet"
       />
       <link
-        href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
         rel="stylesheet"
       />
     </Head>
