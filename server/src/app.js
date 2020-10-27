@@ -7,6 +7,8 @@ const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
+const hpp = require('hpp');
+const helmet = require('helmet');
 
 const db = require('../models');
 const routes = require('./routes');
@@ -20,6 +22,7 @@ const passportConfig = require('./passport');
 dotenv.config();
 
 const app = express();
+const PORT = process.env.NODE_ENV === 'production' ? 80 : 3020;
 
 /** Sync all defined models to the DB. */
 db.sequelize
@@ -31,8 +34,15 @@ const sessionStore = new SequelizeStore({ db: db.sequelize });
 
 passportConfig();
 
-app.use(morgan('dev'));
-app.use(cors({ origin: true, credentials: true }));
+if (process.env.NODE_ENV === 'production') {
+  app.use(morgan('combined'));
+  app.use(hpp());
+  app.use(helmet());
+} else {
+  app.use(morgan('dev'));
+}
+
+app.use(cors({ origin: ['http://localhost:3010', 'dev-readers.site'], credentials: true }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -56,11 +66,13 @@ app.use('*', (req, res, next) => {
   next();
 });
 
+app.get('/', (req, res) => res.send('Welcome to dev.readers!'));
+
 app.use(routes.user, userRouter);
 app.use(routes.review, reviewRouter);
 app.use(routes.reviews, reviewsRouter);
 app.use(routes.search, searchRouter);
 
-app.listen(3020, () => {
-  console.log('Listening to port 3020...');
+app.listen(PORT, () => {
+  console.log(`Listening to port ${PORT}...`);
 });
