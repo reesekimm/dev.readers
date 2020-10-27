@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-import { IUser, IReview } from '@types';
+import { IUser } from '@types';
 
 export const initialState: IUser.UserState = {
   me: null,
@@ -52,30 +52,30 @@ const userSlice = createSlice({
     logoutFailure: (state, action) => {
       state.logOutError = action.payload;
     },
-    addReview: (state, action: PayloadAction<IUser.Review>) => {
+    addReview: (state, action) => {
       state.me?.Reviews.unshift(action.payload);
     },
-    deleteReview: (state, action: PayloadAction<{ ReviewId: number }>) => {
+    deleteReview: (state, action) => {
       const reviewIndex = state.me?.Reviews.findIndex(
         (review) => review.id === action.payload.ReviewId
       );
-      state?.me.Reviews.splice(reviewIndex, 1);
+      if (reviewIndex !== undefined) state.me?.Reviews.splice(reviewIndex, 1);
     },
-    addLike: (state, action: PayloadAction<{ id: IReview.ReviewId }>) => {
+    addLike: (state, action) => {
       state.me?.Likes.push(action.payload);
     },
-    cancelLike: (state, action: PayloadAction<{ id: IReview.ReviewId }>) => {
-      const reviewIndex = state.me?.Likes.findIndex((review) => review.id === action.payload.id);
-      state.me?.Likes.splice(reviewIndex, 1);
+    cancelLike: (state, action) => {
+      const reviewIndex = state.me?.Likes.findIndex((review) => review.id === action.payload.ReviewId);
+      if (reviewIndex !== undefined) state.me?.Likes.splice(reviewIndex, 1);
     },
-    addComment: (state, action: PayloadAction<{ id: number }>) => {
+    addComment: (state, action) => {
       state.me?.Comments.unshift(action.payload);
     },
     deleteComment: (state, action) => {
       const indexOfComment = state.me?.Comments.findIndex(
         (comment) => comment.id === action.payload
       );
-      state.me?.Comments.splice(indexOfComment, 1);
+      if (indexOfComment !== undefined) state.me?.Comments.splice(indexOfComment, 1);
     },
     deleteAccount: (state) => {
       state.deleteAccountDone = false;

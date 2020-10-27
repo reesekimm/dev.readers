@@ -8,8 +8,8 @@ import * as S from './style';
 
 interface Props {
   [key: string]: unknown;
-  reviews: React.ReactNode;
-  lastReviewElementRef: unknown;
+  reviews: IReview.Reviews;
+  lastReviewElementRef: ((node: HTMLDivElement | null) => void) | null;
 }
 
 function ReviewList({ reviews, lastReviewElementRef, ...props }: Props): React.ReactElement {
@@ -17,16 +17,17 @@ function ReviewList({ reviews, lastReviewElementRef, ...props }: Props): React.R
 
   return (
     <S.Container {...props}>
-      {reviews.map((review: IReview.Review) => (
-        <ReviewListItem
-          key={review.id}
-          review={review}
-          lastReviewElementRef={
-            review.id === mainReviews[mainReviews.length - 1]?.id ? lastReviewElementRef : null
-          }
-          data-reviewid={review.id === mainReviews[mainReviews.length - 1]?.id ? review.id : null}
-        />
-      ))}
+      {reviews &&
+        reviews.map((review: IReview.Review) => (
+          <ReviewListItem
+            key={review.id}
+            review={review}
+            lastReviewElementRef={
+              review.id === mainReviews[mainReviews.length - 1]?.id ? lastReviewElementRef : null
+            }
+            data-reviewid={review.id === mainReviews[mainReviews.length - 1]?.id ? review.id : null}
+          />
+        ))}
     </S.Container>
   );
 }

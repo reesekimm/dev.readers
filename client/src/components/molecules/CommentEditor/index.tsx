@@ -23,7 +23,7 @@ function CommentEditor({
   onCloseCommentEditor,
   ...props
 }: Props): React.ReactElement {
-  const [comment, onChangeComment, setComment] = useInput<string>(content);
+  const [comment, onChangeComment] = useInput(content);
 
   const dispatch = useDispatch();
   const { editComment } = useSelector((state: RootState) => state.loading);

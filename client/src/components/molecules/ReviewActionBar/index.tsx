@@ -63,8 +63,8 @@ function ReviewActionBar({
 
   useEffect(() => {
     if (!mainReviews.length) return;
-    const latesNumberOfLikers = mainReviews.find((review) => review.id === id).Likers.length;
-    setNumOfLikers(latesNumberOfLikers);
+    const updatedNumberOfLikers = mainReviews.find((review) => review.id === id)?.Likers.length;
+    if (updatedNumberOfLikers !== undefined) setNumOfLikers(updatedNumberOfLikers);
   }, [mainReviews]);
 
   const onClickEditReview = useCallback(() => {
@@ -88,10 +88,12 @@ function ReviewActionBar({
     <S.Container {...props}>
       <div>
         <Button type="inLink" href={`/${User.nickname}`} styleType="plain">
-          <Avatar src={User.avatarUrl} />
-          <Text color="gray5" fontSize="xsm" fontWeight="medium">
-            {User.nickname}
-          </Text>
+          <>
+            <Avatar src={User.avatarUrl} />
+            <Text color="gray5" fontSize="xsm" fontWeight="medium">
+              {User.nickname}
+            </Text>
+          </>
         </Button>
         <Text color="gray4" fontSize="xsm">
           {dayjs(createdAt).fromNow()}
@@ -103,7 +105,7 @@ function ReviewActionBar({
             <S.ButtonContent>
               <MessageOutlined key="comment" />
               <Text color="gray4" fontSize="xsm">
-                댓글 {Comments.length}
+                <>댓글 {Comments.length}</>
               </Text>
             </S.ButtonContent>
           </Button>
@@ -150,7 +152,7 @@ function ReviewActionBar({
               <HeartOutlined key="like" />
             )}
             <Text color="gray4" fontSize="xsm">
-              좋아요 {numOfLikers}
+              <>좋아요 {numOfLikers}</>
             </Text>
           </S.ButtonContent>
         </Button>

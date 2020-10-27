@@ -22,14 +22,16 @@ function BookListItem({ book, ...props }: Props): React.ReactElement {
   return (
     <S.Container onClick={openWriteReviewModal} {...props}>
       <S.ImageContainer>
-        <Img src={cover} alt={title} />
+        <Img src={cover || ''} alt={title} />
       </S.ImageContainer>
       <div>
         <Text tag="h2" fontSize="sm" fontWeight="medium">
           {title}
         </Text>
         <Text color="gray3" fontSize="xsm">
-          {pubDate.slice(0, 4)} ・ {author.split(' 지음')[0]}
+          <>
+            {pubDate.slice(0, 4)} ・ {author.split(' 지음')[0]}
+          </>
         </Text>
       </div>
     </S.Container>

@@ -22,8 +22,8 @@ function Me(): React.ReactElement | null {
   const { getUserReviews } = useSelector((state: RootState) => state.loading);
 
   const menus = [
-    { title: '리뷰', path: `/${nickname}` },
-    { title: '좋아요', path: `/${nickname}/likes` },
+    { title: '리뷰', path: `/user/${nickname}` },
+    { title: '좋아요', path: `/user/${nickname}/likes` },
   ];
 
   const [lastId, setLastId] = useState<string | number>(mainReviews[mainReviews.length - 1]?.id);
@@ -33,7 +33,7 @@ function Me(): React.ReactElement | null {
   }, [mainReviews]);
 
   const [lastReviewElementRef, entry, isVisible] = useInfiniteScroll();
-  const endOfList = entry?.target.dataset.reviewid === lastId?.toString();
+  const endOfList = (entry?.target as HTMLElement)?.dataset.reviewid === lastId?.toString();
   const loadMoreReviewsAllowed = isVisible && !getUserReviews && endOfList && hasMoreReviews;
 
   useEffect(() => {
@@ -42,7 +42,7 @@ function Me(): React.ReactElement | null {
 
   return (
     <MyPageTemplate
-      nickname={nickname}
+      nickname={typeof nickname === 'string' ? nickname : ''}
       profile={<Profile userInfo={userInfo} />}
       tabs={<Tabs menus={menus} />}
       reviewList={<ReviewList reviews={mainReviews} lastReviewElementRef={lastReviewElementRef} />}
@@ -55,11 +55,7 @@ function Me(): React.ReactElement | null {
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
   async (context) => {
     console.log('===== getServerSideProps start =====');
-    const {
-      req,
-      store,
-      params: { nickname },
-    } = context;
+    const { req, store, params } = context;
 
     const cookie = req ? req.headers.cookie : '';
     axios.defaults.headers.Cookie = '';
@@ -69,8 +65,8 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
 
     store.dispatch(userActions.loadMyInfo());
 
-    store.dispatch(userActions.loadUserInfo(nickname));
-    store.dispatch(reviewActions.getUserReviews({ nickname, lastId: null }));
+    store.dispatch(userActions.loadUserInfo(params?.nickname));
+    store.dispatch(reviewActions.getUserReviews({ nickname: params?.nickname, lastId: null }));
 
     context.store.dispatch(END);
 

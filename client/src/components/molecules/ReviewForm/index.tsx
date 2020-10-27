@@ -9,7 +9,7 @@ interface Props {
   submitButtonText: string;
   buttonDisabled: boolean;
   isLoading: boolean;
-  onChange: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onSubmit: () => void;
 }
 

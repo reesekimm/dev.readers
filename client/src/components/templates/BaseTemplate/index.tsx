@@ -54,30 +54,35 @@ function BeseTemplate({ children }: Props): React.ReactElement {
   }, []);
 
   useEffect(() => {
-    if (addReviewDone)
-      message.success(MESSAGES.ADD_REVIEW_SUCCESS, 1).then(() => {
-        dispatch(reviewActions.resetAddReviewState());
-      });
-    if (addReviewError)
-      message.error(MESSAGES.ERROR, 1).then(() => {
-        dispatch(reviewActions.resetAddReviewState());
-      });
-    if (editReviewDone)
-      message.success(MESSAGES.EDIT_REVIEW_SUCCESS, 1).then(() => {
-        dispatch(reviewActions.resetEditReviewState());
-      });
-    if (editReviewError)
-      message.error(MESSAGES.ERROR, 1).then(() => {
-        dispatch(reviewActions.resetEditReviewState());
-      });
-    if (deleteReviewDone)
-      message.success(MESSAGES.DELETE_REVIEW_SUCCESS, 1).then(() => {
-        dispatch(reviewActions.resetDeleteReviewState());
-      });
-    if (deleteReviewError)
-      message.error(MESSAGES.ERROR, 1).then(() => {
-        dispatch(reviewActions.resetDeleteReviewState());
-      });
+    if (addReviewDone) {
+      message.success(MESSAGES.ADD_REVIEW_SUCCESS, 1);
+      dispatch(reviewActions.resetAddReviewState());
+      return;
+    }
+    if (addReviewError) {
+      message.error(MESSAGES.ERROR, 1);
+      dispatch(reviewActions.resetAddReviewState());
+      return;
+    }
+    if (editReviewDone) {
+      message.success(MESSAGES.EDIT_REVIEW_SUCCESS, 1);
+      dispatch(reviewActions.resetEditReviewState());
+      return;
+    }
+    if (editReviewError) {
+      message.error(MESSAGES.ERROR, 1);
+      dispatch(reviewActions.resetEditReviewState());
+      return;
+    }
+    if (deleteReviewDone) {
+      message.success(MESSAGES.DELETE_REVIEW_SUCCESS, 1);
+      dispatch(reviewActions.resetDeleteReviewState());
+      return;
+    }
+    if (deleteReviewError) {
+      message.error(MESSAGES.ERROR, 1);
+      dispatch(reviewActions.resetDeleteReviewState());
+    }
   }, [
     addReviewDone,
     addReviewError,
@@ -95,7 +100,7 @@ function BeseTemplate({ children }: Props): React.ReactElement {
       <Modal
         modalFor="login"
         modalSize="md"
-        content
+        content={null}
         Template={LoginTemplate}
         modalIsOpened={loginModalIsOpened}
         closeModal={closeLoginModal}

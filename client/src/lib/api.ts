@@ -1,47 +1,42 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import axios from 'axios';
 
-import { IReview } from '@types';
+import { IReview, ISearch } from '@types';
+import { Request } from './createRequestSaga';
 
 const BASE_URL = process.env.NEXT_PUBLIC_DEV_API;
 
 axios.defaults.withCredentials = true;
 
-export const loadMyInfo = () => axios.get(`${BASE_URL}/user`);
+export const loadMyInfo: Request = () => axios.get(`${BASE_URL}/user`);
+export const loadUserInfo: Request = (nickname: string) =>
+  axios.get(`${BASE_URL}/user/${nickname}`);
+export const logout: Request = () => axios.get(`${BASE_URL}/user/logout`);
+export const deleteAccount: Request = () => axios.delete(`${BASE_URL}/user`);
 
-export const loadUserInfo = (nickname) => axios.get(`${BASE_URL}/user/${nickname}`);
-
-export const logout = () => axios.get(`${BASE_URL}/user/logout`);
-
-export const deleteAccount = () => axios.delete(`${BASE_URL}/user`);
-
-export const getReviews = (lastId) => axios.get(`${BASE_URL}/reviews?lastId=${lastId}`);
-
-export const getUserReviews = ({ nickname, lastId }) =>
+export const getReviews: Request = (lastId: number | null) =>
+  axios.get(`${BASE_URL}/reviews?lastId=${lastId}`);
+export const getUserReviews: Request = ({ nickname, lastId }: IReview.GetReviews) =>
   axios.get(`${BASE_URL}/user/${nickname}/reviews?lastId=${lastId}`);
-
-export const getUserLikes = ({ nickname, lastId }) =>
+export const getUserLikes: Request = ({ nickname, lastId }: IReview.GetReviews) =>
   axios.get(`${BASE_URL}/user/${nickname}/likes?lastId=${lastId}`);
 
-export const addReview = (review) => axios.post(`${BASE_URL}/review/review`, review);
-
-export const editReview = ({ id, rating, content }) =>
+export const addReview: Request = (review: IReview.Review) =>
+  axios.post(`${BASE_URL}/review/review`, review);
+export const editReview: Request = ({ id, rating, content }: IReview.EditReview) =>
   axios.patch(`${BASE_URL}/review/${id}`, { id, rating, content });
+export const deleteReview: Request = (id: number) => axios.delete(`${BASE_URL}/review/${id}`);
 
-export const deleteReview = (id: IReview.ReviewId) => axios.delete(`${BASE_URL}/review/${id}`);
+export const addLike: Request = (id: number) => axios.patch(`${BASE_URL}/review/${id}/like`);
+export const cancelLike: Request = (id: number) => axios.delete(`${BASE_URL}/review/${id}/like`);
 
-export const addLike = (id: IReview.ReviewId) => axios.patch(`${BASE_URL}/review/${id}/like`);
+export const getReview = (id: number) => axios.get(`${BASE_URL}/review?id=${id}`);
 
-export const cancelLike = (id: IReview.ReviewId) => axios.delete(`${BASE_URL}/review/${id}/like`);
-
-export const getReview = (id: IReview.ReviewId) => axios.get(`${BASE_URL}/review?id=${id}`);
-
-export const addComment = ({ ReviewId, content }) =>
+export const addComment: Request = ({ ReviewId, content }: IReview.AddComment) =>
   axios.post(`${BASE_URL}/review/${ReviewId}/comment`, { content });
-
-export const editComment = ({ CommentId, content }) =>
+export const editComment: Request = ({ CommentId, content }: IReview.EditComment) =>
   axios.patch(`${BASE_URL}/review/comment/${CommentId}`, { content });
-
-export const deleteComment = (CommentId) => axios.delete(`${BASE_URL}/review/comment/${CommentId}`);
-
-export const searchBook = ({ query, page }) =>
+export const deleteComment: Request = (CommentId: number) =>
+  axios.delete(`${BASE_URL}/review/comment/${CommentId}`);
+export const searchBook: Request = ({ query, page }: ISearch.SearchBook) =>
   axios.get(`${BASE_URL}/search/book?query=${query}&page=${page}`);

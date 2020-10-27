@@ -41,4 +41,7 @@ export const ImageContainer = styled.div`
 export const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
+  &.pub-info {
+    max-width: 250px;
+  }
 `;

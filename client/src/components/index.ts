@@ -29,6 +29,5 @@ export { default as LoginTemplate } from './templates/LoginTemplate';
 export { default as MainTemplate } from './templates/MainTemplate';
 export { default as MyPageTemplate } from './templates/MyPageTemplate';
 export { default as ReviewDetailTemplate } from './templates/ReviewDetailTemplate';
-export { default as SearchAllTemplate } from './templates/SearchAllTemplate';
 export { default as SearchBookTemplate } from './templates/SearchBookTemplate';
 export { default as WriteReviewTemplate } from './templates/WriteReviewTemplate';

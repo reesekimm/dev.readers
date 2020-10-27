@@ -1,6 +1,9 @@
 import { useRef, useEffect } from 'react';
 
-export default function useDidMountEffect(func, deps): void {
+type Callback = () => void;
+type Dependencies = unknown[];
+
+export default function useDidMountEffect(func: Callback, deps: Dependencies): void {
   const didMount = useRef(false);
 
   useEffect(() => {
@@ -8,5 +11,3 @@ export default function useDidMountEffect(func, deps): void {
     else didMount.current = true;
   }, deps);
 }
-
-// https://stackoverflow.com/a/57941438

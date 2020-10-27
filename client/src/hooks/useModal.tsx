@@ -11,7 +11,9 @@ export default function useModal(modalSize?: string, onClose?: () => void) {
     if (!modalWrapper) return;
 
     function clickListener(e: MouseEvent) {
-      if (modalWrapper && e.target.classList.contains(modalSize)) {
+      const onCloseAvailable =
+        modalWrapper && modalSize && (e.target as Element).classList.contains(modalSize);
+      if (onCloseAvailable) {
         onClose?.();
       }
     }

@@ -38,7 +38,7 @@ function Header(): React.ReactElement {
               <Button type="inLink" href={ROUTES.WRITE_REVIEW} styleType="plain">
                 리뷰쓰기
               </Button>
-              <Button styleType="plain" type="inLink" href={`/${me.nickname}`}>
+              <Button styleType="plain" type="inLink" href={`/user/${me.nickname}`}>
                 <Avatar src={me.avatarUrl}>{me.nickname[0]}</Avatar>
               </Button>
             </>

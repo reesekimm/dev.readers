@@ -16,7 +16,7 @@ interface Props {
 }
 
 function CommentForm({ ReviewId, ...props }: Props): React.ReactElement {
-  const [comment, onChangeComment, setComment] = useInput<string>('');
+  const [comment, onChangeComment, setComment] = useInput('');
   const { modalIsOpened: feedbackModalIsOpened, toggleModal: toggleFeedbackModal } = useModal();
 
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ function CommentForm({ ReviewId, ...props }: Props): React.ReactElement {
         return;
       }
       comment
-        ? dispatch(actions.addComment({ ReviewId, content: comment }))
+        ? dispatch(actions.addComment({ ReviewId, content: comment.toString() }))
         : toggleFeedbackModal();
     },
     [comment]

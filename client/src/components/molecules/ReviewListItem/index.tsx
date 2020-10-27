@@ -10,11 +10,11 @@ import { actions } from '../../../features/modal';
 interface Props {
   [key: string]: unknown;
   review: IReview.Review;
-  lastReviewElementRef: unknown;
+  lastReviewElementRef: ((node: HTMLDivElement | null) => void) | null;
 }
 
 function ReviewListItem({ review, lastReviewElementRef, ...props }: Props): React.ReactElement {
-  const { id, User, Book, rating, content, createdAt, Comments, Likers } = review;
+  const { id, Book, rating, content } = review;
 
   const bookInfo = { ...Book, rating } as const;
 

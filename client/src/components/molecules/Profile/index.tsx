@@ -14,7 +14,7 @@ import { actions } from '../../../features/user';
 
 interface Props {
   [key: string]: unknown;
-  userInfo: IUser.User;
+  userInfo: IUser.User | null;
 }
 
 function Profile({ userInfo, ...props }: Props): React.ReactElement | null {

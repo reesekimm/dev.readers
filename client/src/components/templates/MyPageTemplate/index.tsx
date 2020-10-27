@@ -9,7 +9,7 @@ interface Props {
   tabs: React.ReactNode;
   reviewList: React.ReactNode;
   isLoading?: boolean;
-  errorMessage: string;
+  errorMessage: string | null;
 }
 
 function MyPageTemplate({

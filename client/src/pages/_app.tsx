@@ -1,4 +1,5 @@
 import React from 'react';
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
 import 'antd/dist/antd.css';
@@ -7,7 +8,7 @@ import GlobalStyle from '../styles/GlobalStyle';
 import { lightTheme } from '../styles/themes';
 import { wrapper } from '../store/configureStore';
 
-const App = ({ Component }) => (
+const App = ({ Component }: AppProps) => (
   <>
     <Head>
       <title>dev.readers</title>

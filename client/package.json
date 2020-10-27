@@ -6,7 +6,8 @@
   "author": "Reese Kim",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev -p 3010"
+    "dev": "next dev -p 3010",
+    "build": "next build"
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
