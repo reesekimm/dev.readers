@@ -12,3 +12,10 @@ export interface Query {
   query: string | number;
   page: number;
 }
+
+/** api argument types */
+
+export interface SearchBook {
+  query: string;
+  page: number;
+}

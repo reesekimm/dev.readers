@@ -2,8 +2,8 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { message } from 'antd';
 
-import { MESSAGES } from '@constants';
-import { RootState } from '@features';
+import { MESSAGES } from 'common/constants';
+import { RootState } from 'features';
 import {
   Header,
   Footer,
@@ -11,10 +11,10 @@ import {
   WriteReviewTemplate,
   ReviewDetailTemplate,
   LoginTemplate,
-} from '@components';
+} from 'components';
+import { actions as modalActions } from 'features/modal';
+import { actions as reviewActions } from 'features/review';
 import * as S from './style';
-import { actions } from '../../../features/modal';
-import { actions as reviewActions } from '../../../features/review';
 
 interface Props {
   children: React.ReactNode;
@@ -42,42 +42,47 @@ function BeseTemplate({ children }: Props): React.ReactElement {
   const { getReview } = useSelector((state: RootState) => state.loading);
 
   const closeLoginModal = useCallback(() => {
-    dispatch(actions.closeLoginModal());
+    dispatch(modalActions.closeLoginModal());
   }, []);
 
   const closeWriteReviewModal = useCallback(() => {
-    dispatch(actions.closeWriteReviewModal());
+    dispatch(modalActions.closeWriteReviewModal());
   }, []);
 
   const closeReviewDetailModal = useCallback(() => {
-    dispatch(actions.closeReviewDetailModal());
+    dispatch(modalActions.closeReviewDetailModal());
   }, []);
 
   useEffect(() => {
-    if (addReviewDone)
-      message.success(MESSAGES.ADD_REVIEW_SUCCESS, 1).then(() => {
-        dispatch(reviewActions.resetAddReviewState());
-      });
-    if (addReviewError)
-      message.error(MESSAGES.ERROR, 1).then(() => {
-        dispatch(reviewActions.resetAddReviewState());
-      });
-    if (editReviewDone)
-      message.success(MESSAGES.EDIT_REVIEW_SUCCESS, 1).then(() => {
-        dispatch(reviewActions.resetEditReviewState());
-      });
-    if (editReviewError)
-      message.error(MESSAGES.ERROR, 1).then(() => {
-        dispatch(reviewActions.resetEditReviewState());
-      });
-    if (deleteReviewDone)
-      message.success(MESSAGES.DELETE_REVIEW_SUCCESS, 1).then(() => {
-        dispatch(reviewActions.resetDeleteReviewState());
-      });
-    if (deleteReviewError)
-      message.error(MESSAGES.ERROR, 1).then(() => {
-        dispatch(reviewActions.resetDeleteReviewState());
-      });
+    if (addReviewDone) {
+      message.success(MESSAGES.ADD_REVIEW_SUCCESS, 1);
+      dispatch(reviewActions.resetAddReviewState());
+      return;
+    }
+    if (addReviewError) {
+      message.error(MESSAGES.ERROR, 1);
+      dispatch(reviewActions.resetAddReviewState());
+      return;
+    }
+    if (editReviewDone) {
+      message.success(MESSAGES.EDIT_REVIEW_SUCCESS, 1);
+      dispatch(reviewActions.resetEditReviewState());
+      return;
+    }
+    if (editReviewError) {
+      message.error(MESSAGES.ERROR, 1);
+      dispatch(reviewActions.resetEditReviewState());
+      return;
+    }
+    if (deleteReviewDone) {
+      message.success(MESSAGES.DELETE_REVIEW_SUCCESS, 1);
+      dispatch(reviewActions.resetDeleteReviewState());
+      return;
+    }
+    if (deleteReviewError) {
+      message.error(MESSAGES.ERROR, 1);
+      dispatch(reviewActions.resetDeleteReviewState());
+    }
   }, [
     addReviewDone,
     addReviewError,

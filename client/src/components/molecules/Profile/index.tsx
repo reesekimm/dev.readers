@@ -4,17 +4,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Dropdown, Menu } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
 
-import { FEEDBACK_PHRASES } from '@constants';
-import { RootState } from '@features';
-import { Text, Button, Modal, FeedbackTemplate } from '@components';
-import { useModal } from '@hooks';
-import { IUser } from '@types';
+import { FEEDBACK_PHRASES } from 'common/constants';
+import { RootState } from 'features';
+import { Text, Button, Modal, FeedbackTemplate } from 'components';
+import { useModal } from 'hooks';
+import { IUser } from 'common/types';
+import { actions as userActions } from 'features/user';
 import * as S from './style';
-import { actions } from '../../../features/user';
 
 interface Props {
   [key: string]: unknown;
-  userInfo: IUser.User;
+  userInfo: IUser.User | null;
 }
 
 function Profile({ userInfo, ...props }: Props): React.ReactElement | null {
@@ -25,7 +25,7 @@ function Profile({ userInfo, ...props }: Props): React.ReactElement | null {
   const { logout } = useSelector((state: RootState) => state.loading);
 
   const onClickLogout = useCallback(() => {
-    dispatch(actions.logout());
+    dispatch(userActions.logout());
   }, []);
 
   const onClickDeleteAccount = useCallback(() => {
@@ -33,7 +33,7 @@ function Profile({ userInfo, ...props }: Props): React.ReactElement | null {
   }, []);
 
   const onConfirm = useCallback(() => {
-    dispatch(actions.deleteAccount());
+    dispatch(userActions.deleteAccount());
   }, []);
 
   useEffect(() => {

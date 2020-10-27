@@ -5,12 +5,12 @@ import { useRouter } from 'next/router';
 import { END } from 'redux-saga';
 import axios from 'axios';
 
-import { RootState } from '@features';
-import { useInfiniteScroll } from '@hooks';
-import { MyPageTemplate, Profile, Tabs, ReviewList } from '@components';
-import { actions as reviewActions } from '../../../features/review';
-import { actions as userActions } from '../../../features/user';
-import { wrapper, SagaStore } from '../../../store/configureStore';
+import { RootState } from 'features';
+import { useInfiniteScroll } from 'hooks';
+import { MyPageTemplate, Profile, Tabs, ReviewList } from 'components';
+import { actions as reviewActions } from 'features/review';
+import { actions as userActions } from 'features/user';
+import { wrapper, SagaStore } from 'store/configureStore';
 
 function Likes(): React.ReactElement | null {
   const router = useRouter();
@@ -22,8 +22,8 @@ function Likes(): React.ReactElement | null {
   const { getUserLikes } = useSelector((state: RootState) => state.loading);
 
   const menus = [
-    { title: '리뷰', path: `/${nickname}` },
-    { title: '좋아요', path: `/${nickname}/likes` },
+    { title: '리뷰', path: `/user/${nickname}` },
+    { title: '좋아요', path: `/user/${nickname}/likes` },
   ];
 
   const [lastId, setLastId] = useState<string | number>(mainReviews[mainReviews.length - 1]?.id);
@@ -33,7 +33,7 @@ function Likes(): React.ReactElement | null {
   }, [mainReviews]);
 
   const [lastReviewElementRef, entry, isVisible] = useInfiniteScroll();
-  const endOfList = entry?.target.dataset.reviewid === lastId?.toString();
+  const endOfList = (entry?.target as HTMLElement)?.dataset.reviewid === lastId?.toString();
   const loadMoreReviewsAllowed = isVisible && !getUserLikes && endOfList && hasMoreReviews;
 
   useEffect(() => {
@@ -42,7 +42,7 @@ function Likes(): React.ReactElement | null {
 
   return (
     <MyPageTemplate
-      nickname={nickname}
+      nickname={typeof nickname === 'string' ? nickname : ''}
       profile={<Profile userInfo={userInfo} />}
       tabs={<Tabs menus={menus} />}
       reviewList={<ReviewList reviews={mainReviews} lastReviewElementRef={lastReviewElementRef} />}
@@ -55,11 +55,7 @@ function Likes(): React.ReactElement | null {
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
   async (context) => {
     console.log('===== getServerSideProps start =====');
-    const {
-      req,
-      store,
-      params: { nickname },
-    } = context;
+    const { req, store, params } = context;
 
     const cookie = req ? req.headers.cookie : '';
     axios.defaults.headers.Cookie = '';
@@ -69,8 +65,8 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
 
     store.dispatch(userActions.loadMyInfo());
 
-    store.dispatch(userActions.loadUserInfo(nickname));
-    store.dispatch(reviewActions.getUserLikes({ nickname, lastId: null }));
+    store.dispatch(userActions.loadUserInfo(params?.nickname));
+    store.dispatch(reviewActions.getUserLikes({ nickname: params?.nickname, lastId: null }));
 
     context.store.dispatch(END);
 

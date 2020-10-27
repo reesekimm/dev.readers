@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { EMPTY } from '@constants';
-import { RootState } from '@features';
-import { Text, BookInfo, Divider, ReviewActionBar, CommentForm, Comment } from '@components';
-import { IReview } from '@types';
+import { EMPTY } from 'common/constants';
+import { RootState } from 'features';
+import { Text, BookInfo, Divider, ReviewActionBar, CommentForm, Comment } from 'components';
+import { IReview } from 'common/types';
 import * as S from './style';
 
 interface Props {
@@ -20,8 +20,8 @@ function ReviewDetailTemplate({ content, closeModal }: Props): React.ReactElemen
 
   const [comments, setComments] = useState(Comments);
   useEffect(() => {
-    const latestCommentList = mainReviews.find((review) => review.id === id).Comments;
-    setComments(latestCommentList);
+    const latestCommentList = mainReviews.find((review) => review.id === id)?.Comments;
+    if (latestCommentList) setComments(latestCommentList);
   }, [mainReviews]);
 
   return (

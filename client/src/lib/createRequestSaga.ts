@@ -1,14 +1,26 @@
 import { delay, put, call } from 'redux-saga/effects';
-import { actions } from '../features/loading';
+import {
+  ActionCreatorWithoutPayload,
+  ActionCreatorWithPayload,
+  PayloadAction,
+} from '@reduxjs/toolkit';
+import { AxiosResponse } from 'axios';
 
-export default function createRequestSaga(type, request) {
+import { actions as loadingActions } from 'features/loading';
+
+export type ActionType =
+  | ActionCreatorWithPayload<any, string>
+  | ActionCreatorWithoutPayload<string>;
+export type Request = (args?: any) => Promise<AxiosResponse<unknown>>;
+
+export default function createRequestSaga(type: ActionType, request: Request) {
   const success = `${type}Success`;
   const failure = `${type}Failure`;
 
-  return function* (action): Generator {
-    yield put(actions.start(type.toString()));
+  return function* (action: PayloadAction): Generator {
+    yield put(loadingActions.start(type.toString()));
     try {
-      let result;
+      let result: any;
       if (typeof request === 'string') {
         yield delay(1000);
       } else {
@@ -25,6 +37,6 @@ export default function createRequestSaga(type, request) {
         payload: e.response.data,
       });
     }
-    yield put(actions.finish(type.toString()));
+    yield put(loadingActions.finish(type.toString()));
   };
 }

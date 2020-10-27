@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Text, Button } from '@components';
+import { Text, Button } from 'components';
 import * as S from './style';
 
 interface Content {

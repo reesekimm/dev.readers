@@ -1,26 +1,26 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Text, BookInfo, ReviewActionBar } from '@components';
-import { IReview } from '@types';
-import { utils } from '@common';
+import { Text, BookInfo, ReviewActionBar } from 'components';
+import { utils } from 'common';
+import { IReview } from 'common/types';
+import { actions as modalActions } from 'features/modal';
 import * as S from './style';
-import { actions } from '../../../features/modal';
 
 interface Props {
   [key: string]: unknown;
   review: IReview.Review;
-  lastReviewElementRef: unknown;
+  lastReviewElementRef: ((node: HTMLDivElement | null) => void) | null;
 }
 
 function ReviewListItem({ review, lastReviewElementRef, ...props }: Props): React.ReactElement {
-  const { id, User, Book, rating, content, createdAt, Comments, Likers } = review;
+  const { id, Book, rating, content } = review;
 
   const bookInfo = { ...Book, rating } as const;
 
   const dispatch = useDispatch();
   const openReviewDetailModal = useCallback(() => {
-    dispatch(actions.openReviewDetailModal(id));
+    dispatch(modalActions.openReviewDetailModal(id));
   }, []);
 
   return (

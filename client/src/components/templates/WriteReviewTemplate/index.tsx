@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Rate } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
 
-import { FEEDBACK_PHRASES, LOGIN, GITHUB_AUTH_LINK } from '@constants';
-import { RootState } from '@features';
-import { Button, Text, BookInfo, ReviewForm, Modal, FeedbackTemplate } from '@components';
-import { useModal, useInput } from '@hooks';
-import { IBook, IUser, IReview } from '@types';
-import { actions } from '../../../features/review';
-import { actions as modalActions } from '../../../features/modal';
+import { FEEDBACK_PHRASES, LOGIN, GITHUB_AUTH_LINK } from 'common/constants';
+import { RootState } from 'features';
+import { Button, Text, BookInfo, ReviewForm, Modal, FeedbackTemplate } from 'components';
+import { useModal, useInput } from 'hooks';
+import { IBook, IUser, IReview } from 'common/types';
+import { Props as BookInfoProps } from 'components/molecules/BookInfo';
+import { actions as reviewActions } from 'features/review';
+import { actions as modalActions } from 'features/modal';
 import * as S from './style';
 
 interface Props {
@@ -18,23 +19,48 @@ interface Props {
   closeModal: () => void;
 }
 
+function isBook(content: IBook.Book | IReview.ReviewInfo): content is IBook.Book {
+  return (content as IBook.Book).isbn13 !== undefined;
+}
+
 function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement {
-  const bookInfo = content.isbn
+  const bookRef = useRef<IBook.Book | null>(null);
+  const reviewInfoRef = useRef<IReview.ReviewInfo | null>(null);
+
+  const bookInfo: BookInfoProps = isBook(content)
     ? { ...content, type: 'write' }
     : { ...content.Book, type: 'write' };
 
+  const [rating, setRating] = useState<number>(reviewInfoRef.current?.rating || 0);
+  const [text, onChangeText, setText] = useInput(reviewInfoRef.current?.content || '');
   const { modalIsOpened: feedbackModalIsOpened, toggleModal: toggleFeedbackModal } = useModal();
 
   const dispatch = useDispatch();
   const { me } = useSelector((state: RootState) => state.user);
   const { addReview, editReview } = useSelector((state: RootState) => state.loading);
+
+  useEffect(() => {
+    if (isBook(content)) {
+      bookRef.current = content;
+    } else {
+      reviewInfoRef.current = content;
+      setRating(reviewInfoRef.current.rating);
+      setText(reviewInfoRef.current.content);
+    }
+  }, [content]);
+
   const myReview = useRef<IUser.Review | null | undefined>(null);
 
   /** 작성된 리뷰가 있는지 확인 후 피드백 */
   useEffect(() => {
-    myReview.current = me?.Reviews.find((review: IUser.Review) => review.isbn13 === content.isbn13);
+    myReview.current = me?.Reviews.find(
+      (review: IUser.Review) => review.isbn13 === bookRef.current?.isbn13
+    );
     if (myReview.current) toggleFeedbackModal();
-  }, []);
+    return () => {
+      myReview.current = null;
+    };
+  }, [me]);
 
   /** 작성된 리뷰가 있을 경우 */
 
@@ -45,21 +71,17 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
   }, []);
 
   /** 작성된 리뷰가 없을 경우 (리뷰 작성 OR 수정) */
-
-  const [rating, setRating] = useState<number>(content.rating || 0);
-  const [text, onChangeText] = useInput(content.content || '');
-
   const onChangeRate = useCallback((value) => {
     setRating(value);
   }, []);
 
   const onClickWriteReview = useCallback(() => {
-    dispatch(actions.addReview({ Book: content, rating, content: text }));
+    dispatch(reviewActions.addReview({ Book: bookRef.current, rating, content: text }));
     closeModal();
   }, [rating, text]);
 
   const onClickEditReview = useCallback(() => {
-    dispatch(actions.editReview({ id: content.id, rating, content: text }));
+    dispatch(reviewActions.editReview({ id: reviewInfoRef.current?.id, rating, content: text }));
     closeModal();
   }, [rating, text]);
 
@@ -71,10 +93,10 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
         <ReviewForm
           value={text}
           onChange={onChangeText}
-          onSubmit={content.id ? onClickEditReview : onClickWriteReview}
-          submitButtonText={content.id ? '수정' : '작성'}
+          onSubmit={reviewInfoRef.current?.id ? onClickEditReview : onClickWriteReview}
+          submitButtonText={reviewInfoRef.current?.id ? '수정' : '작성'}
           buttonDisabled={!rating || !text}
-          isLoading={content.id ? editReview : addReview}
+          isLoading={reviewInfoRef.current?.id ? editReview : addReview}
           style={{ flex: 1 }}
         />
       ) : (

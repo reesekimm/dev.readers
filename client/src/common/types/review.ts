@@ -22,7 +22,7 @@ export interface Liker {
 }
 
 export interface ReviewInfo {
-  id: number | string;
+  id: ReviewId;
   Book: IBook.Book;
   rating: number;
   content: string;
@@ -61,7 +61,6 @@ export interface ReviewState {
   addLikeError: string | null;
   cancelLikeDone: boolean;
   cancelLikeError: string | null;
-  /** 이미 리뷰를 작성한 도서 클릭시 제공할 데이터 */
   Review: Review | null;
   getReviewDone: boolean;
   getReviewError: string | null;
@@ -71,4 +70,27 @@ export interface ReviewState {
   editCommentError: string | null;
   deleteCommentDone: boolean;
   deleteCommentError: string | null;
+}
+
+/** api argument types */
+
+export interface GetReviews {
+  nickname: string;
+  lastId: number | null;
+}
+
+export interface EditReview {
+  id: number;
+  rating: number;
+  content: string | number;
+}
+
+export interface AddComment {
+  ReviewId: number;
+  content: string | number;
+}
+
+export interface EditComment {
+  CommentId: number;
+  content: string | number;
 }

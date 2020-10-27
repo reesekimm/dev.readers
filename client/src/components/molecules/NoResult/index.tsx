@@ -1,8 +1,8 @@
 import React from 'react';
 import { Empty } from 'antd';
 
-import { EMPTY } from '@constants';
-import { Text } from '@components';
+import { EMPTY } from 'common/constants';
+import { Text } from 'components';
 import * as S from './style';
 
 function NoResult(): React.ReactElement {

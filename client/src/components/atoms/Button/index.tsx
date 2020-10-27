@@ -15,7 +15,7 @@ export interface Props {
   /** 버튼 스타일 (primary(default), secondary, bordered, plain) */
   styleType?: string;
   /** 버튼 타입 (button(default), submit, reset) */
-  btnType?: string;
+  btnType?: 'button' | 'submit' | 'reset';
   /** onclick handler */
   onClick?: () => void;
   /** 버튼 비활성화 여부 */
@@ -26,7 +26,7 @@ export interface Props {
 
 function Button({
   children,
-  href,
+  href = '',
   type,
   styleType = 'primary',
   btnType = 'button',

@@ -20,7 +20,7 @@ export interface User {
 }
 
 export interface Review {
-  id: number | string;
+  id: number;
   isbn13: string;
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BaseTemplate, Loading } from '@components';
+import { BaseTemplate, Loading } from 'components';
 
 interface Props {
   reviewList: React.ReactNode;

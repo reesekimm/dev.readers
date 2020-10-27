@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Text } from '@components';
+import { Text } from 'components';
 import * as S from './style';
 
 function Footer(): React.ReactElement {
@@ -10,7 +10,7 @@ function Footer(): React.ReactElement {
         dev.readers
       </Text>
       <Text color="gray4" fontSize="xsm">
-        Copyright &copy; {new Date().getFullYear()}
+        <>Copyright &copy; {new Date().getFullYear()}</>
       </Text>
     </S.Container>
   );

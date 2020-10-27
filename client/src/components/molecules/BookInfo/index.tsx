@@ -1,11 +1,11 @@
 import React from 'react';
 import { Rate } from 'antd';
 
-import { Text, Button, Img } from '@components';
-import { IBook } from '@types';
+import { Text, Button, Img } from 'components';
+import { IBook } from 'common/types';
 import * as S from './style';
 
-interface Props extends IBook.Book {
+export interface Props extends IBook.Book {
   [key: string]: unknown;
   type?: 'list' | 'detailed' | 'write';
   rating?: number;
@@ -16,7 +16,7 @@ function BookInfo({
   author,
   publisher,
   pubDate,
-  cover,
+  cover = '',
   rating,
   link,
   type = 'list',
@@ -38,9 +38,11 @@ function BookInfo({
         </S.TextContainer>
         {type !== 'list' && (
           <>
-            <S.TextContainer>
+            <S.TextContainer className="pub-info">
               <Text fontSize="xsm">{author.split(' 지음')[0]}</Text>
-              <Text fontSize="xsm">{publisher}</Text>
+              <Text fontSize="xsm" fontWeight="bold">
+                {publisher}
+              </Text>
             </S.TextContainer>
             <Button href={link} type="exLink" styleType="plain">
               자세히 보기

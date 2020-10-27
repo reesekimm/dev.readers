@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-import { IReview, IBook, IUser } from '@types';
+import { IReview } from 'common/types';
 
 export const initialState: IReview.ReviewState = {
   mainReviews: [],
@@ -76,14 +76,11 @@ const reviewSlice = createSlice({
       state.getUserLikesDone = true;
       state.getUserLikesError = action.payload;
     },
-    addReview: (
-      state,
-      actions: PayloadAction<{ Book: IBook.Book; rating: number; content: string }>
-    ) => {
+    addReview: (state, actions) => {
       state.addReviewDone = false;
       state.addReviewError = null;
     },
-    addReviewSuccess: (state, action: PayloadAction<IReview.Review>) => {
+    addReviewSuccess: (state, action) => {
       state.mainReviews.unshift(action.payload);
       state.addReviewDone = true;
     },
@@ -100,9 +97,11 @@ const reviewSlice = createSlice({
       state.editReviewError = null;
     },
     editReviewSuccess: (state, action) => {
-      const reviewIndex = state.mainReviews.findIndex((review) => review.id === action.payload.id);
-      state.mainReviews[reviewIndex].rating = action.payload.rating;
-      state.mainReviews[reviewIndex].content = action.payload.content;
+      const reviewToEdit = state.mainReviews.find((review) => review.id === action.payload.id);
+      if (reviewToEdit !== undefined) {
+        reviewToEdit.rating = action.payload.rating;
+        reviewToEdit.content = action.payload.content;
+      }
       state.editReviewDone = true;
       state.editReviewError = null;
     },
@@ -113,11 +112,11 @@ const reviewSlice = createSlice({
       state.editReviewDone = false;
       state.editReviewError = null;
     },
-    deleteReview: (state, action: PayloadAction<IReview.ReviewId>) => {
+    deleteReview: (state, action) => {
       state.deleteReviewDone = false;
       state.deleteReviewError = null;
     },
-    deleteReviewSuccess: (state, action: PayloadAction<{ ReviewId: number }>) => {
+    deleteReviewSuccess: (state, action) => {
       const reviewIndex = state.mainReviews.findIndex(
         (review) => review.id === action.payload.ReviewId
       );
@@ -131,7 +130,7 @@ const reviewSlice = createSlice({
       state.deleteReviewDone = false;
       state.deleteReviewError = null;
     },
-    addLike: (state, action: PayloadAction<IReview.ReviewId>) => {
+    addLike: (state, action) => {
       state.addLikeDone = false;
       state.addLikeError = null;
       state.selectedReviewId = action.payload;
@@ -140,7 +139,7 @@ const reviewSlice = createSlice({
       const reviewToLike = state.mainReviews.find(
         (review) => review.id === action.payload.ReviewId
       );
-      reviewToLike.Likers.push({ id: action.payload.UserId });
+      reviewToLike?.Likers.push({ id: action.payload.UserId });
       state.addLikeDone = true;
       state.selectedReviewId = null;
     },
@@ -149,7 +148,7 @@ const reviewSlice = createSlice({
       state.addLikeError = action.payload;
       state.selectedReviewId = null;
     },
-    cancelLike: (state, action: PayloadAction<IReview.ReviewId>) => {
+    cancelLike: (state, action) => {
       state.cancelLikeDone = false;
       state.cancelLikeError = null;
       state.selectedReviewId = action.payload;
@@ -158,10 +157,10 @@ const reviewSlice = createSlice({
       const reviewToUnlike = state.mainReviews.find(
         (review) => review.id === action.payload.ReviewId
       );
-      const indexOfLiker = reviewToUnlike.Likers.findIndex(
+      const indexOfLiker = reviewToUnlike?.Likers.findIndex(
         (liker) => liker.id === action.payload.UserId
       );
-      reviewToUnlike.Likers.splice(indexOfLiker, 1);
+      if (indexOfLiker !== undefined) reviewToUnlike?.Likers.splice(indexOfLiker, 1);
       state.cancelLikeDone = true;
       state.selectedReviewId = null;
     },
@@ -170,12 +169,12 @@ const reviewSlice = createSlice({
       state.cancelLikeError = action.payload;
       state.selectedReviewId = null;
     },
-    getReview: (state, action: PayloadAction<IReview.ReviewId>) => {
+    getReview: (state, action) => {
       state.Review = null;
       state.getReviewDone = false;
       state.getReviewError = null;
     },
-    getReviewSuccess: (state, action: PayloadAction<IReview.Review>) => {
+    getReviewSuccess: (state, action) => {
       state.getReviewDone = true;
       state.Review = action.payload;
     },
@@ -186,11 +185,11 @@ const reviewSlice = createSlice({
     clearReview: (state) => {
       state.Review = null;
     },
-    addComment: (state, action: PayloadAction<IReview.CommentInfo>) => {
+    addComment: (state, action) => {
       state.addCommentDone = false;
       state.addCommentError = null;
     },
-    addCommentSuccess: (state, action: PayloadAction<IReview.Comment>) => {
+    addCommentSuccess: (state, action) => {
       const reviewToAddComment = state.mainReviews.find(
         (review) => review.id === action.payload.ReviewId
       );
@@ -209,28 +208,28 @@ const reviewSlice = createSlice({
       const reviewToUpdateComment = state.mainReviews.find(
         (review) => review.id === action.payload.ReviewId
       );
-      const commentToUpdate = reviewToUpdateComment.Comments.find(
+      const commentToUpdate = reviewToUpdateComment?.Comments.find(
         (comment) => comment.id === action.payload.id
       );
-      commentToUpdate.content = action.payload.content;
+      if (commentToUpdate) commentToUpdate.content = action.payload.content;
       state.editCommentDone = true;
     },
     editCommentFailure: (state, action) => {
       state.editCommentDone = true;
       state.editCommentError = action.payload;
     },
-    deleteComment: (state, action: PayloadActions<IUser.Comment>) => {
+    deleteComment: (state, action) => {
       state.deleteCommentDone = false;
       state.deleteCommentError = null;
     },
-    deleteCommentSuccess: (state, action: PayloadActions<IUser.Comment>) => {
+    deleteCommentSuccess: (state, action) => {
       const reviewToDeleteComment = state.mainReviews.find(
         (review) => review.id === action.payload.ReviewId
       );
       const indexOfComment = reviewToDeleteComment?.Comments.findIndex(
         (comment) => comment.id === action.payload.CommentId
       );
-      reviewToDeleteComment?.Comments.splice(indexOfComment, 1);
+      if (indexOfComment !== undefined) reviewToDeleteComment?.Comments.splice(indexOfComment, 1);
     },
     deleteCommentFailure: (state, action) => {
       state.deleteCommentDone = true;

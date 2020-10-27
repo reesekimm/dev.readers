@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { RootState } from '@features';
-import { Button } from '@components';
-import { IReview } from '@types';
-import { useInput } from '@hooks';
+import { RootState } from 'features';
+import { actions } from 'features/review';
+import { Button } from 'components';
+import { IReview } from 'common/types';
+import { useInput } from 'hooks';
 import * as S from './style';
-import { actions } from '../../../features/review';
 
 interface Props {
   [key: string]: unknown;
@@ -23,7 +23,7 @@ function CommentEditor({
   onCloseCommentEditor,
   ...props
 }: Props): React.ReactElement {
-  const [comment, onChangeComment, setComment] = useInput<string>(content);
+  const [comment, onChangeComment] = useInput(content);
 
   const dispatch = useDispatch();
   const { editComment } = useSelector((state: RootState) => state.loading);

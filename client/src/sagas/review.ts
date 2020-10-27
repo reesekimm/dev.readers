@@ -1,10 +1,10 @@
 import { all, fork, takeLatest, take, call, put, throttle } from 'redux-saga/effects';
 
-import * as api from '../lib/api';
-import createRequestSaga from '../lib/createRequestSaga';
-import { actions as reviewActions } from '../features/review';
-import { actions as userActions } from '../features/user';
-import { actions as loadingActions } from '../features/loading';
+import * as api from 'lib/api';
+import createRequestSaga from 'lib/createRequestSaga';
+import { actions as reviewActions } from 'features/review';
+import { actions as userActions } from 'features/user';
+import { actions as loadingActions } from 'features/loading';
 
 /** 리뷰 로드 */
 
@@ -32,7 +32,7 @@ function* watchGetUserLikes() {
 
 /** 리뷰 작성 */
 
-function* addReview({ type, payload }) {
+function* addReview({ type, payload }: any) {
   const success = `${type}Success`;
   const failure = `${type}Failure`;
   yield put(loadingActions.start(type.toString()));
@@ -67,7 +67,7 @@ function* watchEditReview() {
 
 /** 리뷰 삭제 */
 
-function* deleteReview({ type, payload }) {
+function* deleteReview({ type, payload }: any) {
   const success = `${type}Success`;
   const failure = `${type}Failure`;
   yield put(loadingActions.start(type.toString()));
@@ -77,8 +77,8 @@ function* deleteReview({ type, payload }) {
       type: success,
       payload: data,
     });
-    yield put(userActions.deleteReview(payload));
-    yield put(userActions.cancelLike(payload));
+    yield put(userActions.deleteReview(data));
+    yield put(userActions.cancelLike(data));
   } catch (e) {
     console.log(e);
     yield put({
@@ -95,7 +95,7 @@ function* watchDeleteReview() {
 
 /** 좋아요 */
 
-function* addLike({ type, payload }) {
+function* addLike({ type, payload }: any) {
   const success = `${type}Success`;
   const failure = `${type}Failure`;
   yield put(loadingActions.start(type.toString()));
@@ -124,7 +124,7 @@ function* watchAddLike() {
 
 /** 좋아요 취소  */
 
-function* cancelLike({ type, payload }) {
+function* cancelLike({ type, payload }: any) {
   const success = `${type}Success`;
   const failure = `${type}Failure`;
   yield put(loadingActions.start(type.toString()));
@@ -193,7 +193,7 @@ function* watchResetDeleteReviewState() {
 
 /** 댓글 작성 */
 
-function* addComment({ type, payload }) {
+function* addComment({ type, payload }: any) {
   const success = `${type}Success`;
   const failure = `${type}Failure`;
   yield put(loadingActions.start(type.toString()));
@@ -228,7 +228,7 @@ function* watchEditComment() {
 
 /** 댓글 삭제 */
 
-function* deleteComment({ type, payload }) {
+function* deleteComment({ type, payload }: any) {
   const success = `${type}Success`;
   const failure = `${type}Failure`;
   yield put(loadingActions.start(type.toString()));

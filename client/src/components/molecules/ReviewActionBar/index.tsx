@@ -13,14 +13,14 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 
-import { FEEDBACK_PHRASES } from '@constants';
-import { RootState } from '@features';
-import { Text, Button, Modal, FeedbackTemplate } from '@components';
-import { useModal } from '@hooks';
-import { IReview } from '@types';
+import { FEEDBACK_PHRASES } from 'common/constants';
+import { RootState } from 'features';
+import { Text, Button, Modal, FeedbackTemplate } from 'components';
+import { useModal } from 'hooks';
+import { IReview } from 'common/types';
+import { actions as reviewActions } from 'features/review';
+import { actions as modalActions } from 'features/modal';
 import * as S from './style';
-import { actions } from '../../../features/review';
-import { actions as modalActions } from '../../../features/modal';
 
 dayjs.extend(relativeTime);
 dayjs.locale('ko');
@@ -52,19 +52,19 @@ function ReviewActionBar({
       dispatch(modalActions.openLoginModal());
       return;
     }
-    dispatch(actions.addLike(id));
+    dispatch(reviewActions.addLike(id));
   }, [me]);
 
   const onCancelLike = useCallback(() => {
-    dispatch(actions.cancelLike(id));
+    dispatch(reviewActions.cancelLike(id));
   }, []);
 
   const [numOfLikers, setNumOfLikers] = useState(Likers.length);
 
   useEffect(() => {
     if (!mainReviews.length) return;
-    const latesNumberOfLikers = mainReviews.find((review) => review.id === id).Likers.length;
-    setNumOfLikers(latesNumberOfLikers);
+    const updatedNumberOfLikers = mainReviews.find((review) => review.id === id)?.Likers.length;
+    if (updatedNumberOfLikers !== undefined) setNumOfLikers(updatedNumberOfLikers);
   }, [mainReviews]);
 
   const onClickEditReview = useCallback(() => {
@@ -77,7 +77,7 @@ function ReviewActionBar({
   }, []);
 
   const onConfirmDelete = useCallback(() => {
-    dispatch(actions.deleteReview(id));
+    dispatch(reviewActions.deleteReview(id));
     dispatch(modalActions.closeReviewDetailModal());
   }, []);
 
@@ -87,11 +87,13 @@ function ReviewActionBar({
   return (
     <S.Container {...props}>
       <div>
-        <Button type="inLink" href={`/${User.nickname}`} styleType="plain">
-          <Avatar src={User.avatarUrl} />
-          <Text color="gray5" fontSize="xsm" fontWeight="medium">
-            {User.nickname}
-          </Text>
+        <Button type="inLink" href={`/user/${User.nickname}`} styleType="plain">
+          <>
+            <Avatar src={User.avatarUrl} />
+            <Text color="gray5" fontSize="xsm" fontWeight="medium">
+              {User.nickname}
+            </Text>
+          </>
         </Button>
         <Text color="gray4" fontSize="xsm">
           {dayjs(createdAt).fromNow()}
@@ -103,7 +105,7 @@ function ReviewActionBar({
             <S.ButtonContent>
               <MessageOutlined key="comment" />
               <Text color="gray4" fontSize="xsm">
-                댓글 {Comments.length}
+                <>댓글 {Comments.length}</>
               </Text>
             </S.ButtonContent>
           </Button>
@@ -150,7 +152,7 @@ function ReviewActionBar({
               <HeartOutlined key="like" />
             )}
             <Text color="gray4" fontSize="xsm">
-              좋아요 {numOfLikers}
+              <>좋아요 {numOfLikers}</>
             </Text>
           </S.ButtonContent>
         </Button>

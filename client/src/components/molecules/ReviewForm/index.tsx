@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button } from '@components';
+import { Button } from 'components';
 import * as S from './style';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   submitButtonText: string;
   buttonDisabled: boolean;
   isLoading: boolean;
-  onChange: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onSubmit: () => void;
 }
 

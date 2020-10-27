@@ -63,7 +63,9 @@ exports.postGithubLogin = (req, res, next) => {
     }
     return req.login(user, async (error) => {
       if (error) return next(error);
-      return res.redirect(`http://localhost:3010`);
+      const redirectTo =
+        process.env.NODE_ENV === 'production' ? 'dev-readers.site' : 'http://localhost:3010';
+      return res.redirect(redirectTo);
     });
   })(req, res, next);
 };
@@ -169,7 +171,7 @@ exports.getUserLikes = async (req, res, next) => {
   try {
     const user = await User.findOne({ where: { nickname } });
     if (user) {
-      const where = { UserId: user.id };
+      const where = {};
       if (parseInt(lastId, 10)) {
         where.id = { [Op.lt]: parseInt(lastId, 10) };
       }

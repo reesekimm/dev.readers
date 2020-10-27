@@ -5,13 +5,13 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 
-import { FEEDBACK_PHRASES } from '@constants';
-import { RootState } from '@features';
-import { Text, Button, Modal, FeedbackTemplate, CommentEditor } from '@components';
-import { IReview } from '@types';
-import { useModal } from '@hooks';
+import { FEEDBACK_PHRASES } from 'common/constants';
+import { RootState } from 'features';
+import { actions } from 'features/review';
+import { Text, Button, Modal, FeedbackTemplate, CommentEditor } from 'components';
+import { IReview } from 'common/types';
+import { useModal } from 'hooks';
 import * as S from './style';
-import { actions } from '../../../features/review';
 
 dayjs.extend(relativeTime);
 dayjs.locale('ko');
@@ -45,12 +45,12 @@ function Comment({ id, ReviewId, User, content, createdAt }: IReview.Comment): R
 
   return (
     <S.Container>
-      <Button type="inLink" href={`/${User.nickname}`} styleType="plain">
+      <Button type="inLink" href={`/user/${User.nickname}`} styleType="plain">
         <Avatar src={User.avatarUrl} />
       </Button>
       <S.Content>
         <div>
-          <Button type="inLink" href={`/${User.nickname}`} styleType="plain">
+          <Button type="inLink" href={`/user/${User.nickname}`} styleType="plain">
             <Text color="gray5" fontSize="xsm" fontWeight="medium">
               {User.nickname}
             </Text>

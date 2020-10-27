@@ -3,17 +3,24 @@ import ReactDOM from 'react-dom';
 import { CloseOutlined } from '@ant-design/icons';
 import { AnyStyledComponent } from 'styled-components';
 
-import { Loading } from '@components';
-import { useModal } from '@hooks';
+import { IBook, IReview } from 'common/types';
+import { Loading } from 'components';
+import { useModal } from 'hooks';
 import * as S from './style';
 
 interface Props {
   /** modal 타입 (review_detail(리뷰상세), review_write(리뷰작성), feedback(피드백), ...) */
   modalFor: string;
   /** modal 내용 (데이터 객체) */
-  content: unknown;
+  content:
+    | IBook.Book
+    | IReview.Review
+    | IReview.ReviewInfo
+    | { [key: string]: unknown }
+    | boolean
+    | null;
   /** modal 내부에서 사용할 템플릿 */
-  Template: React.ReactNode;
+  Template: React.ReactType;
   /** modal size (lg(default), md, sm(user feedback alert용)) */
   modalSize: string;
   /** modal 상태 (열려있을 경우 true) */
@@ -55,7 +62,11 @@ function Modal({
   const ModalWithCustomizedSize = modals[modalSize];
 
   const modal = (
-    <S.Wrapper modalSize={modalSize} className={modalSize} ref={modalRef}>
+    <S.Wrapper
+      modalSize={modalSize}
+      className={modalSize}
+      ref={modalSize !== 'sm' ? modalRef : null}
+    >
       <ModalWithCustomizedSize>
         {modalSize !== 'sm' && (
           <>

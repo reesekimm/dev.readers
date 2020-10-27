@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-import { IModal, IBook, IReview } from '@types';
+import { IModal } from 'common/types';
 
 export const initialState: IModal.ModalState = {
   loginModal: {
@@ -25,7 +25,7 @@ const modalSlice = createSlice({
     closeLoginModal: (state) => {
       state.loginModal.isOpened = false;
     },
-    openWriteReviewModal: (state, action: PayloadAction<IBook.Book | IReview.ReviewInfo>) => {
+    openWriteReviewModal: (state, action) => {
       state.writeReviewModal.isOpened = true;
       state.writeReviewModal.data = action.payload;
     },
@@ -33,7 +33,7 @@ const modalSlice = createSlice({
       state.writeReviewModal.isOpened = false;
       state.writeReviewModal.data = null;
     },
-    openReviewDetailModal: (state, action: PayloadAction<IReview.ReviewId>) => {
+    openReviewDetailModal: (state, action) => {
       state.reviewDetailModal.isOpened = true;
     },
     closeReviewDetailModal: (state) => {

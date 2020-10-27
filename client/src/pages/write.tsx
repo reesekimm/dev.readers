@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import axios from 'axios';
 
-import { ROUTES, PLACEHOLDERS } from '@constants';
-import { RootState } from '@features';
-import { SearchBookTemplate, BookList, Input } from '@components';
-import { useDebounce, useDidMountEffect } from '@hooks';
-import { InputRef } from '../components/atoms/Input';
-import { actions as searchActions } from '../features/search';
-import { actions as userActions } from '../features/user';
-import { wrapper, SagaStore } from '../store/configureStore';
+import { ROUTES, PLACEHOLDERS } from 'common/constants';
+import { RootState } from 'features';
+import { SearchBookTemplate, BookList, Input } from 'components';
+import { useDebounce, useDidMountEffect } from 'hooks';
+import { InputRef } from 'components/atoms/Input';
+import { actions as searchActions } from 'features/search';
+import { actions as userActions } from 'features/user';
+import { wrapper, SagaStore } from 'store/configureStore';
 
 function Write(): React.ReactElement | null {
   const router = useRouter();
@@ -25,7 +25,9 @@ function Write(): React.ReactElement | null {
   );
   const { searchBook } = useSelector((state: RootState) => state.loading);
 
-  const [inputValue, setInputValue] = useState<string>(initialQuery || '');
+  const [inputValue, setInputValue] = useState<string>(
+    typeof initialQuery === 'string' ? initialQuery : ''
+  );
   const [page, setPage] = useState<number>(initialQuery ? 2 : 1);
   const query = useDebounce(inputValue, 500);
 
@@ -91,7 +93,7 @@ function Write(): React.ReactElement | null {
       }
       bookList={<BookList books={searchBookResult} page={page} />}
       loading={searchBook}
-      noResult={query && searchDone && totalResults === 0}
+      noResult={Boolean(query && searchDone && totalResults === 0)}
     />
   );
 }
@@ -110,7 +112,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     if (req && cookie) axios.defaults.headers.Cookie = cookie;
 
     store.dispatch(userActions.loadMyInfo());
-    if (query)
+    if (typeof query === 'string')
       store.dispatch(searchActions.searchBook({ query: encodeURIComponent(query), page: 1 }));
 
     store.dispatch(END);

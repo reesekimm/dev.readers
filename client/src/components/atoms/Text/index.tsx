@@ -5,7 +5,7 @@ import * as S from './style';
 
 export interface Props {
   [key: string]: unknown;
-  children: string;
+  children: React.ReactElement | string | number;
   /** html tag (span(default), h1, h2, h3) */
   tag?: string;
   color?: string;

@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Text, Img } from '@components';
-import { IBook } from '@types';
+import { Text, Img } from 'components';
+import { IBook } from 'common/types';
+import { actions } from 'features/modal';
 import * as S from './style';
-import { actions } from '../../../features/modal';
 
 interface Props {
   [key: string]: unknown;
@@ -22,14 +22,16 @@ function BookListItem({ book, ...props }: Props): React.ReactElement {
   return (
     <S.Container onClick={openWriteReviewModal} {...props}>
       <S.ImageContainer>
-        <Img src={cover} alt={title} />
+        <Img src={cover || ''} alt={title} />
       </S.ImageContainer>
       <div>
         <Text tag="h2" fontSize="sm" fontWeight="medium">
           {title}
         </Text>
         <Text color="gray3" fontSize="xsm">
-          {pubDate.slice(0, 4)} ・ {author.split(' 지음')[0]}
+          <>
+            {pubDate.slice(0, 4)} ・ {author.split(' 지음')[0]}
+          </>
         </Text>
       </div>
     </S.Container>
