@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { IModal } from '@types';
+import { IModal } from 'common/types';
 
 export const initialState: IModal.ModalState = {
   loginModal: {

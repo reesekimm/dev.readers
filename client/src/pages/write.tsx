@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import axios from 'axios';
 
-import { ROUTES, PLACEHOLDERS } from '@constants';
-import { RootState } from '@features';
-import { SearchBookTemplate, BookList, Input } from '@components';
-import { useDebounce, useDidMountEffect } from '@hooks';
-import { InputRef } from '../components/atoms/Input';
-import { actions as searchActions } from '../features/search';
-import { actions as userActions } from '../features/user';
-import { wrapper, SagaStore } from '../store/configureStore';
+import { ROUTES, PLACEHOLDERS } from 'common/constants';
+import { RootState } from 'features';
+import { SearchBookTemplate, BookList, Input } from 'components';
+import { useDebounce, useDidMountEffect } from 'hooks';
+import { InputRef } from 'components/atoms/Input';
+import { actions as searchActions } from 'features/search';
+import { actions as userActions } from 'features/user';
+import { wrapper, SagaStore } from 'store/configureStore';
 
 function Write(): React.ReactElement | null {
   const router = useRouter();

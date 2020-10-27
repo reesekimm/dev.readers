@@ -4,8 +4,8 @@ import createSagaMiddleware, { Task } from 'redux-saga';
 import { createWrapper } from 'next-redux-wrapper';
 import { logger } from 'redux-logger';
 
-import createReducer from '@features';
-import rootSaga from '../sagas';
+import createReducer from 'features';
+import rootSaga from 'sagas';
 
 export interface SagaStore extends Store {
   sagaTask: Task;

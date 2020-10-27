@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Rate } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
 
-import { FEEDBACK_PHRASES, LOGIN, GITHUB_AUTH_LINK } from '@constants';
-import { RootState } from '@features';
-import { Button, Text, BookInfo, ReviewForm, Modal, FeedbackTemplate } from '@components';
-import { useModal, useInput } from '@hooks';
-import { IBook, IUser, IReview } from '@types';
-import { Props as BookInfoProps } from '../../molecules/BookInfo';
-import { actions } from '../../../features/review';
-import { actions as modalActions } from '../../../features/modal';
+import { FEEDBACK_PHRASES, LOGIN, GITHUB_AUTH_LINK } from 'common/constants';
+import { RootState } from 'features';
+import { Button, Text, BookInfo, ReviewForm, Modal, FeedbackTemplate } from 'components';
+import { useModal, useInput } from 'hooks';
+import { IBook, IUser, IReview } from 'common/types';
+import { Props as BookInfoProps } from 'components/molecules/BookInfo';
+import { actions as reviewActions } from 'features/review';
+import { actions as modalActions } from 'features/modal';
 import * as S from './style';
 
 interface Props {
@@ -76,12 +76,12 @@ function WriteReviewTemplate({ content, closeModal }: Props): React.ReactElement
   }, []);
 
   const onClickWriteReview = useCallback(() => {
-    dispatch(actions.addReview({ Book: bookRef.current, rating, content: text }));
+    dispatch(reviewActions.addReview({ Book: bookRef.current, rating, content: text }));
     closeModal();
   }, [rating, text]);
 
   const onClickEditReview = useCallback(() => {
-    dispatch(actions.editReview({ id: reviewInfoRef.current?.id, rating, content: text }));
+    dispatch(reviewActions.editReview({ id: reviewInfoRef.current?.id, rating, content: text }));
     closeModal();
   }, [rating, text]);
 

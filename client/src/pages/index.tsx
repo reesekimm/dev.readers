@@ -5,12 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import axios from 'axios';
 
-import { RootState } from '@features';
-import { useInfiniteScroll } from '@hooks';
-import { MainTemplate, ReviewList } from '@components';
-import { actions as reviewActions } from '../features/review';
-import { actions as userActions } from '../features/user';
-import { wrapper, SagaStore } from '../store/configureStore';
+import { RootState } from 'features';
+import { useInfiniteScroll } from 'hooks';
+import { MainTemplate, ReviewList } from 'components';
+import { actions as reviewActions } from 'features/review';
+import { actions as userActions } from 'features/user';
+import { wrapper, SagaStore } from 'store/configureStore';
 
 function Main(): React.ReactElement {
   const dispatch = useDispatch();

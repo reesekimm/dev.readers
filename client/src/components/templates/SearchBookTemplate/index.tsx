@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 
-import { Loading, BaseTemplate, NoResult } from '@components';
+import { Loading, BaseTemplate, NoResult } from 'components';
 
 interface Props {
   searchBar: React.ReactNode;

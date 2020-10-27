@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { EMPTY } from '@constants';
-import { RootState } from '@features';
-import { Text, BookInfo, Divider, ReviewActionBar, CommentForm, Comment } from '@components';
-import { IReview } from '@types';
+import { EMPTY } from 'common/constants';
+import { RootState } from 'features';
+import { Text, BookInfo, Divider, ReviewActionBar, CommentForm, Comment } from 'components';
+import { IReview } from 'common/types';
 import * as S from './style';
 
 interface Props {

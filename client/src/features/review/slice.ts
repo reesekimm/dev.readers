@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { IReview } from '@types';
+import { IReview } from 'common/types';
 
 export const initialState: IReview.ReviewState = {
   mainReviews: [],

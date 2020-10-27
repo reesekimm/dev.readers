@@ -2,8 +2,8 @@ import React from 'react';
 import { Tag } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
 
-import { BRAND, LOGIN, GITHUB_AUTH_LINK } from '@constants';
-import { Text, Button } from '@components';
+import { BRAND, LOGIN, GITHUB_AUTH_LINK } from 'common/constants';
+import { Text, Button } from 'components';
 import * as S from './style';
 
 function LoginTemplate(): React.ReactElement {

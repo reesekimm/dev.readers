@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { ILoading } from '@types';
+import { ILoading } from 'common/types';
 
 export const initialState: ILoading.LoadingState = {};
 

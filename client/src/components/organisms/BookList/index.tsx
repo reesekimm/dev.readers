@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { IBook } from '@types';
-import { BookListItem } from '@components';
+import { IBook } from 'common/types';
+import { BookListItem } from 'components';
 import * as S from './style';
 
 interface Props {

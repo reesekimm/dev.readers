@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { FEEDBACK_PHRASES } from '@constants';
-import { RootState } from '@features';
-import { Button, Modal, FeedbackTemplate } from '@components';
-import { IReview } from '@types';
-import { useInput, useModal } from '@hooks';
+import { FEEDBACK_PHRASES } from 'common/constants';
+import { RootState } from 'features';
+import { Button, Modal, FeedbackTemplate } from 'components';
+import { IReview } from 'common/types';
+import { useInput, useModal } from 'hooks';
+import { actions as reviewActions } from 'features/review';
+import { actions as modalActions } from 'features/modal';
 import * as S from './style';
-import { actions } from '../../../features/review';
-import { actions as modalActions } from '../../../features/modal';
 
 interface Props {
   [key: string]: unknown;
@@ -32,7 +32,7 @@ function CommentForm({ ReviewId, ...props }: Props): React.ReactElement {
         return;
       }
       comment
-        ? dispatch(actions.addComment({ ReviewId, content: comment.toString() }))
+        ? dispatch(reviewActions.addComment({ ReviewId, content: comment.toString() }))
         : toggleFeedbackModal();
     },
     [comment]

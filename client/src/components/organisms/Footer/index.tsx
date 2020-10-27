@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Text } from '@components';
+import { Text } from 'components';
 import * as S from './style';
 
 function Footer(): React.ReactElement {

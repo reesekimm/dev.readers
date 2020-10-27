@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Text, Img } from '@components';
-import { IBook } from '@types';
+import { Text, Img } from 'components';
+import { IBook } from 'common/types';
+import { actions } from 'features/modal';
 import * as S from './style';
-import { actions } from '../../../features/modal';
 
 interface Props {
   [key: string]: unknown;

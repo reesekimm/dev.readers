@@ -1,41 +1,41 @@
 import { all, fork, take, call, put } from 'redux-saga/effects';
 
-import { actions } from '../features/modal';
-import { actions as reviewActions } from '../features/review';
+import { actions as modalActions } from 'features/modal';
+import { actions as reviewActions } from 'features/review';
 
 function* watchOpenLoginModal() {
   while (true) {
-    const action = yield take(actions.openLoginModal.toString());
-    if (action) yield call(actions.openLoginModal);
+    const action = yield take(modalActions.openLoginModal.toString());
+    if (action) yield call(modalActions.openLoginModal);
   }
 }
 
 function* watchCloseLoginModal() {
   while (true) {
-    const action = yield take(actions.closeLoginModal.toString());
-    if (action) yield call(actions.closeLoginModal);
+    const action = yield take(modalActions.closeLoginModal.toString());
+    if (action) yield call(modalActions.closeLoginModal);
   }
 }
 
 function* watchOpenWriteReviewModal() {
   while (true) {
-    const action = yield take(actions.openWriteReviewModal.toString());
-    if (action) yield call(actions.openWriteReviewModal, action.payload);
+    const action = yield take(modalActions.openWriteReviewModal.toString());
+    if (action) yield call(modalActions.openWriteReviewModal, action.payload);
   }
 }
 
 function* watchCloseWriteReviewModal() {
   while (true) {
-    const action = yield take(actions.closeWriteReviewModal.toString());
-    if (action) yield call(actions.closeWriteReviewModal);
+    const action = yield take(modalActions.closeWriteReviewModal.toString());
+    if (action) yield call(modalActions.closeWriteReviewModal);
   }
 }
 
 function* watchOpenReviewDetailModal() {
   while (true) {
-    const action = yield take(actions.openReviewDetailModal.toString());
+    const action = yield take(modalActions.openReviewDetailModal.toString());
     if (action) {
-      yield call(actions.openReviewDetailModal, action.payload);
+      yield call(modalActions.openReviewDetailModal, action.payload);
       yield put(reviewActions.getReview(action.payload));
     }
   }
@@ -43,9 +43,9 @@ function* watchOpenReviewDetailModal() {
 
 function* watchCloseReviewDetailModal() {
   while (true) {
-    const action = yield take(actions.closeReviewDetailModal.toString());
+    const action = yield take(modalActions.closeReviewDetailModal.toString());
     if (action) {
-      yield call(actions.closeReviewDetailModal);
+      yield call(modalActions.closeReviewDetailModal);
       yield put(reviewActions.clearReview());
     }
   }

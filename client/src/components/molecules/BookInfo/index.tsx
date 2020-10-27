@@ -1,8 +1,8 @@
 import React from 'react';
 import { Rate } from 'antd';
 
-import { Text, Button, Img } from '@components';
-import { IBook } from '@types';
+import { Text, Button, Img } from 'components';
+import { IBook } from 'common/types';
 import * as S from './style';
 
 export interface Props extends IBook.Book {

@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
-import { ROUTES } from '@constants';
-import { Text, Button } from '@components';
-import { RootState } from '@features';
-import { actions as modalActions } from '../../../features/modal';
+import { ROUTES } from 'common/constants';
+import { Text, Button } from 'components';
+import { RootState } from 'features';
+import { actions as modalActions } from 'features/modal';
 import * as S from './style';
 
 function Header(): React.ReactElement {

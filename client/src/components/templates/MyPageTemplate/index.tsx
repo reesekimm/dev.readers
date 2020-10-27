@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 
-import { BaseTemplate, Loading } from '@components';
+import { BaseTemplate, Loading } from 'components';
 
 interface Props {
   nickname: string;

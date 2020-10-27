@@ -5,12 +5,12 @@ import { useRouter } from 'next/router';
 import { END } from 'redux-saga';
 import axios from 'axios';
 
-import { RootState } from '@features';
-import { useInfiniteScroll } from '@hooks';
-import { MyPageTemplate, Profile, Tabs, ReviewList } from '@components';
-import { actions as reviewActions } from '../../../features/review';
-import { actions as userActions } from '../../../features/user';
-import { wrapper, SagaStore } from '../../../store/configureStore';
+import { RootState } from 'features';
+import { useInfiniteScroll } from 'hooks';
+import { MyPageTemplate, Profile, Tabs, ReviewList } from 'components';
+import { actions as reviewActions } from 'features/review';
+import { actions as userActions } from 'features/user';
+import { wrapper, SagaStore } from 'store/configureStore';
 
 function Likes(): React.ReactElement | null {
   const router = useRouter();

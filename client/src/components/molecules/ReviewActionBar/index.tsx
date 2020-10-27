@@ -13,14 +13,14 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 
-import { FEEDBACK_PHRASES } from '@constants';
-import { RootState } from '@features';
-import { Text, Button, Modal, FeedbackTemplate } from '@components';
-import { useModal } from '@hooks';
-import { IReview } from '@types';
+import { FEEDBACK_PHRASES } from 'common/constants';
+import { RootState } from 'features';
+import { Text, Button, Modal, FeedbackTemplate } from 'components';
+import { useModal } from 'hooks';
+import { IReview } from 'common/types';
+import { actions as reviewActions } from 'features/review';
+import { actions as modalActions } from 'features/modal';
 import * as S from './style';
-import { actions } from '../../../features/review';
-import { actions as modalActions } from '../../../features/modal';
 
 dayjs.extend(relativeTime);
 dayjs.locale('ko');
@@ -52,11 +52,11 @@ function ReviewActionBar({
       dispatch(modalActions.openLoginModal());
       return;
     }
-    dispatch(actions.addLike(id));
+    dispatch(reviewActions.addLike(id));
   }, [me]);
 
   const onCancelLike = useCallback(() => {
-    dispatch(actions.cancelLike(id));
+    dispatch(reviewActions.cancelLike(id));
   }, []);
 
   const [numOfLikers, setNumOfLikers] = useState(Likers.length);
@@ -77,7 +77,7 @@ function ReviewActionBar({
   }, []);
 
   const onConfirmDelete = useCallback(() => {
-    dispatch(actions.deleteReview(id));
+    dispatch(reviewActions.deleteReview(id));
     dispatch(modalActions.closeReviewDetailModal());
   }, []);
 

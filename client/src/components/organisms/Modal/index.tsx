@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import { CloseOutlined } from '@ant-design/icons';
 import { AnyStyledComponent } from 'styled-components';
 
-import { IBook, IReview } from '@types';
-import { Loading } from '@components';
-import { useModal } from '@hooks';
+import { IBook, IReview } from 'common/types';
+import { Loading } from 'components';
+import { useModal } from 'hooks';
 import * as S from './style';
 
 interface Props {

@@ -1,9 +1,9 @@
 import { all, fork, takeLatest, call, put } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 
-import * as api from '../lib/api';
-import createRequestSaga from '../lib/createRequestSaga';
-import { actions } from '../features/user';
+import * as api from 'lib/api';
+import createRequestSaga from 'lib/createRequestSaga';
+import { actions as userActions } from 'features/user';
 
 function* loadMyInfo({ type }: PayloadAction) {
   const success = `${type}Success`;
@@ -31,25 +31,25 @@ function* loadMyInfo({ type }: PayloadAction) {
 }
 
 function* watchLoadMyInfo() {
-  yield takeLatest(actions.loadMyInfo, loadMyInfo);
+  yield takeLatest(userActions.loadMyInfo, loadMyInfo);
 }
 
-const loadUserInfo = createRequestSaga(actions.loadUserInfo, api.loadUserInfo);
+const loadUserInfo = createRequestSaga(userActions.loadUserInfo, api.loadUserInfo);
 
 function* watchLoadUserInfo() {
-  yield takeLatest(actions.loadUserInfo, loadUserInfo);
+  yield takeLatest(userActions.loadUserInfo, loadUserInfo);
 }
 
-const logOut = createRequestSaga(actions.logout, api.logout);
+const logOut = createRequestSaga(userActions.logout, api.logout);
 
 function* watchLogOut() {
-  yield takeLatest(actions.logout, logOut);
+  yield takeLatest(userActions.logout, logOut);
 }
 
-const deleteAccount = createRequestSaga(actions.deleteAccount, api.deleteAccount);
+const deleteAccount = createRequestSaga(userActions.deleteAccount, api.deleteAccount);
 
 function* watchDeleteAccount() {
-  yield takeLatest(actions.deleteAccount, deleteAccount);
+  yield takeLatest(userActions.deleteAccount, deleteAccount);
 }
 
 export default function* userSaga(): Generator {

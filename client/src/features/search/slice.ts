@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { ISearch } from '@types';
+import { ISearch } from 'common/types';
 
 export const initialState: ISearch.SearchState = {
   searchDone: false,

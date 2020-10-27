@@ -1,10 +1,10 @@
 import { all, fork, takeLatest, take, call, put, throttle } from 'redux-saga/effects';
 
-import * as api from '../lib/api';
-import createRequestSaga from '../lib/createRequestSaga';
-import { actions as reviewActions } from '../features/review';
-import { actions as userActions } from '../features/user';
-import { actions as loadingActions } from '../features/loading';
+import * as api from 'lib/api';
+import createRequestSaga from 'lib/createRequestSaga';
+import { actions as reviewActions } from 'features/review';
+import { actions as userActions } from 'features/user';
+import { actions as loadingActions } from 'features/loading';
 
 /** 리뷰 로드 */
 

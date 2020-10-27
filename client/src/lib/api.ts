@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import axios from 'axios';
 
-import { IReview, ISearch } from '@types';
+import { IReview, ISearch } from 'common/types';
 import { Request } from './createRequestSaga';
 
 const BASE_URL = process.env.NEXT_PUBLIC_DEV_API;

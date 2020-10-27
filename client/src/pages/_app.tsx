@@ -4,9 +4,9 @@ import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
 import 'antd/dist/antd.css';
 
-import GlobalStyle from '../styles/GlobalStyle';
-import { lightTheme } from '../styles/themes';
-import { wrapper } from '../store/configureStore';
+import GlobalStyle from 'styles/GlobalStyle';
+import { lightTheme } from 'styles/themes';
+import { wrapper } from 'store/configureStore';
 
 const App = ({ Component }: AppProps) => (
   <>

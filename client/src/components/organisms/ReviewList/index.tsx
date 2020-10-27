@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { RootState } from '@features';
-import { IReview } from '@types';
-import { ReviewListItem } from '@components';
+import { RootState } from 'features';
+import { IReview } from 'common/types';
+import { ReviewListItem } from 'components';
 import * as S from './style';
 
 interface Props {
