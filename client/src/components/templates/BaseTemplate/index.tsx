@@ -100,7 +100,7 @@ function BeseTemplate({ children }: Props): React.ReactElement {
       <Modal
         modalFor="login"
         modalSize="md"
-        content={null}
+        content
         Template={LoginTemplate}
         modalIsOpened={loginModalIsOpened}
         closeModal={closeLoginModal}

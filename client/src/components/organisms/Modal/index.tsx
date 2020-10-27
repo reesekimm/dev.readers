@@ -12,7 +12,13 @@ interface Props {
   /** modal 타입 (review_detail(리뷰상세), review_write(리뷰작성), feedback(피드백), ...) */
   modalFor: string;
   /** modal 내용 (데이터 객체) */
-  content: IBook.Book | IReview.Review | IReview.ReviewInfo | { [key: string]: unknown } | null;
+  content:
+    | IBook.Book
+    | IReview.Review
+    | IReview.ReviewInfo
+    | { [key: string]: unknown }
+    | boolean
+    | null;
   /** modal 내부에서 사용할 템플릿 */
   Template: React.ReactType;
   /** modal size (lg(default), md, sm(user feedback alert용)) */
