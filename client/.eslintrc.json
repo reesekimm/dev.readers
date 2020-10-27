@@ -1,48 +1,46 @@
 {
-  "parser": "@typescript-eslint/parser",
+  "parser": "babel-eslint",
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
     "ecmaVersion": 2020,
-    "sourceType": "module",
-    "tsconfigRootDir": "./client/",
-    "project": "./tsconfig.json"
-  },
-  "env": {
-    "browser": true,
-    "es2020": true,
-    "node": true
+    "sourceType": "module"
   },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "airbnb-typescript",
-    "prettier",
-    "prettier/@typescript-eslint"
+    "prettier"
   ],
-  "plugins": ["import", "prettier"],
-  "settings": {
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"]
-    },
-    "import/resolver": {
-      "typescript": {
-        "alwaysTryTypes": true
+  "env": {
+    "browser": true,
+    "es2020": true,
+    "node": true
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "tsconfigRootDir": "./client/",
+        "project": "./tsconfig.json"
+      },
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "airbnb-typescript",
+        "prettier",
+        "prettier/@typescript-eslint"
+      ],
+      "plugins": ["import", "prettier"],
+      "rules": {
+        "jsx-a11y/label-has-associated-control": "off",
+        "jsx-a11y/anchor-is-valid": "off",
+        "import/prefer-default-export": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/jsx-one-expression-per-line": "off",
+        "react/jsx-wrap-multilines": "off",
+        "no-param-reassign": "off",
+        "no-console": "off",
+        "no-nested-ternary": "off"
       }
     }
-  },
-  "rules": {
-    "jsx-a11y/label-has-associated-control": "off",
-    "jsx-a11y/anchor-is-valid": "off",
-    "import/prefer-default-export": "off",
-    "react/jsx-props-no-spreading": "off",
-    "react/jsx-one-expression-per-line": "off",
-    "react/jsx-wrap-multilines": "off",
-    "no-param-reassign": "off",
-    "no-console": "off",
-    "no-nested-ternary": "off"
-  }
+  ]
 }

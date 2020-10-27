@@ -7,10 +7,11 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev -p 3010",
-    "build": "next build"
+    "build": "cross-env ANALYZE=true NODE_ENV=production next build"
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
+    "@next/bundle-analyzer": "^9.5.5",
     "@reduxjs/toolkit": "^1.4.0",
     "@types/antd": "^1.0.0",
     "@types/faker": "^5.1.2",
@@ -40,7 +41,9 @@
     "@types/react": "^16.9.46",
     "@typescript-eslint/eslint-plugin": "^3.10.0",
     "@typescript-eslint/parser": "^3.10.0",
+    "babel-eslint": "^10.1.0",
     "babel-plugin-styled-components": "^1.11.1",
+    "cross-env": "^7.0.2",
     "eslint": "^7.7.0",
     "eslint-config-airbnb-typescript": "^9.0.0",
     "eslint-config-prettier": "^6.11.0",
