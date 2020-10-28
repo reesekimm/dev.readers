@@ -64,7 +64,9 @@ exports.postGithubLogin = (req, res, next) => {
     return req.login(user, async (error) => {
       if (error) return next(error);
       const redirectTo =
-        process.env.NODE_ENV === 'production' ? 'dev-readers.site' : 'http://localhost:3010';
+        process.env.NODE_ENV === 'production'
+          ? process.env.GITHUB_AUTH_REDIRECT_PROD
+          : process.env.GITHUB_AUTH_REDIRECT_DEV;
       return res.redirect(redirectTo);
     });
   })(req, res, next);
