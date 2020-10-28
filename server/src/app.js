@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(helmet());
   app.use(
     cors({
-      origin: ['http://localhost:3010', 'http://15.164.166.186', 'dev-readers.site'],
+      origin: ['http://dev-readers.site', 'http://www.dev-readers.site'],
       credentials: true,
     })
   );
@@ -58,6 +58,11 @@ app.use(
     saveUninitialized: false,
     secret: process.env.COOKIE_SECRET,
     store: sessionStore,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      domain: process.env.NODE_ENV === 'production' && '.dev-readers.site',
+    },
   })
 );
 app.use(flash());
