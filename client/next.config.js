@@ -9,7 +9,7 @@ module.exports = withBundleAnalyzer({
     return {
       ...config,
       mode: prod ? 'production' : 'development',
-      devtool: prod ? 'hidden-source-map' : 'eval',
+      devtool: prod ? false : 'eval',
     };
   },
 });
