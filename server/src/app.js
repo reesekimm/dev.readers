@@ -22,7 +22,7 @@ const passportConfig = require('./passport');
 dotenv.config();
 
 const app = express();
-const PORT = process.env.NODE_ENV === 'production' ? 80 : 3020;
+const PORT = 80;
 
 /** Sync all defined models to the DB. */
 db.sequelize
