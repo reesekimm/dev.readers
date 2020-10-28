@@ -3,9 +3,7 @@ const GitHubStrategy = require('passport-github2').Strategy;
 const { githubVerifyCallback } = require('../controllers/userController');
 
 const BASE_URL =
-  process.env.NODE_ENV === 'production'
-    ? process.env.GITHUB_AUTH_REDIRECT_PROD
-    : process.env.GITHUB_AUTH_REDIRECT_DEV;
+  process.env.NODE_ENV === 'production' ? process.env.BASE_URL_PROD : process.env.BASE_URL_DEV;
 
 module.exports = () => {
   passport.use(
