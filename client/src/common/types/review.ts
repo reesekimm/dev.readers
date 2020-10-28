@@ -1,4 +1,4 @@
-import { IBook, IUser } from '@types';
+import { IBook, IUser } from 'common/types';
 
 export type ReviewId = number;
 

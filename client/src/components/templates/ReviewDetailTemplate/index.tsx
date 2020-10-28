@@ -20,7 +20,8 @@ function ReviewDetailTemplate({ content, closeModal }: Props): React.ReactElemen
 
   const [comments, setComments] = useState(Comments);
   useEffect(() => {
-    const latestCommentList = mainReviews.find((review) => review.id === id)?.Comments;
+    const latestCommentList = mainReviews.find((review: IReview.Review) => review.id === id)
+      ?.Comments;
     if (latestCommentList) setComments(latestCommentList);
   }, [mainReviews]);
 

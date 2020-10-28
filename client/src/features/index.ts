@@ -2,7 +2,7 @@ import { AnyAction } from 'redux';
 import { combineReducers } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 
-import { IUser, IReview, ISearch, ILoading, IModal } from '@types';
+import { IUser, IReview, ISearch, ILoading, IModal } from 'common/types';
 import { reducer as userReducer } from './user';
 import { reducer as reviewReducer } from './review';
 import { reducer as searchReducer } from './search';

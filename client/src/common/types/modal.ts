@@ -1,4 +1,4 @@
-import { IBook, IReview } from '@types';
+import { IBook, IReview } from 'common/types';
 
 export interface ModalState {
   loginModal: {
