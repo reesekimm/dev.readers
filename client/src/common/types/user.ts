@@ -1,4 +1,4 @@
-import { IReview } from '@types';
+import { IReview } from 'common/types';
 
 export interface UserState {
   me: Me | null;

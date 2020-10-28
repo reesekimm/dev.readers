@@ -41,7 +41,8 @@ function Comment({ id, ReviewId, User, content, createdAt }: IReview.Comment): R
     toggleFeedbackModal();
   }, []);
 
-  const showActionButtons = me && me.Comments.find((comment) => comment.id === id) && !editMode;
+  const showActionButtons =
+    me && me.Comments.find((comment: { id: number }) => comment.id === id) && !editMode;
 
   return (
     <S.Container>

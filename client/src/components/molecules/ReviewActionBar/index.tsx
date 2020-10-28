@@ -46,7 +46,7 @@ function ReviewActionBar({
   const { deleteReview, addLike, cancelLike } = useSelector((state: RootState) => state.loading);
   const { modalIsOpened: feedbackModalIsOpened, toggleModal: toggleFeedbackModal } = useModal();
 
-  const liked = me?.Likes.find((review) => review.id === id);
+  const liked = me?.Likes.find((review: { id: number }) => review.id === id);
   const onLike = useCallback(() => {
     if (!me) {
       dispatch(modalActions.openLoginModal());
@@ -63,7 +63,8 @@ function ReviewActionBar({
 
   useEffect(() => {
     if (!mainReviews.length) return;
-    const updatedNumberOfLikers = mainReviews.find((review) => review.id === id)?.Likers.length;
+    const updatedNumberOfLikers = mainReviews.find((review: IReview.Review) => review.id === id)
+      ?.Likers.length;
     if (updatedNumberOfLikers !== undefined) setNumOfLikers(updatedNumberOfLikers);
   }, [mainReviews]);
 

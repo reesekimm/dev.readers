@@ -1,4 +1,4 @@
-import { IBook } from '@types';
+import { IBook } from 'common/types';
 
 export interface SearchState {
   searchDone: boolean;
