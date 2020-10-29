@@ -46,12 +46,12 @@ function Comment({ id, ReviewId, User, content, createdAt }: IReview.Comment): R
 
   return (
     <S.Container>
-      <Button type="inLink" href={`/user/${User.nickname}`} styleType="plain">
+      <Button styleType="plain" type="inLink" href={`/user/${User.nickname}`} prefetch={false}>
         <Avatar src={User.avatarUrl} />
       </Button>
       <S.Content>
         <div>
-          <Button type="inLink" href={`/user/${User.nickname}`} styleType="plain">
+          <Button styleType="plain" type="inLink" href={`/user/${User.nickname}`} prefetch={false}>
             <Text color="gray5" fontSize="xsm" fontWeight="medium">
               {User.nickname}
             </Text>

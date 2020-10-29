@@ -88,7 +88,7 @@ function ReviewActionBar({
   return (
     <S.Container {...props}>
       <div>
-        <Button type="inLink" href={`/user/${User.nickname}`} styleType="plain">
+        <Button styleType="plain" type="inLink" href={`/user/${User.nickname}`} prefetch={false}>
           <>
             <Avatar src={User.avatarUrl} />
             <Text color="gray5" fontSize="xsm" fontWeight="medium">
