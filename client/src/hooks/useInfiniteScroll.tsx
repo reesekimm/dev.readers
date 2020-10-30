@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 
 type IntersectionObserverHookRefCallback = (node: HTMLDivElement | null) => void;
 
@@ -17,6 +17,15 @@ const options = {
 export default function useInfiniteScroll(): UseInfiniteScrollHookResult {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const [entry, setEntry] = useState<IntersectionObserverEntry>();
+
+  useEffect(() => {
+    return () => {
+      const observer = observerRef.current;
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, []);
 
   const callbackRef = useCallback((node) => {
     if (!observerRef.current) {
